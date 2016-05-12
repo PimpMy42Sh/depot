@@ -101,12 +101,19 @@ int ft_pipes (t_list cmds)
 int main (void)
 {
 	t_list	*cmds;
-	char *ls[] = { "ls", "-lF", 0 };
+	t_list	*ptr;
+	char *ls[] = { "ls", "-lF", "a.out", 0 };
 	char *cat[] = { "cat", "-e", 0 };
+	int i;
 
+	i = 252; // nombre de chats (limite sur mon mac à 252 // clang test.c ; ./a.out | wc -c)
 	cmds = ft_lstnew(ls, sizeof(ls));
-	cmds->next = ft_lstnew(cat, sizeof(cat));
-	cmds->next->next = ft_lstnew(cat, sizeof(cat));
-	cmds->next->next->next = ft_lstnew(cat, sizeof(cat));
-	return ft_pipes(*cmds);
+	ptr = cmds;
+	while (i)
+	{
+		cmds->next = ft_lstnew(cat, sizeof(cat));
+		cmds = cmds->next;
+		i--;
+	}
+	return ft_pipes(*ptr);
 }

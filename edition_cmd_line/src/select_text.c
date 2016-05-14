@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/13 10:37:19 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:16:54 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/14 15:05:11 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,12 @@ void		ft_cut_select(t_it *it, int save)
 		if (save)
 			it->tmp_buffer = ft_strsub(it->line, ((it->saved_i - return_offset() - 2)), length);
 		it->line = ft_strsub_rev(it->line, ((it->saved_i - return_offset())), length + 1);
-		//printf("\nline = %s\nit->buffer = %s\n", it->line, it->tmp_buffer);
 	}
 	else
 	{
 		if (save)
 			it->tmp_buffer = ft_strsub(it->line, ((temp - return_offset() - 2)), length);
 		it->line = ft_strsub_rev(it->line, ((temp - return_offset())), length + 1);
-		//printf("\nline = %s\nit->buffer = %s\n", it->line, it->tmp_buffer);
 	}
 	ft_putstr(it->line);
 	it->i += ft_strlen(it->line);
@@ -116,7 +114,6 @@ void		ft_replace_vid(t_it *it, int rewrite)
 	{
 		tputs(tgetstr("mr", NULL), 0, my_putchar);
 		ft_putchar(it->line[(it->i - return_offset() - 2)]);
-		//tputs(tgetstr("vi", NULL), 0, my_putchar);
 		tputs(tgetstr("le", NULL), 0, my_putchar);
 	}
 	else
@@ -128,17 +125,9 @@ void		ft_replace_vid(t_it *it, int rewrite)
 		ft_move_saved(it);
 		//it->tmp_buffer = ft_yolo(it);
 		if (temp > it->saved_i)
-		{
-			//printf("SUP\n");
-			//printf("\nline = %s, start = %d, length = %d\n", it->line, ((it->i - return_offset() - 2)), length );
-			it->tmp_buffer = ft_strsub(it->line, ((it->i - return_offset() - 2)), length);
-		}
+			it->tmp_buffer = ft_strsub(it->line, ((it->i - return_offset() - 2)), length + 1);
 		else
-		{
-			//printf("INF\n");
-			//printf("\nline = %s, start = %d, length = %d\n", it->line, ((it->saved_i - return_offset() - length)), length );
-			it->tmp_buffer = ft_strsub(it->line, ((temp - return_offset() - 1)), length);
-		}
+			it->tmp_buffer = ft_strsub(it->line, ((temp - return_offset() - 2)), length + 1);
 		ft_putstr(it->tmp_buffer);
 		it->i += ft_strlen(it->tmp_buffer);
 	}

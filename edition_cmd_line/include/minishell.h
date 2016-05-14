@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:09:01 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/14 11:46:33 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define CTRL_U		21
 # define CTRL_P		16
 # define CTRL_R		18
+# define CTRL_L		12
 # define U_cut		117
 # define MAX_SIZE	4
 # define ALT_LEFT	17465

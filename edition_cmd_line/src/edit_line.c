@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 11:10:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:18:52 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/14 15:07:26 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,13 @@ void		edit_line(t_it *it)
 			cut_line(it);
 		if (it->buffer == CTRL_P)
 			paste_line(it);
+		if (it->buffer == CTRL_L)
+		{
+			tputs(tgetstr("cl", NULL), 0, my_putchar);
+			print_prompt();
+			if (it->line)
+				ft_putstr(it->line);
+		}
 		if (!it->line)
 		{
 			if (it->buffer == CTRL_D)

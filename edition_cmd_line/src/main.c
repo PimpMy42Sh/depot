@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 11:36:00 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 13:43:28 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/14 15:15:22 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static void		main_loop(char **environ)
 		ft_stock_it(it);
 		if (it->buffer == '\n')
 		{
+			tputs(tgetstr("me", NULL), 0, my_putchar);
+			it->r_video = 0;
 			check_only_space(it);
 			if (it->line && ft_strlen(it->line))
 				split_cmd(it, environ);

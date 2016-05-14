@@ -1,0 +1,3 @@
+Penser a recuperer la valeur de retour d'une commande pour '$?' (a mettre dans 't->last_return')
+
+Commencer a reflechir sur une fonction de hachage (qui serait tres utile pour debugger le parser)

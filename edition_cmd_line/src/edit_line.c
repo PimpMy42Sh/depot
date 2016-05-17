@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 11:10:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/14 15:07:26 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:09:41 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,36 @@ char		*copy_end_line(int j, int i, char *line)
 	return (tmp);
 }
 
+void		multi_line_text(t_it *it)
+{
+	int i;
+	int end;
+	int	start;
+
+	i = 0;
+	if (!((it->i + 1) % it->ws_col))
+	{
+		tputs(tgetstr("do", NULL), 0, my_putchar);
+		tputs(tgetstr("cr", NULL), 0, my_putchar);
+	}
+	start = it->ws_col - 1 - it->offset;
+	tputs(tgetstr("sc", NULL), 0, my_putchar);
+	tputs(tgetstr("do", NULL), 0, my_putchar);
+	tputs(tgetstr("cr", NULL), 0, my_putchar);
+	tputs(tgetstr("ce", NULL), 0, my_putchar);
+	end = ft_strlen(it->line);
+	while (it->line[start+i] && (start + i) < end)
+	{
+		ft_putchar(it->line[start+i]);
+		i++;
+	}
+	/*tputs(tgetstr("do", NULL), 0, my_putchar);
+	tputs(tgetstr("cr", NULL), 0, my_putchar);
+	tputs(tgetstr("ce", NULL), 0, my_putchar);*/
+	tputs(tgetstr("rc", NULL), 0, my_putchar);
+	//move_right(it);
+}
+
 void		replace_char(t_it *it, int i)
 {
 	char	*tmp;
@@ -71,6 +101,7 @@ void		replace_char(t_it *it, int i)
 	ft_putchar(it->buffer);
 	tputs(tgetstr("ip", NULL), 0, my_putchar);
 	tputs(tgetstr("ei", NULL), 0, my_putchar);
+	multi_line_text(it);
 	free_elements(tmp, tmp2, tmp3, NULL);
 }
 
@@ -126,6 +157,8 @@ void		edit_line(t_it *it)
 	}
 	else if(it->r_video)
 	{
+		if (it->buffer == RET)
+			put_reverse(it);
 		if (it->buffer == U_cut)
 			ft_cut_select(it, 1);
 		if (it->buffer == DEL)

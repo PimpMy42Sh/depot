@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/14 11:46:33 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 11:41:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct		s_it
 	char			*line;
 	char			*tmp_buffer;
 	int				r_video;
+	int				ws_col;
 }					t_it;
 
 typedef struct		s_hist
@@ -221,6 +222,11 @@ int					my_putchar(int c);
 void				print_prompt(void);
 void				check_shlvl(char **environ);
 void				check_only_space(t_it *it);
-void				check_signal(void);
 t_it				*ft_stock_it(t_it *it);
+
+/*
+**	Signals
+*/
+void				rec_size(t_it *it);
+void				check_signal(void);
 #endif

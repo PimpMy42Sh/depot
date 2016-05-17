@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/05/13 10:40:08 by mfamilar         ###   ########.fr        #
+#    Updated: 2016/05/17 11:06:50 by mfamilar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC_NAME = 	main.c free.c parse_args.c errors.c parse_args_2.c\
 			ft_exit.c utilities.c parser.c edit_line.c suspend_terminal.c\
 			cursor_moves.c cursor_moves_2.c cursor_moves_one_word_left.c\
 			cursor_moves_one_word_right.c history.c history_2.c del_char.c\
-			signals.c errors_3.c copy_paste.c select_text.c
+			signals.c errors_3.c copy_paste.c select_text.c rec_size.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

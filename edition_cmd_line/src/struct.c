@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 15:26:03 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:04:18 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 11:40:19 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_it		*init_it_struct(void)
 	it->tmp_buffer = NULL;
 	it->tmp_line = NULL;
 	it->line = NULL;
+	rec_size(it);
 	return (it);
 }
 

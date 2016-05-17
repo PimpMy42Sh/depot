@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/13 10:37:19 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/14 15:05:11 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 11:12:44 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		ft_replace_vid(t_it *it, int rewrite)
 	else
 	{
 		temp = it->i;
-		tputs(tgetstr("ve", NULL), 0, my_putchar);
+		//tputs(tgetstr("ve", NULL), 0, my_putchar);
 		tputs(tgetstr("me", NULL), 0, my_putchar);
 		length = ft_abs(it->i - it->saved_i);
 		ft_move_saved(it);

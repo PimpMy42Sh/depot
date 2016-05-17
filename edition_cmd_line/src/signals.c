@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/14 10:20:55 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 11:40:10 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void				signal_handler(int signum)
 {
 	if (signum == SIGINT)
 		ctrl_c();
+	else if (signum == SIGWINCH)
+		rec_size(NULL);
 	else
 		return ;
 }

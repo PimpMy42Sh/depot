@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:05:15 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 15:20:00 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:31:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void			move_right(t_it *it)
 void			del_char(t_it *it)
 {
 	del_char_buffer(it);
+	ft_memdel((void**)&it->tmp_line);
 	it->tmp_line = ft_strdup(it->line);
 	move_left(it);
 	tputs(tgetstr("dc", NULL), 0, my_putchar);

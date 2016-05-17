@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 11:10:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 16:09:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 17:36:44 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,32 +50,36 @@ char		*copy_end_line(int j, int i, char *line)
 
 void		multi_line_text(t_it *it)
 {
-	int i;
-	int end;
 	int	start;
 
-	i = 0;
+	start = it->ws_col - 1 - it->offset + ((it->i / it->ws_col) * it->ws_col);
 	if (!((it->i + 1) % it->ws_col))
 	{
 		tputs(tgetstr("do", NULL), 0, my_putchar);
 		tputs(tgetstr("cr", NULL), 0, my_putchar);
+		if (start < ft_strlen(it->line))
+		{
+			tputs(tgetstr("sc", NULL), 0, my_putchar);
+			tputs(tgetstr("cr", NULL), 0, my_putchar);
+			tputs(tgetstr("cd", NULL), 0, my_putchar);
+			ft_putstr(&it->line[start]);
+			tputs(tgetstr("cd", NULL), 0, my_putchar);
+			tputs(tgetstr("rc", NULL), 0, my_putchar);
+		}
 	}
-	start = it->ws_col - 1 - it->offset;
-	tputs(tgetstr("sc", NULL), 0, my_putchar);
-	tputs(tgetstr("do", NULL), 0, my_putchar);
-	tputs(tgetstr("cr", NULL), 0, my_putchar);
-	tputs(tgetstr("ce", NULL), 0, my_putchar);
-	end = ft_strlen(it->line);
-	while (it->line[start+i] && (start + i) < end)
+	else
 	{
-		ft_putchar(it->line[start+i]);
-		i++;
+		if (start < ft_strlen(it->line))
+		{
+			tputs(tgetstr("sc", NULL), 0, my_putchar);
+			tputs(tgetstr("do", NULL), 0, my_putchar);
+			tputs(tgetstr("cr", NULL), 0, my_putchar);
+			tputs(tgetstr("cd", NULL), 0, my_putchar);
+			ft_putstr(&it->line[start]);
+			tputs(tgetstr("cd", NULL), 0, my_putchar);
+			tputs(tgetstr("rc", NULL), 0, my_putchar);
+		}
 	}
-	/*tputs(tgetstr("do", NULL), 0, my_putchar);
-	tputs(tgetstr("cr", NULL), 0, my_putchar);
-	tputs(tgetstr("ce", NULL), 0, my_putchar);*/
-	tputs(tgetstr("rc", NULL), 0, my_putchar);
-	//move_right(it);
 }
 
 void		replace_char(t_it *it, int i)

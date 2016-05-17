@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:48:46 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:24:09 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:28:02 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ static void		write_buffer(t_it *it)
 		{
 			tmp = (it->i - it->offset) - 1;
 			replace_char(it, tmp);
+			ft_memdel((void**)&it->tmp_line);
 			it->tmp_line = ft_strdup(it->line);
 		}
 		else
 		{
 			parse_buffer(cmd, it);
 			ft_putchar(it->buffer);
+			ft_memdel((void**)&it->tmp_line);
 			it->tmp_line = ft_strdup(it->line);
 		}
 	}

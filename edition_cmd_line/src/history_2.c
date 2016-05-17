@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 13:30:12 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:14:50 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:40:11 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,15 @@ t_history			*up_history(t_history *list, t_it *it)
 	if (!list->prev && !it->first)
 		return (list);
 	else if (list->prev && !it->first)
+	{
+		ft_memdel((void**)&it->line);
 		it->line = ft_strdup(list->prev->cmd);
+	}
 	else if (it->first)
+	{
+		ft_memdel((void**)&it->line);
 		it->line = ft_strdup(list->cmd);
+	}
 	handle_history(i, it);
 	if (list->prev && !it->first)
 		return (list->prev);
@@ -86,6 +92,7 @@ t_history			*down_history(t_history *list,
 		move_left(it);
 	tputs(tgetstr("ce", NULL), 0, my_putchar);
 	tputs(tgetstr("cd", NULL), 0, my_putchar);
+	ft_memdel((void**)&it->line);
 	if (list->next)
 	{
 		list = list->next;

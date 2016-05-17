@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/03 16:31:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:13:39 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:44:06 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void					print_history(t_it *it)
 	if (!history)
 		return ;
 	if (!it->line)
+	{
+		ft_memdel((void**)&it->tmp_line);
 		it->tmp_line = NULL;
+	}
 	if (!list || it->buffer == RET)
 	{
 		list = go_to_end(history);

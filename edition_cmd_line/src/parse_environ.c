@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 12:31:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/09 16:09:11 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 17:52:46 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void		move_old_and_pwd_suite(t_norme *norme, char **environ,
 	{
 		if (old && norme->previous)
 		{
+			ft_memdel((void**)&environ[norme->i]);
 			environ[norme->i] = ft_strjoin("OLDPWD=", old);
 			norme->i++;
 		}
@@ -34,7 +35,10 @@ static void		move_old_and_pwd_suite(t_norme *norme, char **environ,
 			if (!ret)
 				permission_denied("cd", "");
 			else
+			{
+				ft_memdel((void**)&environ[norme->i]);
 				environ[norme->i] = ft_strjoin("PWD=", ret);
+			}
 		}
 	}
 }
@@ -56,12 +60,12 @@ void			move_old_and_pwd(char **environ, char *old, char *pwd)
 		if (old && !ft_strncmp(environ[norme->i], "OLDPWD", 6))
 		{
 			ft_strclr(environ[norme->i]);
-			environ[norme->i] = ft_strjoin("OLDPWD=", old); // INIT A NULL ?
+			environ[norme->i] = ft_strjoin("OLDPWD=", old);
 			norme->previous = 0;
 		}
 		if (pwd && !ft_strncmp(environ[norme->i], "PWD", 3))
 		{
-			//ft_strclr(environ[norme->i]);
+			ft_strclr(environ[norme->i]);
 			environ[norme->i] = ft_strjoin("PWD=", pwd);
 			norme->current = 0;
 		}

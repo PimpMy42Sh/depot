@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 11:40:10 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:34:48 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void				ctrl_c(void)
 	tputs(tgetstr("me", NULL), 0, my_putchar);
 	if (it)
 	{
+		ft_memdel((void**)&it->line);
 		it->line = NULL;
 		it->i = 0;
 		it->r_video = 0;

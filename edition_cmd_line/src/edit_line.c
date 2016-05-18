@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 11:10:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 17:36:44 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 16:47:23 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,29 @@ char		*copy_end_line(int j, int i, char *line)
 	return (tmp);
 }
 
-void		multi_line_text(t_it *it)
+void		ft_yolo(char *tmp, char *tmp2)
+{
+	tputs(tgetstr("sc", NULL), 0, my_putchar);
+	tputs(tgetstr("ho", NULL), 0, my_putchar);
+	tputs(tgetstr("ce", NULL), 0, my_putchar);
+	printf("tmp = %s\n", tmp);
+	printf("tmp2 = %s", tmp2);
+	tputs(tgetstr("ce", NULL), 0, my_putchar);
+	printf("\n");
+	tputs(tgetstr("rc", NULL), 0, my_putchar);
+}
+
+void		multi_line_text(t_it *it, int move)
 {
 	int	start;
 
-	start = it->ws_col - 1 - it->offset + ((it->i / it->ws_col) * it->ws_col);
-	if (!((it->i + 1) % it->ws_col))
+	start = it->i - it->offset; //it->ws_col - 1 - it->offset + ((it->i / it->ws_col) * it->ws_col);
+	//ft_yolo(start, it);
+	if (!((it->i + 1) % it->ws_col) && move)
 	{
-		tputs(tgetstr("do", NULL), 0, my_putchar);
-		tputs(tgetstr("cr", NULL), 0, my_putchar);
+		//tputs(tgetstr("do", NULL), 0, my_putchar);
+		tputs(tgetstr("sf", NULL), 0, my_putchar);
+		//tputs(tgetstr("cr", NULL), 0, my_putchar);
 		if (start < ft_strlen(it->line))
 		{
 			tputs(tgetstr("sc", NULL), 0, my_putchar);
@@ -72,14 +86,15 @@ void		multi_line_text(t_it *it)
 		if (start < ft_strlen(it->line))
 		{
 			tputs(tgetstr("sc", NULL), 0, my_putchar);
-			tputs(tgetstr("do", NULL), 0, my_putchar);
-			tputs(tgetstr("cr", NULL), 0, my_putchar);
+			//tputs(tgetstr("do", NULL), 0, my_putchar);
+			//tputs(tgetstr("cr", NULL), 0, my_putchar);
 			tputs(tgetstr("cd", NULL), 0, my_putchar);
 			ft_putstr(&it->line[start]);
 			tputs(tgetstr("cd", NULL), 0, my_putchar);
 			tputs(tgetstr("rc", NULL), 0, my_putchar);
 		}
 	}
+	//ft_putchar(it->buffer);
 }
 
 void		replace_char(t_it *it, int i)
@@ -100,12 +115,8 @@ void		replace_char(t_it *it, int i)
 	tmp2 = ft_strjoin(tmp, tmp3);
 	ft_memdel((void**)&it->line);
 	it->line = ft_strdup(tmp2);
-	tputs(tgetstr("im", NULL), 0, my_putchar);
-	tputs(tgetstr("ic", NULL), 0, my_putchar);
 	ft_putchar(it->buffer);
-	tputs(tgetstr("ip", NULL), 0, my_putchar);
-	tputs(tgetstr("ei", NULL), 0, my_putchar);
-	multi_line_text(it);
+	multi_line_text(it, 1);
 	free_elements(tmp, tmp2, tmp3, NULL);
 }
 
@@ -123,6 +134,8 @@ static void	check_move(t_it *it)
 		move_one_word_left(it);
 	else if (it->buffer == ALT_RIGHT)
 		move_one_word_right(it);
+	else if ((it->buffer == ALT_UP) || (it->buffer == ALT_DOWN))
+		move_up_and_down(it);
 }
 
 void		edit_line(t_it *it)

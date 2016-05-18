@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 11:16:00 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 12:22:26 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static void		split_cmd(t_it *it, char **environ)
 	{
 		if (!(check_line(cmd[i], environ, 0)))
 			split_cmd_suite(i, environ, cmd);
-		ft_memdel((void**)&it->line);
 		i++;
 	}
 	if (!cmd[0])
 		ft_putchar('\n');
+	ft_memdel((void**)&it->line);
 	free_cmd(cmd);
 	print_prompt();
 }
@@ -69,6 +69,7 @@ static void		main_loop(char **environ)
 				split_cmd(it, environ);
 			else
 			{
+				go_to_bottom(it);
 				ft_putchar('\n');
 				print_prompt();
 			}

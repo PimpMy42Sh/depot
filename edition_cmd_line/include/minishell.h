@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 11:41:54 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 15:32:21 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@
 # define MAX_SIZE	4
 # define ALT_LEFT	17465
 # define ALT_RIGHT	17209
+# define ALT_UP		16697
+# define ALT_DOWN	16953
 # define TERM_ENV	"xterm-256color"
 
 pid_t				g_father;
@@ -194,8 +196,11 @@ void				move_end(t_it *it);
 void				move_one_word_left(t_it *it);
 void				move_one_word_right(t_it *it);
 t_it				*init_it_struct(void);
-void				del_char_buffer(t_it *it);
+void				del_char_buffer(t_it *it, int current);
 void				del_current(t_it *it);
+void				multi_line_text(t_it *it, int move);
+void				move_up_and_down(t_it *it);
+void				move_n_char(t_it *it, int direction, int n);
 
 /*
 **	copy paste
@@ -223,10 +228,15 @@ void				print_prompt(void);
 void				check_shlvl(char **environ);
 void				check_only_space(t_it *it);
 t_it				*ft_stock_it(t_it *it);
+void				go_to_bottom(t_it *it);
+int					ft_abs(int i);
 
 /*
 **	Signals
 */
 void				rec_size(t_it *it);
 void				check_signal(void);
+
+//	DEBUG
+void				ft_yolo(char *tmp, char *tmp2);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 10:48:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/04/28 11:14:15 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 16:50:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int		modifiy_term(t_tty *tty)
 		tcsetattr_error();
 		return (1);
 	}
+	tputs(tgetstr("ns", NULL), 0, my_putchar);
 	return (0);
 }
 

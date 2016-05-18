@@ -12,14 +12,6 @@
 
 #include "minishell.h"
 
-int			ft_abs(int i)
-{
-	if (i >= 0)
-		return(i);
-	else
-		return(-i);
-}
-
 void		ft_move_saved(t_it *it)
 {
 	int target;

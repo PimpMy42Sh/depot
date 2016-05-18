@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:05:15 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 16:31:27 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 16:46:48 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,12 @@ void			move_right(t_it *it)
 	}
 	if (!((it->i + 1) % it->ws_col))
 	{
-		tputs(tgetstr("do", NULL), 0, my_putchar);
+		//tputs(tgetstr("do", NULL), 0, my_putchar);
+		tputs(tgetstr("sf", NULL), 0, my_putchar);
 		tputs(tgetstr("cr", NULL), 0, my_putchar);
 	}
 	else
 		tputs(tgetstr("nd", NULL), 0, my_putchar);
-}
-
-void			del_char(t_it *it)
-{
-	del_char_buffer(it);
-	ft_memdel((void**)&it->tmp_line);
-	it->tmp_line = ft_strdup(it->line);
-	move_left(it);
-	tputs(tgetstr("dc", NULL), 0, my_putchar);
 }
 
 void			move_begin(t_it *it)

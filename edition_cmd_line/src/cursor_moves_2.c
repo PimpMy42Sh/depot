@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/03 15:27:27 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:09:49 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 14:11:10 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,68 @@
 
 void				move_end(t_it *it)
 {
-	while (it->i < it->offset + ft_strlen(it->line))
+	int		temp;
+
+	temp = 0;
+	while (temp != it->i)
 	{
-		it->i++;
-		tputs(tgetstr("nd", NULL), 0, my_putchar);
+		temp = it->i;
+		move_right(it);
 	}
 }
 
-static void			init_tmp(char **tmp, char **tmp2, int *j, char *line)
+static void			init_tmp(char **tmp, char **tmp2, char *line)
 {
-	*j = 0;
 	*tmp2 = ft_memalloc(sizeof(char) * ft_strlen(line));
 	*tmp = ft_memalloc(sizeof(char) * ft_strlen(line));
 }
 
-static void			copy_line(int i, int j, char *tmp, char *line)
+static void			copy_line(int i, char *tmp, char *line)
 {
+	int		j;
+
+	j = 0;
 	while (j < i)
 	{
 		tmp[j] = line[j];
 		j++;
 	}
+	tmp[j] = '\0';
 }
 
-void				del_char_buffer(t_it *it)
+void				del_char_buffer(t_it *it, int current)
 {
 	char	*tmp;
 	char	*tmp2;
 	int		i;
 	int		j;
+	int 	temp;
 
-	init_tmp(&tmp, &tmp2, &j, it->line);
-	i = (it->i - it->offset) - 1;
-	copy_line(i, j, tmp, it->line);
+	init_tmp(&tmp, &tmp2, it->line);
+	i = (it->i - it->offset) - current;
+	copy_line(i, tmp, it->line);
 	j = 0;
 	i++;
-	while (it->line[i])
+	temp = ft_strlen(it->line);
+	while (it->line[i] && i < temp)
 	{
 		tmp2[j] = it->line[i];
 		i++;
 		j++;
 	}
+	tmp2[j] = '\0';
 	ft_memdel((void**)&it->line);
 	if (!tmp)
 		return ;
+	ft_yolo(tmp, tmp2);
 	it->line = ft_strjoin(tmp, tmp2);
 	free_elements(tmp, tmp2, NULL, NULL);
+}
+
+void			move_up_and_down(t_it *it)
+{
+	if (it->buffer == ALT_UP)
+		move_n_char(it, KL, it->ws_col);
+	else if (it->buffer == ALT_DOWN)
+		move_n_char(it, KR, it->ws_col);
 }

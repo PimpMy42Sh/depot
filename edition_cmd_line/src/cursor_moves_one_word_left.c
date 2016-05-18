@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:51:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/13 18:11:16 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 16:11:07 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 static void		go_left(t_it *it)
 {
-	tputs(tgetstr("le", NULL), 0, my_putchar);
-	it->i--;
+	if (!(it->i == it->offset))
+		move_left(it);
+	else
+	{
+		tputs(tgetstr("le", NULL), 0, my_putchar);
+		it->i--;
+	}
 }
 
 static void		move_one_word_left_1(t_it *it, int i)

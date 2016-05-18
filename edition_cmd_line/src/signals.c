@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/05/17 16:34:48 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/05/18 11:49:03 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,18 @@
 static void				ctrl_c(void)
 {
 	t_it		*it;
+	int			nb_lines;
 
+	nb_lines = 0;
 	it = ft_stock_it(NULL);
 	tputs(tgetstr("me", NULL), 0, my_putchar);
 	if (it)
 	{
-		ft_memdel((void**)&it->line);
-		it->line = NULL;
-		it->i = 0;
 		it->r_video = 0;
+		go_to_bottom(it);
+		ft_memdel((void**)&it->line);
+		it->i = 0;
+		it->line = NULL;
 		ft_stock_it(it);
 	}
 	if (g_father == 0)

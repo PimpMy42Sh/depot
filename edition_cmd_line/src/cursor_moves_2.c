@@ -75,7 +75,8 @@ void				del_char_buffer(t_it *it, int current)
 
 void			move_up_and_down(t_it *it)
 {
-	int i;
+	int 	i;
+	int		fd;
 
 	i = 0;
 	if (it->buffer == ALT_UP)
@@ -90,16 +91,10 @@ void			move_up_and_down(t_it *it)
 	}
 	else if (it->buffer == ALT_DOWN)
 	{
-		if (it->i +  it->ws_col < ft_strlen(it->line))
+		if (it->i + it->ws_col < ft_strlen(it->line))
 		{
-			tputs(tgetstr("do", NULL), 0, my_putchar);
-			tputs(tparam("DO", NULL), 0, my_putchar);
-
-			/*ft_yolo(ft_itoa(i), ft_itoa(it->i));*/
-			i = it->ws_col;//(it->i % it->ws_col);
-			//it->i += (i - it->ws_col);
-			while (i--)
-				move_right(it);
+			tputs(tparm(tgetstr("DO", NULL), 1), 0, my_putchar);
+			it->i += it->ws_col;
 		}
 		else
 			move_n_char(it, KR, it->ws_col);

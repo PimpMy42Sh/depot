@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+ #include <sgtty.h>
 
 static int		handle_success(int success)
 {

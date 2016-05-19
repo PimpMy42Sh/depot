@@ -14,13 +14,14 @@
 
 void				move_end(t_it *it)
 {
-	int		temp;
+	int	last_i;
 
-	temp = 0;
-	while (temp != it->i)
+	last_i = 0;
+	it->buffer = ALT_DOWN;
+	while (it->i != last_i)
 	{
-		temp = it->i;
-		move_right(it);
+		last_i = it->i;
+		move_up_and_down(it);
 	}
 }
 
@@ -74,8 +75,33 @@ void				del_char_buffer(t_it *it, int current)
 
 void			move_up_and_down(t_it *it)
 {
+	int i;
+
+	i = 0;
 	if (it->buffer == ALT_UP)
-		move_n_char(it, KL, it->ws_col);
+	{
+		if (it->i - it->ws_col > it->offset)
+		{
+			tputs(tgetstr("up", NULL), 0, my_putchar);
+			it->i -= it->ws_col;
+		}
+		else
+			move_n_char(it, KL, it->ws_col);
+	}
 	else if (it->buffer == ALT_DOWN)
-		move_n_char(it, KR, it->ws_col);
+	{
+		if (it->i +  it->ws_col < ft_strlen(it->line))
+		{
+			tputs(tgetstr("do", NULL), 0, my_putchar);
+			tputs(tparam("DO", NULL), 0, my_putchar);
+
+			/*ft_yolo(ft_itoa(i), ft_itoa(it->i));*/
+			i = it->ws_col;//(it->i % it->ws_col);
+			//it->i += (i - it->ws_col);
+			while (i--)
+				move_right(it);
+		}
+		else
+			move_n_char(it, KR, it->ws_col);
+	}
 }

@@ -71,8 +71,7 @@ void			move_right(t_it *it)
 	}
 	if (!((it->i + 1) % it->ws_col))
 	{
-		//tputs(tgetstr("do", NULL), 0, my_putchar);
-		tputs(tgetstr("sf", NULL), 0, my_putchar);
+		tputs(tgetstr("do", NULL), 0, my_putchar);
 		tputs(tgetstr("cr", NULL), 0, my_putchar);
 	}
 	else
@@ -81,9 +80,13 @@ void			move_right(t_it *it)
 
 void			move_begin(t_it *it)
 {
-	while (it->i > it->offset)
+	int	last_i;
+
+	last_i = 0;
+	it->buffer = ALT_UP;
+	while (it->i != last_i)
 	{
-		it->i--;
-		tputs(tgetstr("le", NULL), 0, my_putchar);
+		last_i = it->i;
+		move_up_and_down(it);
 	}
 }

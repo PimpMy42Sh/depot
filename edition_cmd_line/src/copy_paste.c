@@ -54,7 +54,6 @@ void		paste_line(t_it *it)
 {
 	int temp;
 
-	tputs(tgetstr("LP", NULL), 0, my_putchar);
 	if (!it->tmp_buffer)
 		return ;
 	else if (!it->line)

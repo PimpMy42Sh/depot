@@ -84,6 +84,7 @@ void					print_history(t_it *it)
 		if (it->buffer == RET)
 			list = list->next;
 		it->first = 1;
+		ft_stock_list(list);
 	}
 	if (it->buffer == KU)
 		list = up_history(list, it);

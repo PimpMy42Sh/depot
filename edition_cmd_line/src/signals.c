@@ -15,10 +15,14 @@
 static void				ctrl_c(void)
 {
 	t_it		*it;
+	t_history	*list;
+	t_history	*history;
 	int			nb_lines;
 
 	nb_lines = 0;
 	it = ft_stock_it(NULL);
+	list = ft_stock_list(NULL);
+	history = ft_stock_history(NULL);
 	tputs(tgetstr("me", NULL), 0, my_putchar);
 	if (it)
 	{
@@ -28,6 +32,16 @@ static void				ctrl_c(void)
 		it->i = 0;
 		it->line = NULL;
 		ft_stock_it(it);
+	}
+	if (list)
+	{
+		list = go_to_end(history);
+		printf("list = %s\n", list->cmd);
+		list = list->next;
+		//printf("list = %s\n", list->cmd);
+		it->first = 1;
+		ft_stock_it(it);
+		ft_stock_list(list);
 	}
 	if (g_father == 0)
 	{

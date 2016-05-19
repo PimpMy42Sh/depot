@@ -16,7 +16,7 @@ CXX = gcc
 
 NAME = 21sh
 
-FLAGS = -g 
+FLAGS = -g
 
 SRC_PATH = ./src/
 

@@ -64,19 +64,22 @@ void		multi_line_text(t_it *it, int move)
 {
 	int	start;
 
-	start = it->i - it->offset; //it->ws_col - 1 - it->offset + ((it->i / it->ws_col) * it->ws_col);
-	//ft_yolo(start, it);
+	start = it->i;
+	move_begin(it);
+	ft_putstr(it->line);
+	it->i += ft_strlen(it->line);
+	move_n_char(it, KL, start);
+	/*start = it->i - it->offset; //it->ws_col - 1 - it->offset + ((it->i / it->ws_col) * it->ws_col);
 	if (!((it->i + 1) % it->ws_col) && move)
 	{
-		//tputs(tgetstr("do", NULL), 0, my_putchar);
 		tputs(tgetstr("sf", NULL), 0, my_putchar);
-		//tputs(tgetstr("cr", NULL), 0, my_putchar);
 		if (start < ft_strlen(it->line))
 		{
 			tputs(tgetstr("sc", NULL), 0, my_putchar);
 			tputs(tgetstr("cr", NULL), 0, my_putchar);
 			tputs(tgetstr("cd", NULL), 0, my_putchar);
-			ft_putstr(&it->line[start]);
+			ft_putstr(it->line);
+			it->i += ft_strlen(it->line);
 			tputs(tgetstr("cd", NULL), 0, my_putchar);
 			tputs(tgetstr("rc", NULL), 0, my_putchar);
 		}
@@ -86,15 +89,13 @@ void		multi_line_text(t_it *it, int move)
 		if (start < ft_strlen(it->line))
 		{
 			tputs(tgetstr("sc", NULL), 0, my_putchar);
-			//tputs(tgetstr("do", NULL), 0, my_putchar);
-			//tputs(tgetstr("cr", NULL), 0, my_putchar);
 			tputs(tgetstr("cd", NULL), 0, my_putchar);
-			ft_putstr(&it->line[start]);
+			ft_putstr(it->line);
+			it->i += ft_strlen(it->line);
 			tputs(tgetstr("cd", NULL), 0, my_putchar);
 			tputs(tgetstr("rc", NULL), 0, my_putchar);
 		}
-	}
-	//ft_putchar(it->buffer);
+	}*/
 }
 
 void		replace_char(t_it *it, int i)

@@ -33,7 +33,6 @@ static int		modifiy_term(t_tty *tty)
 		tcsetattr_error();
 		return (1);
 	}
-	tputs(tgetstr("ns", NULL), 0, my_putchar);
 	return (0);
 }
 

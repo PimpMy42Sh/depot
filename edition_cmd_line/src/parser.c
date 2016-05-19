@@ -18,7 +18,7 @@ static void		resize_buffer(t_it *it)
 	int			i;
 
 	i = 0;
-	tmp = ft_memalloc(sizeof(char) * ft_strlen(it->line) * MAX_SIZE);
+	tmp = ft_memalloc(sizeof(char) * ft_strlen(it->line) * (MAX_SIZE + 1));
 	while (i < ft_strlen(it->line))
 	{
 		tmp[i] = it->line[i];
@@ -28,7 +28,6 @@ static void		resize_buffer(t_it *it)
 	ft_memdel((void**)&it->line);
 	it->line = ft_strdup(tmp);
 	ft_memdel((void**)&tmp);
-	//indice++;
 }
 
 static void		parse_buffer(char *cmd, t_it *it)

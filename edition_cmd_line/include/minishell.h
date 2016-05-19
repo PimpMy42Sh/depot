@@ -48,7 +48,7 @@
 # define CTRL_R		18
 # define CTRL_L		12
 # define U_cut		117
-# define MAX_SIZE	4
+# define MAX_SIZE	1
 # define ALT_LEFT	17465
 # define ALT_RIGHT	17209
 # define ALT_UP		16697
@@ -219,6 +219,7 @@ t_history			*create_elem(t_history *history, char *line);
 t_history			*go_to_end(t_history *history);
 t_history			*up_history(t_history *list, t_it *it);
 t_history			*down_history(t_history *list, t_it *it);
+t_history			*ft_stock_list(t_history *list);
 
 /*
 **	Utilities

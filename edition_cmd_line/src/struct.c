@@ -59,3 +59,12 @@ t_it		*ft_stock_it(t_it *it)
 		tmp = it;
 	return (tmp);
 }
+
+t_history		*ft_stock_list(t_history *list)
+{
+	static t_history	*tmp = NULL;
+
+	if (list)
+		tmp = list;
+	return (tmp);
+}

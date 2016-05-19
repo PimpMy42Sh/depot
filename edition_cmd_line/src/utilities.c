@@ -40,15 +40,11 @@ void		go_to_bottom(t_it *it)
 	nb_lines = 0;
 	if (it->line)
 	{
-	//	ft_yolo(nb_lines, it);
 		nb_lines = (ft_strlen(it->line) + it->offset) / it->ws_col - (it->i / it->ws_col);
 		if (nb_lines < 0)
 			nb_lines = 0;
 		while (nb_lines--)
-		{
-			//tputs(tgetstr("do", NULL), 0, my_putchar);
-			tputs(tgetstr("sf", NULL), 0, my_putchar);
-		}
+			tputs(tgetstr("do", NULL), 0, my_putchar);
 	}
 }
 

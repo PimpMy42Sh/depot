@@ -12,21 +12,21 @@
 
 #include "minishell.h"
 
-static void		move_old_and_pwd_suite(t_norme *norme, char **environ,
+static void		move_old_and_pwd_suite(t_norme *norme, t_env *env,
 		char *old)
 {
 	char	*ret;
 	char	buffer[256];
 
 	ret = NULL;
-	if (return_env_indice(environ, "PWD"))
+	if (return_env_indice(env->environ, "PWD"))
 		norme->current = 0;
 	if (norme->current || norme->previous)
 	{
 		if (old && norme->previous)
 		{
-			ft_memdel((void**)&environ[norme->i]);
-			environ[norme->i] = ft_strjoin("OLDPWD=", old);
+			ft_memdel((void**)&env->environ[norme->i]);
+			env->environ[norme->i] = ft_strjoin("OLDPWD=", old);
 			norme->i++;
 		}
 		if (norme->current)
@@ -36,42 +36,38 @@ static void		move_old_and_pwd_suite(t_norme *norme, char **environ,
 				permission_denied("cd", "");
 			else
 			{
-				ft_memdel((void**)&environ[norme->i]);
-				environ[norme->i] = ft_strjoin("PWD=", ret);
+				ft_memdel((void**)&env->environ[norme->i]);
+				env->environ[norme->i] = ft_strjoin("PWD=", ret);
 			}
 		}
 	}
 }
 
-void			move_old_and_pwd(char **environ, char *old, char *pwd)
+void			move_old_and_pwd(t_env *env, char *old, char *pwd)
 {
 	t_norme	*norme;
-	char	*tmp;
-	char	*tmp2;
 
-	tmp = NULL;
-	tmp2 = NULL;
 	norme = ft_memalloc(sizeof(t_norme));
 	norme->i = 0;
 	norme->current = 1;
 	norme->previous = 1;
-	while (environ[norme->i])
+	while (env->environ[norme->i])
 	{
-		if (old && !ft_strncmp(environ[norme->i], "OLDPWD", 6))
+		if (old && !ft_strncmp(env->environ[norme->i], "OLDPWD", 6))
 		{
-			ft_strclr(environ[norme->i]);
-			environ[norme->i] = ft_strjoin("OLDPWD=", old);
+			ft_memdel((void**)&env->environ[norme->i]);
+			env->environ[norme->i] = ft_strjoin("OLDPWD=", old);
 			norme->previous = 0;
 		}
-		if (pwd && !ft_strncmp(environ[norme->i], "PWD", 3))
+		if (pwd && !ft_strncmp(env->environ[norme->i], "PWD", 3))
 		{
-			ft_strclr(environ[norme->i]);
-			environ[norme->i] = ft_strjoin("PWD=", pwd);
+			ft_memdel((void**)&env->environ[norme->i]);
+			env->environ[norme->i] = ft_strjoin("PWD=", pwd);
 			norme->current = 0;
 		}
 		norme->i++;
 	}
-	move_old_and_pwd_suite(norme, environ, old);
+	move_old_and_pwd_suite(norme, env, old);
 	free_struct(norme);
 }
 
@@ -107,9 +103,13 @@ int				return_env_indice(char **environ, char *env)
 
 void			remove_env(char **av, int indice)
 {
+	char		*tmp;
+
+	tmp = av[indice];
 	while (av[indice])
 	{
 		av[indice] = av[indice + 1];
 		indice++;
 	}
+	ft_memdel((void**)&tmp);
 }

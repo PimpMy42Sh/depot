@@ -41,7 +41,6 @@ static void		parse_buffer(char *cmd, t_it *it)
 	tmp = ft_strdup(it->line);
 	ft_memdel((void**)&it->line);
 	it->line = ft_strjoin(tmp, cmd);
-	//printf("it->line = %s\n", it->line);
 	ft_memdel((void**)&tmp);
 }
 
@@ -66,25 +65,23 @@ static void		write_buffer(t_it *it)
 
 	max_size = init_max_size(it->line);
 	tmp = 0;
-	if (it->buffer >= ESP && it->buffer <= TILDE)
+	cmd[0] = it->buffer;
+	cmd[1] = '\0';
+	if (it->i < max_size)
 	{
-		cmd[0] = it->buffer;
-		cmd[1] = '\0';
-		it->i++;
-		if (it->i <= max_size)
-		{
-			tmp = (it->i - it->offset) - 1;
-			replace_char(it, tmp);
-			ft_memdel((void**)&it->tmp_line);
-			it->tmp_line = ft_strdup(it->line);
-		}
-		else
-		{
-			parse_buffer(cmd, it);
-			ft_putchar(it->buffer);
-			ft_memdel((void**)&it->tmp_line);
-			it->tmp_line = ft_strdup(it->line);
-		}
+		tmp = (it->i - it->offset);
+		replace_char(it, tmp);
+		move_right(it);
+		ft_memdel((void**)&it->tmp_line);
+		it->tmp_line = ft_strdup(it->line);
+	}
+	else
+	{
+		parse_buffer(cmd, it);
+		multi_line_text(it);
+		move_right(it);
+		ft_memdel((void**)&it->tmp_line);
+		it->tmp_line = ft_strdup(it->line);
 	}
 }
 

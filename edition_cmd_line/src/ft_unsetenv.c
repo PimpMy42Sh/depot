@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void		ft_unsetenv(char **av, char **environ)
+void		ft_unsetenv(char **av, t_env *env)
 {
 	int		i;
 
@@ -23,6 +23,6 @@ void		ft_unsetenv(char **av, char **environ)
 		return ;
 	}
 	else
-		loop_remove_env(av, environ);
+		loop_remove_env(av, env);
 	ft_putchar('\n');
 }

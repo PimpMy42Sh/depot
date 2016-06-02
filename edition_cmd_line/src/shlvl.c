@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void		incremente_shlvl(char **environ, int i, char *lvl)
+static void		incremente_shlvl(t_env *env, int i, char *lvl)
 {
 	int		intlvl;
 	char	*tmp;
@@ -25,39 +25,40 @@ static void		incremente_shlvl(char **environ, int i, char *lvl)
 	else
 		intlvl = 1;
 	lvl = ft_itoa(intlvl);
-	tmp = ft_strdup(environ[i]);
+	tmp = ft_strdup(env->environ[i]);
 	tmp[6] = 0;
-	environ[i] = ft_strjoin(tmp, lvl);
+	ft_memdel((void**)&env->environ[i]);
+	env->environ[i] = ft_strjoin(tmp, lvl);
 	ft_memdel((void**)&tmp);
 	ft_memdel((void**)&lvl);
 }
 
-static void		create_shlvl(char **environ)
+static void		create_shlvl(t_env *env)
 {
 	int			i;
 
-	if (!environ[0])
+	if (!env->environ[0])
 		i = 0;
 	else
-		i = return_env_size(environ);
-	environ[i] = ft_strdup("SHLVL=1");
-	environ[i + 1] = 0;
+		i = return_env_size(env->environ);
+	env->environ[i] = ft_strdup("SHLVL=1");
+	env->environ[i + 1] = 0;
 }
 
-void			check_shlvl(char **environ)
+void			check_shlvl(t_env *env)
 {
 	int		i;
 	char	*charlvl;
 
 	i = 0;
 	charlvl = NULL;
-	while (environ[i])
+	while (env->environ[i])
 	{
-		if (!ft_strncmp(environ[i], "SHLVL", 5))
+		if (!ft_strncmp(env->environ[i], "SHLVL", 5))
 		{
-			charlvl = ft_strsub(environ[i], 6, ft_strlen(environ[i]));
+			charlvl = ft_strsub(env->environ[i], 6, ft_strlen(env->environ[i]));
 			if (charlvl)
-				incremente_shlvl(environ, i, charlvl);
+				incremente_shlvl(env, i, charlvl);
 			else
 				return ;
 			ft_memdel((void**)&charlvl);
@@ -65,5 +66,5 @@ void			check_shlvl(char **environ)
 		}
 		i++;
 	}
-	create_shlvl(environ);
+	create_shlvl(env);
 }

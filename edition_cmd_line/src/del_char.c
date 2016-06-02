@@ -47,32 +47,26 @@ void			del_char(t_it *it)
 {
 	int temp;
 
+	if ((it->i) % it->ws_col == (it->ws_col - 2))
+		move_right(it);
 	del_char_buffer(it, 1);
 	ft_memdel((void**)&it->tmp_line);
 	it->tmp_line = ft_strdup(it->line);
-	if (((it->i + 1) % it->ws_col) == 1)
-	{
-		tputs(tgetstr("le", NULL), 0, my_putchar);
-		tputs(tgetstr("dc", NULL), 0, my_putchar);
-		tputs(tgetstr("up", NULL), 0, my_putchar);
-		tputs(tgetstr("cr", NULL), 0, my_putchar);
-		temp = it->ws_col;
-		while (temp--)
-			tputs(tgetstr("nd", NULL), 0, my_putchar);
-		it->i--;
-	}
-	else
-	{
-		move_left(it);
-		tputs(tgetstr("dc", NULL), 0, my_putchar);
-	}
-	//ft_yolo(it->i, it);
-	multi_line_text(it, 1);
+	move_left(it);
+	//tputs(tgetstr("dc", NULL), 0, my_putchar);
+	multi_line_text(it);
 }
 
 void			del_current(t_it *it)
 {
-	tputs(tgetstr("dc", NULL), 0, my_putchar);
+	if (!it->line[0])
+	{
+		ft_putchar('\n');
+		exit(0);
+	}
+	//tputs(tgetstr("dc", NULL), 0, my_putchar);
 	del_char_buffer(it, 0);
-	multi_line_text(it, 1);
+	multi_line_text(it);
+	if (((ft_strlen(it->line) + it->offset) % it->ws_col == (it->ws_col - 1)))
+		move_right(it);
 }

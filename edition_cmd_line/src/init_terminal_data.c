@@ -52,12 +52,19 @@ static int		init_termios_struct(t_tty *tty)
 int				init_terminal_data(t_tty *tty)
 {
 	char			*name_term;
+	char			*tmp;
 	int				success;
 
 	name_term = NULL;
+	tmp = NULL;
 	if (!(name_term = getenv("TERM")))
-		name_term = ft_strdup(TERM_ENV);
+	{
+		tmp = ft_strdup(TERM_ENV);
+		name_term = tmp;
+	}
 	success = tgetent(NULL, name_term);
+	if (tmp)
+		ft_memdel((void**)&tmp);
 	if (handle_success(success))
 		return (1);
 	if (init_termios_struct(tty))

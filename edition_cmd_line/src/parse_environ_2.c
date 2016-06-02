@@ -34,7 +34,11 @@ void			replace_item(t_norme *flags, char *env, char **av, int indice)
 	while (flags->copy[i])
 	{
 		if (!ft_strncmp(flags->copy[i], env, ft_strlen(env)))
+		{
+			//ft_memdel((void**)&flags->copy[i]);
+			free(flags->copy[i]);
 			flags->copy[i] = ft_strdup(av[indice]);
+		}
 		i++;
 	}
 }

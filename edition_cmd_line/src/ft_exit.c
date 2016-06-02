@@ -12,13 +12,15 @@
 
 #include "minishell.h"
 
-void		ft_exit(char **av)
+void		ft_exit(char **av, t_env *env)
 {
 	int		i;
 
 	if (!av[1])
 	{
 		ft_putchar('\n');
+		free_double_array(env->environ);
+		ft_memdel((void**)&env);
 		exit(0);
 	}
 	else if (av[1] && !ft_isalpha(av[1][0]) && !av[2])
@@ -26,6 +28,8 @@ void		ft_exit(char **av)
 		i = ft_atoi(av[1]);
 		free_double_array(av);
 		ft_putchar('\n');
+		free_double_array(env->environ);
+		ft_memdel((void**)&env);
 		exit(i);
 	}
 	else if (av[2] || ft_isalpha(av[1][0]))

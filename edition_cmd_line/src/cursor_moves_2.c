@@ -68,7 +68,6 @@ void				del_char_buffer(t_it *it, int current)
 	ft_memdel((void**)&it->line);
 	if (!tmp)
 		return ;
-	ft_yolo(tmp, tmp2);
 	it->line = ft_strjoin(tmp, tmp2);
 	free_elements(tmp, tmp2, NULL, NULL);
 }
@@ -81,7 +80,7 @@ void			move_up_and_down(t_it *it)
 	i = 0;
 	if (it->buffer == ALT_UP)
 	{
-		if (it->i - it->ws_col > it->offset)
+		if (it->i - (it->ws_col + 1) > it->offset)
 		{
 			tputs(tgetstr("up", NULL), 0, my_putchar);
 			it->i -= it->ws_col;
@@ -91,7 +90,7 @@ void			move_up_and_down(t_it *it)
 	}
 	else if (it->buffer == ALT_DOWN)
 	{
-		if (it->i + it->ws_col < ft_strlen(it->line))
+		if (it->i + (it->ws_col + 1 ) < ft_strlen(it->line))
 		{
 			tputs(tparm(tgetstr("DO", NULL), 1), 0, my_putchar);
 			it->i += it->ws_col;

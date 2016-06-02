@@ -31,7 +31,7 @@ static void		split_cmd_suite(int i, char **environ, char **cmd)
 	resumed_terminal();
 }
 
-static void		split_cmd(t_it *it, char **environ)
+static void		split_cmd(t_it *it, t_env *env)
 {
 	char				**cmd;
 	int					i;
@@ -42,8 +42,8 @@ static void		split_cmd(t_it *it, char **environ)
 	history = create_elem(history, it->line);
 	while (cmd[i])
 	{
-		if (!(check_line(cmd[i], environ, 0)))
-			split_cmd_suite(i, environ, cmd);
+		if (!(check_line(cmd[i], env, 0)))
+			split_cmd_suite(i, env->environ, cmd);
 		i++;
 	}
 	if (!cmd[0])
@@ -53,7 +53,7 @@ static void		split_cmd(t_it *it, char **environ)
 	print_prompt();
 }
 
-static void		main_loop(char **environ)
+static void		main_loop(t_env *env)
 {
 	t_it			*it;
 
@@ -66,7 +66,7 @@ static void		main_loop(char **environ)
 		{
 			check_only_space(it);
 			if (it->line && ft_strlen(it->line))
-				split_cmd(it, environ);
+				split_cmd(it, env);
 			else
 			{
 				go_to_bottom(it);
@@ -80,19 +80,42 @@ static void		main_loop(char **environ)
 	}
 }
 
-int				main(int argc, char **argv, char **environ)
+void			init_copy_environ(t_env *env, char **environment)
+{
+	int		i;
+
+	if (!environment[0])
+	{
+		env->environ = ft_memalloc(sizeof(char*));
+		return ;
+	}
+	i = return_env_size(environment);
+	env->environ = ft_memalloc(sizeof(char*) * (i + 1));
+	i = 0;
+	while (environment[i])
+	{
+		env->environ[i] = ft_strdup(environment[i]);
+		i++;
+	}
+	env->environ[i] = NULL;
+}
+
+int				main(int argc, char **argv, char **environment)
 {
 	t_tty			*tty;
+	t_env			*env;
 
 	(void)argv;
 	(void)argc;
+	env = ft_memalloc(sizeof(struct s_env));
+	init_copy_environ(env, environment);
 	tty = ft_memalloc(sizeof(struct s_tty));
 	if (init_terminal_data(tty))
 		return (-1);
 	ft_stock_term(tty);
-	check_shlvl(environ);
+	check_shlvl(env);
 	print_prompt();
 	check_signal();
-	main_loop(environ);
+	main_loop(env);
 	return (0);
 }

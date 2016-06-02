@@ -15,6 +15,7 @@
 void			replace_item_environ(char **environ, char *env, char *av)
 {
 	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (environ[i])
@@ -22,30 +23,48 @@ void			replace_item_environ(char **environ, char *env, char *av)
 		if (!ft_strncmp(environ[i], env, ft_strlen(env))
 			&& environ[i][ft_strlen(env)] == '=')
 		{
+			ft_memdel((void**)&environ[i]);
 			environ[i] = ft_strjoin(env, "=");
 			if (av)
-				environ[i] = ft_strjoin(environ[i], av);
+			{
+				tmp = ft_strdup(environ[i]);
+				ft_memdel((void**)&environ[i]);
+				environ[i] = ft_strjoin(tmp, av);
+				ft_memdel((void**)&tmp);
+			}
 		}
 		i++;
 	}
 }
 
-void			append_item_environ(char **environ, char *env, char *av)
+void			append_item_environ(t_env *env, char *environ, char *av)
 {
 	int		i;
+	char	**new_environ;
+	char	*tmp;
 
+	i = return_env_size(env->environ);
+	new_environ = ft_memalloc(sizeof(char*) * (i + 2));
 	i = 0;
-	while (environ[i])
+	while (env->environ[i])
+	{
+		new_environ[i] = env->environ[i];
 		i++;
-	environ[i] = ft_strjoin(env, "=");
+	}
+	new_environ[i] = ft_strjoin(environ, "=");
 	if (av)
-		environ[i] = ft_strjoin(environ[i], av);
+	{
+		tmp = new_environ[i];
+		new_environ[i] = ft_strjoin(tmp, av);
+		ft_memdel((void**)&tmp);
+	}
 	i++;
-	environ[i] = ft_memalloc(sizeof(char) * 2);
-	environ[i] = 0;
+	new_environ[i] = NULL;
+	ft_memdel((void**)&env->environ);
+	env->environ = new_environ;
 }
 
-void			loop_remove_env(char **av, char **environ)
+void			loop_remove_env(char **av, t_env *env)
 {
 	int			i;
 	int			j;
@@ -55,12 +74,12 @@ void			loop_remove_env(char **av, char **environ)
 	j = 0;
 	while (av[i])
 	{
-		while (environ[j])
+		while (env->environ[j])
 		{
-			env_var = ft_strsplit(environ[j], '=');
+			env_var = ft_strsplit(env->environ[j], '=');
 			if (!ft_strncmp(env_var[0], av[i], ft_strlen(av[i])))
 			{
-				remove_env(environ, j);
+				remove_env(env->environ, j);
 				j--;
 			}
 			j++;

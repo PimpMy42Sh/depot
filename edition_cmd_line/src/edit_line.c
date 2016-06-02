@@ -48,54 +48,32 @@ char		*copy_end_line(int j, int i, char *line)
 	return (tmp);
 }
 
-void		ft_yolo(char *tmp, char *tmp2)
+void		ft_yolo(int i)
 {
 	tputs(tgetstr("sc", NULL), 0, my_putchar);
 	tputs(tgetstr("ho", NULL), 0, my_putchar);
 	tputs(tgetstr("ce", NULL), 0, my_putchar);
-	printf("tmp = %s\n", tmp);
-	printf("tmp2 = %s", tmp2);
+	printf("i = %d\n", i);
 	tputs(tgetstr("ce", NULL), 0, my_putchar);
-	printf("\n");
 	tputs(tgetstr("rc", NULL), 0, my_putchar);
 }
 
-void		multi_line_text(t_it *it, int move)
+void		multi_line_text(t_it *it)
 {
 	int	start;
 
-	start = it->i;
+	/*if ((it->i + 1) % it->ws_col == 0)
+		it->i -= 2;*/
+	start = ft_strlen(it->line) - (it->i - it->offset);
 	move_begin(it);
+	tputs(tgetstr("cd", NULL), 0, my_putchar);
 	ft_putstr(it->line);
-	it->i += ft_strlen(it->line);
-	move_n_char(it, KL, start);
-	/*start = it->i - it->offset; //it->ws_col - 1 - it->offset + ((it->i / it->ws_col) * it->ws_col);
-	if (!((it->i + 1) % it->ws_col) && move)
+	it->i = ft_strlen(it->line) + it->offset;
+	if ((it->i + 1) % it->ws_col == 0)
 	{
-		tputs(tgetstr("sf", NULL), 0, my_putchar);
-		if (start < ft_strlen(it->line))
-		{
-			tputs(tgetstr("sc", NULL), 0, my_putchar);
-			tputs(tgetstr("cr", NULL), 0, my_putchar);
-			tputs(tgetstr("cd", NULL), 0, my_putchar);
-			ft_putstr(it->line);
-			it->i += ft_strlen(it->line);
-			tputs(tgetstr("cd", NULL), 0, my_putchar);
-			tputs(tgetstr("rc", NULL), 0, my_putchar);
-		}
+		it->i--;
 	}
-	else
-	{
-		if (start < ft_strlen(it->line))
-		{
-			tputs(tgetstr("sc", NULL), 0, my_putchar);
-			tputs(tgetstr("cd", NULL), 0, my_putchar);
-			ft_putstr(it->line);
-			it->i += ft_strlen(it->line);
-			tputs(tgetstr("cd", NULL), 0, my_putchar);
-			tputs(tgetstr("rc", NULL), 0, my_putchar);
-		}
-	}*/
+	move_n_char(it, KL, start);
 }
 
 void		replace_char(t_it *it, int i)
@@ -116,8 +94,7 @@ void		replace_char(t_it *it, int i)
 	tmp2 = ft_strjoin(tmp, tmp3);
 	ft_memdel((void**)&it->line);
 	it->line = ft_strdup(tmp2);
-	ft_putchar(it->buffer);
-	multi_line_text(it, 1);
+	multi_line_text(it);
 	free_elements(tmp, tmp2, tmp3, NULL);
 }
 
@@ -135,14 +112,14 @@ static void	check_move(t_it *it)
 		move_one_word_left(it);
 	else if (it->buffer == ALT_RIGHT)
 		move_one_word_right(it);
-	else if ((it->buffer == ALT_UP) || (it->buffer == ALT_DOWN))
+	else if (!it->r_video && ((it->buffer == ALT_UP) || (it->buffer == ALT_DOWN)))
 		move_up_and_down(it);
 }
 
 void		edit_line(t_it *it)
 {
 	it->offset = return_offset() + 2;
-	if (it->buffer == CTRL_R)
+	if (it->buffer == CTRL_R && it->line)
 		put_reverse(it);
 	if (!it->r_video)
 	{
@@ -150,6 +127,8 @@ void		edit_line(t_it *it)
 			print_history(it);
 		if (it->buffer == CTRL_U && it->line)
 			cut_line(it);
+		if (it->buffer == CTRL_T && it->line)
+			copy_tmpline(it);
 		if (it->buffer == CTRL_P)
 			paste_line(it);
 		if (it->buffer == CTRL_L)
@@ -178,9 +157,7 @@ void		edit_line(t_it *it)
 		if (it->buffer == RET)
 			put_reverse(it);
 		if (it->buffer == U_cut)
-			ft_cut_select(it, 1);
-		if (it->buffer == DEL)
-			ft_cut_select(it, 0);
-	}		
+			ft_cut_select(it);
+	}
 	check_move(it);
 }

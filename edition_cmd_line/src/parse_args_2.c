@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int			check_line(char *line, char **environ, int boolean)
+int			check_line(char *line, t_env *env, int boolean)
 {
 	char	**av;
 
@@ -25,12 +25,12 @@ int			check_line(char *line, char **environ, int boolean)
 		free_double_array(av);
 		return (1);
 	}
-	check_tilde_and_dollar(environ, av, boolean);
-	map_environ(environ);
+	check_tilde_and_dollar(env->environ, av, boolean);
+	map_environ(env->environ);
 	if (!(ft_strcmp(av[0], "cd")) || !(ft_strcmp(av[0], "setenv")) ||
 			!(ft_strcmp(av[0], "unsetenv")) || !(ft_strcmp(av[0], "exit"))
 			|| !ft_strcmp(av[0], "env"))
-		return (check_builtins(av, environ));
+		return (check_builtins(av, env));
 	free_double_array(av);
 	return (0);
 }

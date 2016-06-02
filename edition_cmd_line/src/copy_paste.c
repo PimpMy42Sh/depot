@@ -25,7 +25,13 @@ void		cut_line(t_it *it)
 		i++;
 	}
 	tputs(tgetstr("cd", NULL), 0, my_putchar);
-	it->line = NULL;
+	ft_memdel((void**)&it->line);
+}
+
+void		copy_tmpline(t_it *it)
+{
+	ft_memdel((void**)&it->tmp_buffer);
+	it->tmp_buffer = ft_strdup(it->line);
 }
 
 static void	paste_existing_line(t_it *it)
@@ -43,11 +49,9 @@ static void	paste_existing_line(t_it *it)
 	ft_strncpy(tmp, it->line, i);
 	tmp2 = ft_strsub(it->line, i, ft_strlen(it->line));
 	tmp3 = ft_strjoin(tmp, it->tmp_buffer);
-	//ft_yolo(tmp, tmp3);
 	ft_memdel((void**)&it->line);
 	it->line = ft_strjoin(tmp3, tmp2);
 	free_elements(tmp, tmp2, tmp3, NULL);
-	//ft_yolo(it->line, it->tmp_buffer);
 }
 
 void		paste_line(t_it *it)
@@ -60,9 +64,6 @@ void		paste_line(t_it *it)
 		it->line = ft_strdup(it->tmp_buffer);
 	else
 		paste_existing_line(it);
-	multi_line_text(it, 0);
-	if (it->i - it->offset == ft_strlen(it->line))
-		move_n_char(it, KR, ft_strlen(it->tmp_buffer) + 1);
-	else
-		move_n_char(it, KR, ft_strlen(it->tmp_buffer));
+	multi_line_text(it);
+	move_n_char(it, KR, ft_strlen(it->tmp_buffer));
 }

@@ -47,6 +47,7 @@
 # define CTRL_P		16
 # define CTRL_R		18
 # define CTRL_L		12
+# define CTRL_T		20
 # define U_cut		117
 # define MAX_SIZE	1
 # define ALT_LEFT	17465
@@ -75,6 +76,11 @@ typedef struct		s_tty
 {
 	struct termios	term;
 }					t_tty;
+
+typedef struct		s_env
+{
+	char			**environ;
+}					t_env;
 
 typedef struct		s_it
 {
@@ -116,14 +122,14 @@ void				no_such_file(char *path);
 /*
 **	builtins
 */
-int					ft_setenv(char **av, char **environ);
-void				ft_unsetenv(char **av, char **environ);
-int					ft_cd(char **av, char **environ);
+int					ft_setenv(char **av, t_env *env);
+void				ft_unsetenv(char **av, t_env *env);
+int					ft_cd(char **av, t_env *env);
 int					ft_env(char **av, char **environ);
 void				remove_flags(char **av, t_norme *flags);
 void				check_variables(t_norme *flags, char **av, char **environ);
 void				copy_environ(char **av, char **environ, t_norme *flags);
-void				ft_exit(char **av);
+void				ft_exit(char **av, t_env *env);
 char				*return_pwd(void);
 
 /*
@@ -142,7 +148,7 @@ void				free_cmd(char **cmd);
 void				parse_arguments(char **environ, char *line, int boolean);
 void				check_tilde_and_dollar(char **environ, char **av,
 	int boolean);
-int					check_builtins(char **av, char **environ);
+int					check_builtins(char **av, t_env *env);
 void				replace_envrion_suite_2(char *ret, char *search,
 	t_norme *norme, char **av);
 char				*parse_search(char *ret);
@@ -155,15 +161,15 @@ void				convert_tab(char *str);
 void				remove_env(char **av, int indice);
 int					return_env_indice(char **environ, char *env);
 char				*return_env(char **environ, char *env);
-void				move_old_and_pwd(char **environ, char *old, char *pwd);
+void				move_old_and_pwd(t_env *env, char *old, char *pwd);
 void				map_environ(char **environ);
 char				*return_variable(char *str);
 void				replace_item(t_norme *flags, char *env, char **av,
 	int indice);
 void				print_env(char **environ);
-void				loop_remove_env(char **av, char **environ);
+void				loop_remove_env(char **av, t_env *env);
 void				replace_item_environ(char **environ, char *env, char *av);
-void				append_item_environ(char **environ, char *env, char *av);
+void				append_item_environ(t_env *env, char *environ, char *av);
 int					return_env_size(char **environ);
 void				replace_char(t_it *it, int i);
 
@@ -178,8 +184,8 @@ void				resumed_terminal(void);
 /*
 **	parser
 */
-int					check_line(char *line, char **environ, int boolean);
-char				*append_set_path(char *cmd);
+int					check_line(char *line, t_env *env, int boolean);
+char				**append_set_path(char *cmd);
 void				init_struct(t_norme *norme);
 void				parse_line(t_it *it);
 void				edit_line(t_it *it);
@@ -199,15 +205,16 @@ void				move_one_word_right(t_it *it);
 t_it				*init_it_struct(void);
 void				del_char_buffer(t_it *it, int current);
 void				del_current(t_it *it);
-void				multi_line_text(t_it *it, int move);
+void				multi_line_text(t_it *it);
 void				move_up_and_down(t_it *it);
 void				move_n_char(t_it *it, int direction, int n);
 
 /*
 **	copy paste
 */
-void				ft_cut_select(t_it *it, int save);
+void				ft_cut_select(t_it *it);
 void				cut_line(t_it *it);
+void				copy_tmpline(t_it *it);
 void				paste_line(t_it *it);
 void				put_reverse(t_it *it);
 
@@ -227,11 +234,12 @@ t_history			*ft_stock_list(t_history *list);
 */
 int					my_putchar(int c);
 void				print_prompt(void);
-void				check_shlvl(char **environ);
+void				check_shlvl(t_env *env);
 void				check_only_space(t_it *it);
 t_it				*ft_stock_it(t_it *it);
 void				go_to_bottom(t_it *it);
 int					ft_abs(int i);
+char				**malloc_environ(char **environ, char *var);
 
 /*
 **	Signals
@@ -240,5 +248,5 @@ void				rec_size(t_it *it);
 void				check_signal(void);
 
 //	DEBUG
-void				ft_yolo(char *tmp, char *tmp2);
+void				ft_yolo(int i);
 #endif

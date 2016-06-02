@@ -57,6 +57,8 @@ void			check_variables(t_norme *flags, char **av, char **environ)
 {
 	int		i;
 	int		j;
+	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
 	if (!flags->copy)
@@ -71,10 +73,15 @@ void			check_variables(t_norme *flags, char **av, char **environ)
 	{
 		if (av[i][0] != '=' && ft_strchr(av[i] + 1, '='))
 		{
-			if (return_env(flags->copy, return_variable(av[i])))
-				replace_item(flags, return_variable(av[i]), av, i);
+			tmp = return_variable(av[i]);
+			if ((tmp2 = return_env(flags->copy, tmp)))
+			{
+				replace_item(flags, tmp, av, i);
+				ft_memdel((void**)&tmp2);
+			}
 			else
 				flags->copy[j++] = ft_strdup(av[i]);
+			ft_memdel((void**)&tmp);
 		}
 		i++;
 	}

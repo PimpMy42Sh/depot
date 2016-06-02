@@ -26,25 +26,25 @@ static int			ft_check_equal(char *av)
 	return (0);
 }
 
-static void			ft_setenv_suite(char **av, char **environ)
+static void			ft_setenv_suite(char **av, t_env *env)
 {
 	int		i;
 
-	i = return_env_indice(environ, av[1]);
+	i = return_env_indice(env->environ, av[1]);
 	if (i >= 0)
-		replace_item_environ(environ, av[1], av[2]);
+		replace_item_environ(env->environ, av[1], av[2]);
 	else
-		append_item_environ(environ, av[1], av[2]);
+		append_item_environ(env, av[1], av[2]);
 }
 
-int					ft_setenv(char **av, char **environ)
+int					ft_setenv(char **av, t_env *env)
 {
 	int		i;
 
 	i = return_env_size(av);
 	if (i == 1)
 	{
-		print_env(environ);
+		print_env(env->environ);
 		return (1);
 	}
 	else if (i >= 4)
@@ -57,7 +57,7 @@ int					ft_setenv(char **av, char **environ)
 		setenv_error(0);
 		return (1);
 	}
-	ft_setenv_suite(av, environ);
+	ft_setenv_suite(av, env);
 	ft_putchar('\n');
 	return (1);
 }

@@ -36,9 +36,7 @@ static void				ctrl_c(void)
 	if (list)
 	{
 		list = go_to_end(history);
-		printf("list = %s\n", list->cmd);
 		list = list->next;
-		//printf("list = %s\n", list->cmd);
 		it->first = 1;
 		ft_stock_it(it);
 		ft_stock_list(list);

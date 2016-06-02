@@ -52,13 +52,18 @@ void			move_right(t_it *it)
 	int temp;
 
 	it->i++;
-	if (it->i > it->offset + (int)ft_strlen(it->line))
+	if (it->i > it->offset + ft_strlen(it->line))
 	{
 		it->i -= 1;
 		return ;
 	}
 	if (it->r_video && it->i > it->saved_i)
 	{
+		if ((it->i - it->offset) == ft_strlen(it->line))
+		{
+			it->i--;
+			return ;
+		}
 		ft_putchar(it->line[(it->i - return_offset() - 3)]);
 		tputs(tgetstr("le", NULL), 0, my_putchar);
 	}
@@ -81,6 +86,7 @@ void			move_right(t_it *it)
 void			move_begin(t_it *it)
 {
 	int	last_i;
+	int	tmp = it->buffer;
 
 	last_i = 0;
 	it->buffer = ALT_UP;
@@ -89,4 +95,5 @@ void			move_begin(t_it *it)
 		last_i = it->i;
 		move_up_and_down(it);
 	}
+	it->buffer = tmp;
 }

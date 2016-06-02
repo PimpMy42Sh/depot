@@ -12,22 +12,22 @@
 
 #include "minishell.h"
 
-int		check_builtins(char **av, char **environ)
+int		check_builtins(char **av, t_env *env)
 {
 	int		i;
 
 	i = 1;
 	if (av[0] && !ft_strcmp(av[0], "exit"))
-		ft_exit(av);
+		ft_exit(av, env);
 	if (av[0] && !ft_strcmp(av[0], "cd"))
-		ft_cd(av, environ);
+		ft_cd(av, env);
 	if (av[0] && !ft_strcmp(av[0], "setenv"))
-		ft_setenv(av, environ);
+		ft_setenv(av, env);
 	if (av[0] && !ft_strcmp(av[0], "unsetenv"))
-		ft_unsetenv(av, environ);
+		ft_unsetenv(av, env);
 	if (!ft_strcmp(av[0], "env"))
 	{
-		i = ft_env(av, environ);
+		i = ft_env(av, env->environ);
 		resumed_terminal();
 	}
 	free_double_array(av);

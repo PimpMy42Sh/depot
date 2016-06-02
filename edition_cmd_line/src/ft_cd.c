@@ -18,7 +18,7 @@ static int		cd_too_many_args(void)
 	return (1);
 }
 
-static int		move_to_env_suite(char **environ, char *cat,
+static int		move_to_env_suite(t_env *env, char *cat,
 		char *pwd, char *oldpwd)
 {
 	char	*tmp;
@@ -26,14 +26,14 @@ static int		move_to_env_suite(char **environ, char *cat,
 	tmp = NULL;
 	if (cat)
 	{
-		tmp = ft_strjoin(pwd, cat);
-		pwd = ft_strdup(tmp);
+		tmp = pwd;
+		pwd = ft_strjoin(pwd, cat);
 		ft_memdel((void**)&tmp);
 	}
 	if (pwd && chdir(pwd) == 0)
 	{
-		move_old_and_pwd(environ, oldpwd, pwd);
-		free_elements(NULL, cat, pwd, NULL);
+		move_old_and_pwd(env, oldpwd, pwd);
+		free_elements(pwd, cat, NULL, NULL);
 		return (0);
 	}
 	else
@@ -44,7 +44,7 @@ static int		move_to_env_suite(char **environ, char *cat,
 	}
 }
 
-static int		move_to_env(char **environ, char *env, char *av)
+static int		move_to_env(t_env *environ, char *env, char *av)
 {
 	char	*oldpwd;
 	char	*pwd;
@@ -54,6 +54,7 @@ static int		move_to_env(char **environ, char *env, char *av)
 
 	cat = NULL;
 	tmp = NULL;
+	pwd = NULL;
 	if (!ft_strcmp(env, "OLDPWD") && ft_strlen(av) > 0)
 	{
 		tmp = ft_strsub(av, 1, ft_strlen(av));
@@ -61,7 +62,7 @@ static int		move_to_env(char **environ, char *env, char *av)
 		av = ft_strdup(tmp);
 	}
 	oldpwd = getcwd(buffer, 256);
-	pwd = return_env(environ, env);
+	pwd = return_env(environ->environ, env);
 	if (!pwd)
 	{
 		cant_move_home();
@@ -70,10 +71,11 @@ static int		move_to_env(char **environ, char *env, char *av)
 		return (1);
 	}
 	ft_memdel((void**)&tmp);
+	ft_memdel((void**)&av);
 	return (move_to_env_suite(environ, cat, pwd, oldpwd));
 }
 
-static int		move_to_dir(char **environ, char *path)
+static int		move_to_dir(t_env *env, char *path)
 {
 	char	*oldpwd;
 	char	*pwd;
@@ -89,7 +91,7 @@ static int		move_to_dir(char **environ, char *path)
 	if (chdir(path) == 0)
 	{
 		pwd = getcwd(buffer, 256);
-		move_old_and_pwd(environ, oldpwd, pwd);
+		move_old_and_pwd(env, oldpwd, pwd);
 		ft_memdel((void**)&oldpwd);
 		return (0);
 	}
@@ -101,7 +103,7 @@ static int		move_to_dir(char **environ, char *path)
 	}
 }
 
-int				ft_cd(char **av, char **environ)
+int				ft_cd(char **av, t_env *env)
 {
 	int		i;
 
@@ -112,10 +114,10 @@ int				ft_cd(char **av, char **environ)
 	if (i >= 3)
 		return (cd_too_many_args());
 	if (!av[1] || (av[1] && !ft_strcmp(av[1], "--")))
-		return (move_to_env(environ, "HOME", av[1]));
+		return (move_to_env(env, "HOME", av[1]));
 	if (av[1][0] == '-')
-		return (move_to_env(environ, "OLDPWD", av[1]));
+		return (move_to_env(env, "OLDPWD", av[1]));
 	else
-		move_to_dir(environ, av[1]);
+		move_to_dir(env, av[1]);
 	return (0);
 }

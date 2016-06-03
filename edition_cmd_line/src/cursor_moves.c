@@ -26,6 +26,9 @@ void			move_n_char(t_it *it, int direction, int n)
 
 void			move_left(t_it *it)
 {
+	int		col;
+
+	col = it->ws_col - 1;
 	it->i--;
 	if (it->i < it->offset)
 	{
@@ -85,7 +88,17 @@ void			move_right(t_it *it)
 
 void			move_begin(t_it *it)
 {
-	int	last_i;
+	if ((it->i + 1) / it->ws_row == 1)
+	{
+		ft_yolo(it->i, it->ws_col, 0);
+		tputs(tgetstr("rc", NULL), 0, my_putchar);
+		tputs(tgetstr("up", NULL), 0, my_putchar);
+		tputs(tgetstr("sc", NULL), 0, my_putchar);
+	}
+	it->i = it->offset;
+
+
+	/*int	last_i;
 	int	tmp = it->buffer;
 
 	last_i = 0;
@@ -95,5 +108,5 @@ void			move_begin(t_it *it)
 		last_i = it->i;
 		move_up_and_down(it);
 	}
-	it->buffer = tmp;
+	it->buffer = tmp;*/
 }

@@ -85,6 +85,7 @@ typedef struct		s_env
 typedef struct		s_it
 {
 	int				i;
+	int				size;
 	int				saved_i;
 	int				first;
 	int				buffer;

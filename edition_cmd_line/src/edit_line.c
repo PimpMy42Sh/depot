@@ -48,79 +48,31 @@ char		*copy_end_line(int j, int i, char *line)
 	return (tmp);
 }
 
-void		ft_yolo(int i, int j, int k)
+void		ft_yolo(int i)
 {
 	tputs(tgetstr("sc", NULL), 0, my_putchar);
 	tputs(tgetstr("ho", NULL), 0, my_putchar);
 	tputs(tgetstr("ce", NULL), 0, my_putchar);
-	printf("\ni = %d     ws_col = %d et     calcul = %d    \n", i, j, k);
+	printf("i = %d\n", i);
 	tputs(tgetstr("ce", NULL), 0, my_putchar);
 	tputs(tgetstr("rc", NULL), 0, my_putchar);
-}
-
-void		go_to_prompt(t_it *it)
-{
-	int		test;
-
-	test = (it->i / it->ws_col);
-	if (test == 1)
-		tputs(tgetstr("up", NULL), 0, my_putchar);
-	tputs(tgetstr("cr", NULL), 0, my_putchar);
-	test = it->offset + 1;
-	while (test)
-	{
-		tputs(tgetstr("nd", NULL), 0, my_putchar);
-		test--;
-	}
-}
-
-void		rec_begin(void)
-{
-	tputs(tgetstr("sc", NULL), 0, my_putchar);
 }
 
 void		multi_line_text(t_it *it)
 {
 	int	start;
-	int	test;
-	int	test2;
 
+	/*if ((it->i + 1) % it->ws_col == 0)
+		it->i -= 2;*/
 	start = ft_strlen(it->line) - (it->i - it->offset);
-	//move_begin(it);
-
-
-	/*test = it->i < it->ws_col ? it->ws_col - it->i : it->i - it->ws_col;
-	test2 = test;
-	sleep(1);
-	while (test)
-	{
-		tputs(tgetstr("nd", NULL), 0, my_putchar);
-		test--;
-	}
-	while (test2)
-	{
-		tputs(tgetstr("le", NULL), 0, my_putchar);
-		test2--;
-	}*/
-	tputs(tgetstr("rc", NULL), 0, my_putchar);
-	//sleep(1);
+	move_begin(it);
 	tputs(tgetstr("cd", NULL), 0, my_putchar);
-	//sleep(1);
-
-
-	it->i = ft_strlen(it->line) + it->offset;	
-	//ft_yolo(it->i, it->ws_col, (it->i + 1) % it->ws_col);
-	if ((it->i + 1) % it->ws_col == 1)
-	{
-	//sleep(1);
-
-		tputs(tgetstr("up", NULL), 0, my_putchar);
-	//sleep(1);
-		
-		tputs(tgetstr("sc", NULL), 0, my_putchar);
-	}
-	//	go_to_prompt(it);
 	ft_putstr(it->line);
+	it->i = ft_strlen(it->line) + it->offset;
+	if ((it->i + 1) % it->ws_col == 0)
+	{
+		it->i--;
+	}
 	move_n_char(it, KL, start);
 }
 

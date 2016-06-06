@@ -248,6 +248,5 @@ void				rec_size(t_it *it);
 void				check_signal(void);
 
 //	DEBUG
-void				ft_yolo(int i, int j, int k);
-void				rec_begin(void);
+void				ft_yolo(int i);
 #endif

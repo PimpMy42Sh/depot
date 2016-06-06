@@ -26,9 +26,9 @@ void			move_n_char(t_it *it, int direction, int n)
 
 void			move_left(t_it *it)
 {
-	int		col;
+	int lol;
 
-	col = it->ws_col - 1;
+	lol = 0;
 	it->i--;
 	if (it->i < it->offset)
 	{
@@ -47,7 +47,17 @@ void			move_left(t_it *it)
 		tputs(tgetstr("mr", NULL), 0, my_putchar);
 		tputs(tgetstr("le", NULL), 0, my_putchar);
 	}
-	tputs(tgetstr("le", NULL), 0, my_putchar);
+	/*if ((((it->i + 2) % it->ws_col) == 0) && !ft_isprint(it->buffer))
+	{
+		tputs(tgetstr("up", NULL), 0, my_putchar);
+		while (lol < it->ws_col - 1)
+		{
+			lol++;
+			tputs(tgetstr("nd", NULL), 0, my_putchar);
+		}
+	}
+	else*/
+		tputs(tgetstr("le", NULL), 0, my_putchar);
 }
 
 void			move_right(t_it *it)
@@ -88,17 +98,7 @@ void			move_right(t_it *it)
 
 void			move_begin(t_it *it)
 {
-	if ((it->i + 1) / it->ws_row == 1)
-	{
-		ft_yolo(it->i, it->ws_col, 0);
-		tputs(tgetstr("rc", NULL), 0, my_putchar);
-		tputs(tgetstr("up", NULL), 0, my_putchar);
-		tputs(tgetstr("sc", NULL), 0, my_putchar);
-	}
-	it->i = it->offset;
-
-
-	/*int	last_i;
+	int	last_i;
 	int	tmp = it->buffer;
 
 	last_i = 0;
@@ -106,7 +106,8 @@ void			move_begin(t_it *it)
 	while (it->i != last_i)
 	{
 		last_i = it->i;
-		move_up_and_down(it);
+		move_left(it);
+		//move_up_and_down(it);
 	}
-	it->buffer = tmp;*/
+	it->buffer = tmp;
 }

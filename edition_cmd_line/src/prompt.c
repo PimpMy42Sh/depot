@@ -34,5 +34,4 @@ void		print_prompt(void)
 		ft_putstr("$> ");
 		ft_putstr(RESET);
 	}
-	rec_begin();
 }

@@ -71,7 +71,8 @@ void		multi_line_text(t_it *it)
 	it->i = ft_strlen(it->line) + it->offset;
 	if ((it->i + 1) % it->ws_col == 0)
 	{
-		it->i--;
+		//move_right(it);
+		//it->i--;
 	}
 	move_n_char(it, KL, start);
 }

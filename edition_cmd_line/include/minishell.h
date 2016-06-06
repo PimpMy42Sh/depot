@@ -55,7 +55,7 @@
 # define ALT_UP		16697
 # define ALT_DOWN	16953
 # define TERM_ENV	"xterm-256color"
-# define DOWN		"\x1b[1B"
+# define CURS_POS	"\x1b[6n"
 
 pid_t				g_father;
 

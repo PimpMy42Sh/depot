@@ -47,7 +47,7 @@ void			move_left(t_it *it)
 		tputs(tgetstr("mr", NULL), 0, my_putchar);
 		tputs(tgetstr("le", NULL), 0, my_putchar);
 	}
-	/*if ((((it->i + 2) % it->ws_col) == 0) && !ft_isprint(it->buffer))
+	if ((((it->i + 2) % it->ws_col) == 0) && !ft_isprint(it->buffer))
 	{
 		tputs(tgetstr("up", NULL), 0, my_putchar);
 		while (lol < it->ws_col - 1)
@@ -56,7 +56,7 @@ void			move_left(t_it *it)
 			tputs(tgetstr("nd", NULL), 0, my_putchar);
 		}
 	}
-	else*/
+	else
 		tputs(tgetstr("le", NULL), 0, my_putchar);
 }
 

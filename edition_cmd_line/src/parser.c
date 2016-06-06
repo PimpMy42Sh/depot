@@ -85,6 +85,19 @@ static void		write_buffer(t_it *it)
 	}
 }
 
+void			get_cursor_position(t_it *it)
+{
+	int		fd;
+	char	buffer[100];
+
+	fd = open("/dev/tty", O_RDWR);
+	ft_putstr_fd(CURS_POS, fd);
+	read(fd, buffer, 101);
+	printf("buffer = %s\n", buffer);
+	close(fd);
+
+}
+
 void			parse_line(t_it *it)
 {
 	char			cmd[2];
@@ -93,7 +106,10 @@ void			parse_line(t_it *it)
 	if (!it->i)
 		it->i = it->offset;
 	if (it->buffer >= ESP && it->buffer <= TILDE && !it->r_video)
+	{
+		//get_cursor_position(it);
 		write_buffer(it);
+	}
 	else
 		edit_line(it);
 }

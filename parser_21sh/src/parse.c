@@ -2,8 +2,7 @@
 /*
 **	A AJOUTER DANS LE HEADER
 */
-# include <libft/libft.h>
-# include <stdio.h>
+# include <parse.h>
 
 # define DOUBLE_CHEVRON_DROITE 1
 # define SIMPLE_CHEVRON_DROITE 2
@@ -36,7 +35,7 @@ void	add_cmd(t_list **ptr, t_list *new)
 {
 	t_list	*lst;
 
-	if ((lst = *ptr))
+	if ((lst = *ptr))	// ? //
 	{
 		while (lst->next)
 			lst = lst->next;
@@ -82,7 +81,7 @@ t_list 	*get_next_cmd(int *type, char **str)
 	while (**str && **str != ';' && *type == -1)
 	{
 		if ((*type = attribute_type(*str)) != -1)
-			*str += (*type == DOUBLE_CHEVRON_DROITE || *type == DOUBLE_CHEVRON_GAUCHE);
+			*str += (*type == DOUBLE_CHEVRON_DROITE || *type == DOUBLE_CHEVRON_GAUCHE); // ? //
 		else if (**str == ' ')
 		{
 			while (**str == ' ')
@@ -202,9 +201,9 @@ void	parse(char *str, char **environ)
 					else if (type == DOUBLE_CHEVRON_DROITE)
 						double_chevron_droite(args[0], args, filename, environ);
 					else if (type == SIMPLE_CHEVRON_GAUCHE)
-						;
+						chevron_gauche(args[0], args, filename, environ);
 					else if (type == DOUBLE_CHEVRON_GAUCHE)
-						;
+						double_chevron_gauche(args[0], args, filename, environ);
 					free(filename);
 				}
 				free(args);

@@ -1,0 +1,8 @@
+total 71$$
+-rwxr-xr-x  1 fjacquem  2015_paris  17580 Jun  7 18:03 21sh$$
+-rw-r--r--  1 fjacquem  2015_paris   1906 Jun  7 18:03 Makefile$$
+drwxr-xr-x  2 fjacquem  2015_paris   4096 Jun  7 11:20 include$$
+drwxr-xr-x  2 fjacquem  2015_paris   4096 Jun  7 18:03 libft$$
+drwxr-xr-x  2 fjacquem  2015_paris   4096 Jun  7 18:03 obj$$
+drwxr-xr-x  2 fjacquem  2015_paris   4096 Jun  7 17:42 src$$
+-rw-r--r--  1 fjacquem  2015_paris      0 Jun  7 18:04 test$$

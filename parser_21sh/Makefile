@@ -16,7 +16,9 @@ CXX = gcc
 
 NAME = 21sh
 
-FLAGS =
+MAIN = main_parser.c
+
+FLAGS = -Wall -Wextra -g
 
 SRC_PATH = ./src/
 
@@ -24,9 +26,10 @@ OBJ_PATH = ./obj/
 
 INC_PATH = ./include/
 
-LIB_PATH = ./libft
+LIB_PATH = ./libft/
 
-SRC_NAME = 	parse.c chevron_droite.c
+SRC_NAME = 	parse.c chevron_droite.c ft_pipes.c execution.c chevron_gauche.c\
+			parse_outils.c get_next_cmd.c $(MAIN)
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
@@ -42,7 +45,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	MAKE -C $(LIB_PATH)
-	$(CXX) $(FLAGS) -ltermcap $(LIB) $(LIB_NAME) $(LIBX_NAME) $(OBJ) -o $(NAME)
+	$(CXX) $(FLAGS) -ltermcap $(LIB) $(LIB_NAME) $(LIBX_NAME) $(INC) $(OBJ) -o $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null

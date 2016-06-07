@@ -17,7 +17,7 @@ int		chevron_gauche(char *path, char **args, char *filename, char **environ)
 	int		fd;
 	pid_t	child;
 
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(filename, O_RDWR | O_CREAT, 0644);
 	if (fd == -1)
 	{
 		write(2, "open fails\n", 11);

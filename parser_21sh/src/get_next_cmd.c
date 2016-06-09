@@ -63,7 +63,9 @@ t_list		*get_next_cmd(int *type, char **str)
 			*str +=
 			(*type == DOUBLE_CHEVRON_DROITE || *type == DOUBLE_CHEVRON_GAUCHE);
 		else
+		{
 			alloc_word = parse_token(str, &cpy, alloc_word, &lst);
+		}
 		(*str)++;
 	}
 	if (alloc_word != cpy)

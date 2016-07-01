@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <spliter.h>
+#include <redirections.h>
 
 /*
 **	Execute les agregateurs de file desc.

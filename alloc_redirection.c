@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <spliter.h>
+#include <redirections.h>
 /*
 void				initialize_redirections(t_term *t)
 {
@@ -22,6 +22,10 @@ void				initialize_redirections(t_term *t)
 	r.in = NULL;
 	t->redirs = r;
 }
+
+ou
+
+bzero(&r, sizeof(t_redirections));
 */
 
 void				use_agregator_redirection(t_redirections *r, int fd_in, int fd_out)

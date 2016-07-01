@@ -132,7 +132,7 @@ int				build_redirection(t_redirections *r, char **cmd)
 	int				type;
 
 	type = 0;
-	if ((ft_isalpha(**cmd) && (*((*cmd) + 1) == '<' || *((*cmd) + 1) == '>')) ||
+	if ((ft_isdigit(**cmd) && (*((*cmd) + 1) == '<' || *((*cmd) + 1) == '>')) ||
 		(**cmd == '<' || **cmd == '>'))
 	{
 		normalize_build_redirection(&fd, &type, cmd);

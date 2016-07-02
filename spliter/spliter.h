@@ -81,4 +81,12 @@ void				end_redirections(t_redirections *redirs);
 int					build_redirection(t_redirections *r, char **cmd);
 void				do_redirections(int cfg, t_redirections *redirs);
 
+/*
+**	split_cmd.c
+**
+**	Parser de commande
+*/
+t_command			get_next_command(char **cmd);
+void				exec_command(t_command *cmd, char **env);
+
 #endif

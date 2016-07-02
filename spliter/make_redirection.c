@@ -70,12 +70,6 @@ static inline void		do__redirection(int cfg, int fd, t_list *lst)
 */
 void					do_redirections(int cfg, t_redirections *redirs)
 {
-	t_list			*lst;
-	t_redirection	*r;
-	int				i;
-
-	lst = redirs->in;
-	i = 0;
 	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, STDIN_FILENO, redirs->in);
 	do__agregateur(STDIN_FILENO, redirs->fd_in);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, STDOUT_FILENO, redirs->out);

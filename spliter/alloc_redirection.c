@@ -11,18 +11,6 @@
 /* ************************************************************************** */
 
 #include <spliter.h>
-/*
-void				initialize_redirections(t_term *t)
-{
-	t_redirections	r;
-
-	r.fd_out = 0;
-	r.fd_in = 0;
-	r.out = NULL;
-	r.in = NULL;
-	t->redirs = r;
-}
-*/
 
 void				use_agregator_redirection(t_redirections *r, int fd_in, int fd_out)
 {

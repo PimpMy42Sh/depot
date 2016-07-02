@@ -4,18 +4,24 @@
 
 int					main(int argc, char **argv, char **env)
 {
-	char		*cmd = "/bin/ls -l | /bin/cat -e | /bin/cat -e > out";
+	char		*cmd = "/bin/ls -l | /bin/cat -e > out; cat out";
 	t_command	c;
+	char		**split;
 
-	while (*cmd)
+	split = ft_strsplit(cmd, ';');
+	while (*split)
 	{
-		c = get_next_command(&cmd);
-		printf("%s\n", cmd);
-		printf("=================\n");
-		if (c.pipeline)
-			exec_command(&c, env);
-		else
-			ft_bzero(&c, sizeof(t_command));
+			printf("(%s)\n", *split);
+		if (**split)
+		{
+			c = get_next_command(&*split);
+			if (c.pipeline)
+				exec_command(&c, env);
+			else
+				ft_bzero(&c, sizeof(t_command));
+			printf("=================\n");
+		}
+		split++;
 	}
 	return (0);
 	(void)argc;

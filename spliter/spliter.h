@@ -89,4 +89,14 @@ void				do_redirections(int cfg, t_redirections *redirs);
 t_command			get_next_command(char **cmd);
 void				exec_command(t_command *cmd, char **env);
 
+/*
+**	deps.c
+**
+**	Dependances
+*/
+char				*ft_strword(char *s);
+t_list				*ft_lstnew_noalloc(void *cnt, size_t cnt_size);
+int					ft_lstsize(t_list *t);
+
+
 #endif

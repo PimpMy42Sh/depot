@@ -70,6 +70,10 @@ t_command			get_next_command(char **cmd)
 	{
 		if (**cmd == '|')
 		{
+			if (*cpy)
+				ft_lstadd(&tmp, ft_lstnew_noalloc(cpy, ft_strlen(cpy)));
+			cpy = ft_strnew(1024);
+			str = (char*)cpy;
 			my_pipeline(&com.pipeline, &tmp);
 			(*cmd)++;
 		}
@@ -83,7 +87,7 @@ t_command			get_next_command(char **cmd)
 //			printf("adding arg: %s\n", cpy);
 			while (**cmd == ' ')
 				(*cmd)++;
-			if (*(str - 1))
+			if (*cpy)
 				ft_lstadd(&tmp, ft_lstnew_noalloc(cpy, ft_strlen(cpy)));
 			cpy = ft_strnew(1024);
 			str = (char*)cpy;

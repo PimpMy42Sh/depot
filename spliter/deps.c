@@ -48,7 +48,7 @@ t_list	*ft_lstnew_noalloc(void *cnt, size_t cnt_size)
 	return (lst);
 }
 
-int	ft_lstsize(t_list *t)
+int		ft_lstsize(t_list *t)
 {
 	int	n;
 
@@ -59,4 +59,17 @@ int	ft_lstsize(t_list *t)
 		t = t->next;
 	}
 	return (n);
+}
+
+void	delete_tab(char **t)
+{
+	int	i;
+
+	i = 0;
+	while (t[i])
+	{
+		free(t[i]);
+		i++;
+	}
+	free(t);
 }

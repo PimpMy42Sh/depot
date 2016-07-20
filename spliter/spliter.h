@@ -9,9 +9,14 @@
 # define PARSING_IS_CMDNAME 1
 # define PARSING_IS_ARG 2
 # define PARSING_IS_REDIR 3
-# include <libft/implemt.h>
+# include <libft/libft.h>
+# include <sys/wait.h>
+# include <dirent.h>
 # include <fcntl.h>
 # include <stdio.h>
+
+typedef struct dirent	t_dir;
+typedef struct stat		t_stat;
 
 /*
 **	Redirection data structure
@@ -56,18 +61,17 @@ typedef struct		s_pipeline
 */
 typedef struct		s_command
 {
-	int				fd[2];
+	int				mask;
 	int				split_type;
 	t_redirections	redirs;
 	t_list			*pipeline;
+	int				need_redir;
 }					t_command;
-
 /*
 **	alloc_redirections.c
 **
 **	Initialisation, allocation et liberation
 */
-//void				initialize_redirections(t_term *t);
 void				use_agregator_redirection(t_redirections *r, int fd_in, int fd_out);
 t_redirection		*new_redirection(t_redirections *t, int type, char *filename);
 void				end_redirection(t_redirection *r);
@@ -97,6 +101,6 @@ void				exec_command(t_command *cmd, char **env);
 char				*ft_strword(char *s);
 t_list				*ft_lstnew_noalloc(void *cnt, size_t cnt_size);
 int					ft_lstsize(t_list *t);
-
+void				delete_tab(char **t);
 
 #endif

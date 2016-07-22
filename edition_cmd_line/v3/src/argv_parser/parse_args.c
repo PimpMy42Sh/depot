@@ -6,13 +6,13 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 12:02:11 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:40:06 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:17:38 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char		**append_slash(char **env, char **environ)
+static char	**append_slash(char **env, char **environ)
 {
 	char		*path;
 	int			i;
@@ -32,7 +32,7 @@ static char		**append_slash(char **env, char **environ)
 	return (env);
 }
 
-static char		*check_path(char **path_env, char *cmd)
+static char	*check_path(char **path_env, char *cmd)
 {
 	int		i;
 	char	*ret;
@@ -76,7 +76,7 @@ char		*append_path(char *environ, char *av)
 	return (av);
 }
 
-int		check_env(char **environ)
+int			check_env(char **environ)
 {
 	int		i;
 
@@ -90,7 +90,7 @@ int		check_env(char **environ)
 	return (-1);
 }
 
-void			parse_arguments(char **environ, char *line, int boolean)
+void		parse_arguments(char **environ, char *line, int boolean)
 {
 	char		**av;
 

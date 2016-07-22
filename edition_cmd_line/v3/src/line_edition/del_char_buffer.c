@@ -6,7 +6,7 @@
 /*   By: Marco <Marco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 14:42:30 by Marco             #+#    #+#             */
-/*   Updated: 2016/07/19 14:43:47 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 16:54:45 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void				del_char_buffer(t_it *it, int current)
 	char	*tmp2;
 	int		i;
 	int		j;
-	int 	temp;
+	int		temp;
 
 	init_tmp(&tmp, &tmp2, it->line, it);
 	i = it->i - current;

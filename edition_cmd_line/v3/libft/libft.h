@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 13:24:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/04/25 10:41:11 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/07/21 17:20:05 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 
 typedef struct		s_list
 {
-	void						*content;
-	size_t					content_size;
-	char						*cmd;
-	char						*path;
-	int							indice;
-	struct 					s_list	*next;
-}									t_list;
+	void			*content;
+	size_t			content_size;
+	char			*cmd;
+	char			*path;
+	int				indice;
+	struct s_list	*next;
+}					t_list;
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));

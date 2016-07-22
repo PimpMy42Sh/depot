@@ -6,13 +6,13 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/19 11:19:25 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:12:16 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static void		split_cmd_suite(int i, char **environ, char **cmd)
+static void	split_cmd_suite(int i, char **environ, char **cmd)
 {
 	int			status;
 
@@ -31,7 +31,7 @@ static void		split_cmd_suite(int i, char **environ, char **cmd)
 	resumed_terminal();
 }
 
-static void		split_cmd(t_it *it, t_env *env)
+static void	split_cmd(t_it *it, t_env *env)
 {
 	char				**cmd;
 	int					i;
@@ -53,7 +53,7 @@ static void		split_cmd(t_it *it, t_env *env)
 	print_prompt();
 }
 
-static void		main_loop(t_env *env)
+static void	main_loop(t_env *env)
 {
 	t_it			*it;
 
@@ -81,7 +81,7 @@ static void		main_loop(t_env *env)
 	}
 }
 
-static void			init_copy_environ(t_env *env, char **environment)
+static void	init_copy_environ(t_env *env, char **environment)
 {
 	int		i;
 
@@ -104,7 +104,7 @@ static void			init_copy_environ(t_env *env, char **environment)
 		path_manager(env);
 }
 
-int				main(int argc, char **argv, char **environment)
+int			main(int argc, char **argv, char **environment)
 {
 	t_tty			*tty;
 	t_env			*env;

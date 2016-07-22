@@ -6,13 +6,13 @@
 /*   By: Marco <Marco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 15:27:33 by Marco             #+#    #+#             */
-/*   Updated: 2016/07/19 15:30:46 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 16:57:03 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void check_move_first_elem(t_it *it)
+void	check_move_first_elem(t_it *it)
 {
 	int size;
 	int i;
@@ -31,7 +31,7 @@ void check_move_first_elem(t_it *it)
 	}
 }
 
-void cursor_on_last_pos(t_it *it, int line)
+void	cursor_on_last_pos(t_it *it, int line)
 {
 	it->i--;
 	if (it->line[it->i] == ' ')

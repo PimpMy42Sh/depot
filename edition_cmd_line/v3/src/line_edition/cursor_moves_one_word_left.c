@@ -6,13 +6,13 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:51:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/19 15:31:03 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:06:52 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void		go_left(t_it *it)
+static void	go_left(t_it *it)
 {
 	if (it->i != 0)
 	{
@@ -26,7 +26,7 @@ static void		go_left(t_it *it)
 	}
 }
 
-void				move_one_word_left_1(t_it *it, int i)
+void		move_one_word_left_1(t_it *it, int i)
 {
 	while (it->line[i] && it->line[i] == ' ')
 	{
@@ -41,7 +41,7 @@ void				move_one_word_left_1(t_it *it, int i)
 	move_right(it);
 }
 
-void				move_one_word_left_2(t_it *it, int i)
+void		move_one_word_left_2(t_it *it, int i)
 {
 	while (it->line[i] && it->line[i] != ' ')
 	{
@@ -51,7 +51,7 @@ void				move_one_word_left_2(t_it *it, int i)
 	move_right(it);
 }
 
-static void		move_one_word_left_3(t_it *it, int i)
+static void	move_one_word_left_3(t_it *it, int i)
 {
 	while (it->line[i] && it->line[i] != ' ')
 	{
@@ -71,7 +71,7 @@ static void		move_one_word_left_3(t_it *it, int i)
 	move_right(it);
 }
 
-void			move_one_word_left(t_it *it)
+void		move_one_word_left(t_it *it)
 {
 	int		line;
 

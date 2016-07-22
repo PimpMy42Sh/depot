@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 14:49:45 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:39:32 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:18:02 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		command_not_find(char *arg)
 {
-	t_it 	*it;
+	t_it		*it;
 
 	it = ft_stock_it(NULL);
 	go_to_bottom(it);

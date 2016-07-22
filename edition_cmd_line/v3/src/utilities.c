@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:40:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/19 15:25:38 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:18:22 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		go_to_bottom(t_it *it)
 int			ft_abs(int i)
 {
 	if (i >= 0)
-		return(i);
+		return (i);
 	else
-		return(-i);
+		return (-i);
 }

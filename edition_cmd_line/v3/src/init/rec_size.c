@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:00:59 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:38:47 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:12:54 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		rec_size(t_it *it)
 {
-	t_it 	*rec;
+	t_it				*rec;
 	struct winsize		win;
 
 	ioctl(0, TIOCGWINSZ, &win);

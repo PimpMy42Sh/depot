@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 15:59:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/08 18:20:32 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/22 10:51:27 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,18 @@ static void		remove_variables(char **av)
 	}
 }
 
-void			check_variables(t_norme *flags, char **av, char **environ)
+static void 		env_loop(char **av, t_norme *flags, int j)
 {
-	int		i;
-	int		j;
 	char	*tmp;
 	char	*tmp2;
+	int 	i;
 
 	i = 0;
-	if (!flags->copy)
-	{
-		flags->copy = ft_memalloc(sizeof(char*) * (return_env_size(av) +
-				(return_env_size(environ))));
-		j = 0;
-	}
-	else
-		j = return_env_size(flags->copy);
+	tmp2 = NULL;
+	tmp = NULL;
 	while (av[i])
 	{
+		debug("LOOP", i);
 		if (av[i][0] != '=' && ft_strchr(av[i] + 1, '='))
 		{
 			tmp = return_variable(av[i]);
@@ -85,6 +79,22 @@ void			check_variables(t_norme *flags, char **av, char **environ)
 		}
 		i++;
 	}
+}
+
+void			check_variables(t_norme *flags, char **av,
+			char **environ)
+{
+	int		j;
+
+	if (!flags->copy)
+	{
+		flags->copy = ft_memalloc(sizeof(char*) * (return_env_size(av) +
+					(return_env_size(environ))));
+		j = 0;
+	}
+	else
+		j = return_env_size(flags->copy);
+	env_loop(av, flags, j);
 	flags->copy[j] = 0;
 	remove_variables(av);
 }

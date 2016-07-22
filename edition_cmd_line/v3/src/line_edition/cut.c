@@ -6,7 +6,7 @@
 /*   By: Marco <Marco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 16:49:27 by Marco             #+#    #+#             */
-/*   Updated: 2016/07/19 14:49:33 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 16:57:59 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		cut_line(t_it *it)
 	ft_memdel((void**)&it->line);
 }
 
-static void		cut_selection(int begin, int end, t_it *it)
+static void	cut_selection(int begin, int end, t_it *it)
 {
 	char	*first;
 	char	*second;
@@ -45,7 +45,7 @@ static void		cut_selection(int begin, int end, t_it *it)
 	ft_memdel((void**)&second);
 }
 
-void			ft_cut_select(t_it *it)
+void		ft_cut_select(t_it *it)
 {
 	int		length;
 	int		tmp;

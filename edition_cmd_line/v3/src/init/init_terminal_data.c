@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 10:48:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 16:10:45 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:13:26 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int				init_terminal_data(t_tty *tty)
 	return (0);
 }
 
-void				reset_term(void)
+void			reset_term(void)
 {
 	t_tty			*tty;
 

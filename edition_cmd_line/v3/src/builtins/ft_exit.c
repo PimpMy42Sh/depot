@@ -6,14 +6,13 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:18:11 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:31:47 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 16:51:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-static void exit_no_args(char **av, t_env *env)
+static void	exit_no_args(char **av, t_env *env)
 {
 	ft_putchar('\n');
 	if (env)
@@ -25,7 +24,7 @@ static void exit_no_args(char **av, t_env *env)
 	exit(0);
 }
 
-static void exit_with_args(char **av, t_env *env)
+static void	exit_with_args(char **av, t_env *env)
 {
 	int i;
 
@@ -41,7 +40,7 @@ static void exit_with_args(char **av, t_env *env)
 	exit(i);
 }
 
-static void exit_failure(char **av, t_env *env)
+static void	exit_failure(char **av, t_env *env)
 {
 	ft_putstr_fd(RED, 2);
 	ft_putchar('\n');
@@ -49,7 +48,7 @@ static void exit_failure(char **av, t_env *env)
 	ft_putstr_fd(RESET, 2);
 }
 
-void				ft_exit(char **av, t_env *env)
+void		ft_exit(char **av, t_env *env)
 {
 	if (!av || !av[1])
 		exit_no_args(av, env);

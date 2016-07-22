@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 18:43:17 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:39:41 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:11:31 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void			replace_item(t_norme *flags, char *env, char **av, int indice)
 	{
 		if (!ft_strncmp(flags->copy[i], env, ft_strlen(env)))
 		{
-			//ft_memdel((void**)&flags->copy[i]);
 			free(flags->copy[i]);
 			flags->copy[i] = ft_strdup(av[indice]);
 		}

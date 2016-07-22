@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 19:00:18 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/08 18:20:27 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/22 10:39:38 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ static int		move_to_env_suite(t_env *env, char *cat,
 	}
 }
 
-static int		move_to_env(t_env *environ, char *env, char *av)
+static int		move_to_env(t_env *environ, char *env, char *av, char *oldpwd)
 {
-	char	*oldpwd;
 	char	*pwd;
 	char	buffer[256];
 	char	*cat;
@@ -67,11 +66,10 @@ static int		move_to_env(t_env *environ, char *env, char *av)
 	{
 		cant_move_home();
 		move_old_and_pwd(environ, oldpwd, pwd);
-		free_elements(pwd, cat, tmp, NULL);
+		free_elements(pwd, cat, tmp, av);
 		return (1);
 	}
-	ft_memdel((void**)&tmp);
-	ft_memdel((void**)&av);
+	free_elements(tmp, av, NULL, NULL);
 	return (move_to_env_suite(environ, cat, pwd, oldpwd));
 }
 
@@ -103,10 +101,12 @@ static int		move_to_dir(t_env *env, char *path)
 	}
 }
 
-int				ft_cd(char **av, t_env *env)
+int			ft_cd(char **av, t_env *env)
 {
 	int		i;
+	char	*oldpwd;
 
+	oldpwd = NULL;
 	i = 0;
 	ft_putchar('\n');
 	while (av[i])
@@ -114,9 +114,9 @@ int				ft_cd(char **av, t_env *env)
 	if (i >= 3)
 		return (cd_too_many_args());
 	if (!av[1] || (av[1] && !ft_strcmp(av[1], "--")))
-		return (move_to_env(env, "HOME", av[1]));
+		return (move_to_env(env, "HOME", av[1], oldpwd));
 	if (av[1][0] == '-')
-		return (move_to_env(env, "OLDPWD", av[1]));
+		return (move_to_env(env, "OLDPWD", av[1], oldpwd));
 	else
 		move_to_dir(env, av[1]);
 	return (0);

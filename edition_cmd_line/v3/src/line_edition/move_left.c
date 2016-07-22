@@ -6,13 +6,13 @@
 /*   By: Marco <Marco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 09:31:55 by Marco             #+#    #+#             */
-/*   Updated: 2016/07/18 17:23:37 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:02:38 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int move_left_r_video(t_it *it)
+static int	move_left_r_video(t_it *it)
 {
 	if ((((it->offset + it->i + 3) % it->ws_col) == 0))
 	{
@@ -37,7 +37,7 @@ static int move_left_r_video(t_it *it)
 	return (0);
 }
 
-void			move_left(t_it *it)
+void		move_left(t_it *it)
 {
 	int counter;
 
@@ -50,7 +50,8 @@ void			move_left(t_it *it)
 		if (move_left_r_video(it))
 			return ;
 	}
-	if ((((it->offset + it->i + 2) % it->ws_col) == 0) && !ft_isprint(it->buffer))
+	if ((((it->offset + it->i + 2) % it->ws_col) == 0) &&
+			!ft_isprint(it->buffer))
 	{
 		tputs(tgetstr(UP, NULL), 0, my_putchar);
 		while (counter < it->ws_col - 1)
@@ -59,6 +60,6 @@ void			move_left(t_it *it)
 			tputs(tgetstr(RIGHT, NULL), 0, my_putchar);
 		}
 	}
-		else
-			tputs(tgetstr(LEFT, NULL), 0, my_putchar);
+	else
+		tputs(tgetstr(LEFT, NULL), 0, my_putchar);
 }

@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:48:46 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/19 11:57:55 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:10:10 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ static void		write_buffer(t_it *it)
 	{
 		parse_buffer(cmd, it);
 		multi_line_text(it);
-/*
-**  Verifie si on est en bout de ligne et met le curseur sur la ligne inferieure
-*/
 		if (!((it->offset + it->i + 2) % it->ws_col))
 			tputs(tgetstr(DOWN, NULL), 0, my_putchar);
 		ft_memdel((void**)&it->tmp_line);

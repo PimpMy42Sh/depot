@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 15:53:36 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/19 14:43:54 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:03:46 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** en remontant une ligne
 */
 
-static void check_delete_first_elem(t_it *it, int old_size)
+static void	check_delete_first_elem(t_it *it, int old_size)
 {
 	int size;
 
@@ -31,7 +31,7 @@ static void check_delete_first_elem(t_it *it, int old_size)
 		tputs(tparm(tgetstr(DOWN_MAJ, NULL), 1), 0, my_putchar);
 }
 
-void			del_char(t_it *it)
+void		del_char(t_it *it)
 {
 	int size;
 
@@ -45,7 +45,7 @@ void			del_char(t_it *it)
 	check_delete_first_elem(it, size);
 }
 
-void			del_current(t_it *it)
+void		del_current(t_it *it)
 {
 	int size;
 

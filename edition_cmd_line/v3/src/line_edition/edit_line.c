@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 11:10:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/19 12:45:44 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:09:28 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ void		multi_line_text(t_it *it)
 	tputs(tgetstr(CLEAR, NULL), 0, my_putchar);
 	ft_putstr(it->line);
 	it->i = it->len;
-	/*
-	**  Vérifie si la ligne à afficher fait la taille du nombre de colonnes
-	** 	et met le curseur sur la ligne inferieure si c'est le cas
-	*/
 	if (!ft_isprint(it->buffer) && it->buffer != CTRL_D && it->buffer != DEL)
 	{
 		if (!((it->offset + it->i + 1) % it->ws_col))
@@ -49,11 +45,12 @@ static void	next_check(t_it *it)
 		move_one_word_left(it);
 	else if (it->buffer == ALT_RIGHT)
 		move_one_word_right(it);
-	else if (!it->r_video && ((it->buffer == ALT_UP) || (it->buffer == ALT_DOWN)))
+	else if (!it->r_video && ((it->buffer == ALT_UP) ||
+				(it->buffer == ALT_DOWN)))
 		move_up_and_down(it);
 }
 
-static int no_reverse_video(t_it *it)
+static int	no_reverse_video(t_it *it)
 {
 	if (it->buffer == KU || it->buffer == KD || it->buffer == RET)
 		print_history(it);
@@ -92,11 +89,11 @@ void		edit_line(t_it *it)
 		else if (it->buffer == DEL && it->i > 0)
 			del_char(it);
 	}
-	else if(it->r_video)
+	else if (it->r_video)
 	{
 		if (it->buffer == RET)
 			put_reverse(it);
-		if (it->buffer == U_cut)
+		if (it->buffer == U_CUT)
 			ft_cut_select(it);
 	}
 	next_check(it);

@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/07/19 15:31:44 by Marco            ###   ########.fr        #
+#    Updated: 2016/07/21 16:23:57 by mfamilar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,60 +20,43 @@ FLAGS = -g
 
 SRC_PATH = ./src/
 
-BUILTINS_PATH = ./src/builtins/
-
-LINE_EDITION_PATH = ./src/line_edition/
-
-BONUS_PATH = ./src/bonus/
-
-ENV_PARSER_PATH = ./src/env_parser/
-
-ARGV_PARSER_PATH = ./src/argv_parser/
-
-ERRORS_PATH = ./src/errors/
-
-INIT_PATH = ./src/init/
-
 OBJ_PATH = ./obj/
 
 INC_PATH = ./include/
 
 LIB_PATH = ./libft
 
-SRC_NAME = 	main.c free.c  utilities.c get_next_line.c debug.c
+OBJ_NAME = $(addsuffix .o, $(basename $(SRC_NAME)))
 
-BUILTINS_NAME = ft_cd.c ft_env.c ft_env_suite.c ft_setenv.c ft_unsetenv.c\
-								ft_exit.c
+SRC_NAME = main.c free.c utilities.c get_next_line.c debug.c buitlins/ft_cd.c\
+buitlins/ft_env.c buitlins/ft_env_suite.c buitlins/ft_setenv.c\
+buitlins/ft_unsetenv.c buitlins/ft_exit.c line_edition/move_left.c\
+line_edition/move_right.c line_edition/copy_paste.c\
+line_edition/selection_mode.c init/signals.c init/rec_size.c\
+line_edition/cursor_moves_one_word_right.c line_edition/write_char.c\
+line_edition/edit_line.c line_edition/cursor_moves.c\
+line_edition/create_history.c line_edition/cut.c history.c\
+line_edition/del_char.c line_edition/insert_char.c\
+line_edition/del_char_buffer.c bonus/ft_hash.c\
+line_edition/check_move_one_word_left.c bonus/hash_tree.c\
+bonus/hachage.c bonus/prompt.c env_parser/parse_environ.c\
+env_parser/parse_environ_2.c env_parser/parse_environ_3.c\
+env_parser/path_manager.c argv_parser/parse_args.c bonus/shlvl.c\
+argv_parser/parse_args_2.c argv_parser/parse_args_3.c errors/errors.c\
+errors/errors_2.c errors/errors_3.c init/struct.c\
+init/init_terminal_data.c init/suspend_terminal.c\
+line_edition/cursor_moves_one_word_left.c\
 
-LINE_EDITION_NAME = move_left.c move_right.c copy_paste.c selection_mode.c\
-										cursor_moves_one_word_left.c cursor_moves_one_word_right.c\
-										write_char.c edit_line.c cursor_moves.c create_history.c\
-										cut.c history.c del_char.c insert_char.c del_char_buffer.c\
-										check_move_one_word_left.c\
-
-BONUS_NAME = hash_tree.c ft_hash.c hachage.c prompt.c shlvl.c
-
-ENV_PARSER_NAME = parse_environ.c parse_environ_2.c parse_environ_3.c\
-									path_manager.c
-
-ARGV_PARSER_NAME = parse_args.c parse_args_2.c parse_args_3.c
-
-ERRORS_NAME = errors.c errors_2.c errors_3.c
-
-INIT_NAME = struct.c init_terminal_data.c suspend_terminal.c signals.c\
-						rec_size.c
-
-OBJ_NAME = $(SRC_NAME:.c=.o) $(BUILTINS_NAME:.c=.o) $(LINE_EDITION_NAME:.c=.o)\
-						$(BONUS_NAME:.c=.o) $(ENV_PARSER_NAME:.c=.o) $(ERRORS_NAME:.c=.o)\
-						$(ARGV_PARSER_NAME:.c=.o) $(INIT_NAME:.c=.o)
 
 LIB_NAME = -lft
 
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
-OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
+OBJ = $(addprefix $(OBJ_PATH), $(notdir $(OBJ_NAME)))
 INC = $(addprefix -I, $(INC_PATH))
 INC += $(addprefix -I, $(LIB_PATH))
 LIB = $(addprefix -L, $(LIB_PATH))
+
+VPATH = $(shell find $(SRC_PATH) -type d)
 
 all: $(NAME)
 
@@ -81,35 +64,7 @@ $(NAME): $(OBJ)
 	MAKE -C $(LIB_PATH)
 	$(CXX) $(FLAGS) -ltermcap $(LIB) $(LIB_NAME) $(LIBX_NAME) $(OBJ) -o $(NAME)
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CXX) $(FLAGS) $(INC) -c $< -o $@
-
-$(OBJ_PATH)%.o: $(BUILTINS_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CXX) $(FLAGS) $(INC) -c $< -o $@
-
-$(OBJ_PATH)%.o: $(LINE_EDITION_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CXX) $(FLAGS) $(INC) -c $< -o $@
-
-$(OBJ_PATH)%.o: $(BONUS_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CXX) $(FLAGS) $(INC) -c $< -o $@
-
-$(OBJ_PATH)%.o: $(ENV_PARSER_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CXX) $(FLAGS) $(INC) -c $< -o $@
-
-$(OBJ_PATH)%.o: $(ARGV_PARSER_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CXX) $(FLAGS) $(INC) -c $< -o $@
-
-$(OBJ_PATH)%.o: $(ERRORS_PATH)%.c
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CXX) $(FLAGS) $(INC) -c $< -o $@
-
-$(OBJ_PATH)%.o: $(INIT_PATH)%.c
+$(OBJ_PATH)%.o: %.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
 	$(CXX) $(FLAGS) $(INC) -c $< -o $@
 

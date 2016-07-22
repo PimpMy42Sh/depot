@@ -6,13 +6,13 @@
 /*   By: Marco <Marco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 16:32:04 by Marco             #+#    #+#             */
-/*   Updated: 2016/07/19 11:58:28 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 16:57:35 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int			    return_offset(void)
+int				return_offset(void)
 {
 	char		*cwd;
 	char		buffer[256];
@@ -46,7 +46,7 @@ static char		*copy_end_line(int j, int i, char *line)
 	return (tmp);
 }
 
-void		    replace_char(t_it *it, char cmd[2])
+void			replace_char(t_it *it, char cmd[2])
 {
 	int		size;
 	char	*tmp2;

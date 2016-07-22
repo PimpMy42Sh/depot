@@ -6,19 +6,18 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 12:31:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:39:44 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/22 15:23:32 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void		move_old_and_pwd_suite(t_norme *norme, t_env *env,
+static void	move_old_and_pwd_suite(t_norme *norme, t_env *env,
 		char *old)
 {
 	char	*ret;
 	char	buffer[256];
 
-	ret = NULL;
 	if (return_env_indice(env->environ, "PWD"))
 		norme->current = 0;
 	if (norme->current || norme->previous)
@@ -43,7 +42,7 @@ static void		move_old_and_pwd_suite(t_norme *norme, t_env *env,
 	}
 }
 
-void			move_old_and_pwd(t_env *env, char *old, char *pwd)
+void		move_old_and_pwd(t_env *env, char *old, char *pwd)
 {
 	t_norme	*norme;
 
@@ -71,7 +70,7 @@ void			move_old_and_pwd(t_env *env, char *old, char *pwd)
 	free_struct(norme);
 }
 
-char			*return_env(char **environ, char *env)
+char		*return_env(char **environ, char *env)
 {
 	int		i;
 
@@ -81,12 +80,12 @@ char			*return_env(char **environ, char *env)
 		if (!ft_strncmp(environ[i], env, ft_strlen(env)))
 			return (ft_strsub(environ[i], ft_strlen(env) + 1,
 						ft_strlen(environ[i])));
-		i++;
+			i++;
 	}
 	return (NULL);
 }
 
-int				return_env_indice(char **environ, char *env)
+int			return_env_indice(char **environ, char *env)
 {
 	int		i;
 
@@ -94,14 +93,14 @@ int				return_env_indice(char **environ, char *env)
 	while (environ[i])
 	{
 		if (!ft_strncmp(environ[i], env, ft_strlen(env))
-			&& environ[i][ft_strlen(env)] == '=')
+				&& environ[i][ft_strlen(env)] == '=')
 			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-void			remove_env(char **av, int indice)
+void		remove_env(char **av, int indice)
 {
 	char		*tmp;
 

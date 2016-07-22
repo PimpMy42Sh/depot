@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/09 11:45:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:39:48 by Marco            ###   ########.fr       */
+/*   Updated: 2016/07/21 17:10:47 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		path_manager(t_env *env)
 		ft_strcat(path, ":");
 		ft_memdel((void**)&line);
 	}
-	close (fd);
+	close(fd);
 	ft_memdel((void**)&line);
 	path[ft_strlen(path) - 1] = 0;
 	append_item_environ(env, "PATH", path);

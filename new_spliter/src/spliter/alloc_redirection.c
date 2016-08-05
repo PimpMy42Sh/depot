@@ -14,6 +14,9 @@
 #include "../../include/minishell.h"
 #define HDOC_TMP_FILENAME "hdoc"
 
+/*
+**	J'ouvre un fd et le ferme pour sauvegarder son contenu
+*/
 void				hdoc(char *eof, int fd)
 {
 	t_it			*it;

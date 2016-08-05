@@ -36,9 +36,13 @@ static int			start_prgm(char **env, char **argv, int child)
 		return (0);
 	else
 	{
+		check_tilde_and_dollar(env, argv, 1);
 		argv[0] = hash_cmd(argv[0], env);
+		map_environ(env);
+		suspend_terminal();
 		execve(argv[0], argv, env);
-		write(2, "Command not found\n", 18);
+		command_not_find(argv[0]);
+		// write(2, "Command not found\n", 18);
 		exit(1);
 	}
 	return (WEXITSTATUS(child));

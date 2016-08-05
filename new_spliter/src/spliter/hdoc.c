@@ -8,20 +8,27 @@
 static void				hdoc(char *eof, int fd)
 {
 	t_it			*it;
+	int				delta;
 
 	it = init_it_struct();
 	it->eof = 1;
 	ft_putstr("> ");
 	while (read(0, &it->buffer, 4))
 	{
-		if (it->buffer == CTRL_D && !it->len)
+		if ((it->buffer == CTRL_D && !it->len) || !it->eof)
 			break ;
 		parse_line(it);
 		if (it->buffer == '\n')
 		{
+			move_begin(it);
+			delta = (it->len + 2) / it->ws_col;
+			while (delta)
+			{
+				tputs(tgetstr(DOWN, NULL), 0, my_putchar);
+				delta--;
+			}
 			if (it->line)
 			{
-				debug("hdoc", it->buffer);
 				if (!ft_strcmp(it->line, eof))
 					break ;
 				ft_putendl_fd(it->line, fd);

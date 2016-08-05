@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/05 17:11:13 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/05 18:53:53 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,5 +339,5 @@ void										check_signal(void);
 /*
 **	DEBUG
 */
-void										debug(char *str, char buffer);
+void										debug(char *str, int l);
 #endif

@@ -2,7 +2,7 @@
 
 #include "../include/minishell.h"
 
-void	debug(char *str, char buffer)
+void	debug(char *str, int l)
 {
 	t_it	*it;
 	int		fd;
@@ -14,13 +14,13 @@ void	debug(char *str, char buffer)
 	dprintf(fd, "\n---------------------\n");
 	// dprintf(fd, "line = %d\n", line);
 	// dprintf(fd, "itlen = %d\n", itlen);
-	// dprintf(fd, "nb lines = %d\n", l);
+	dprintf(fd, "nb lines = %d\n", l);
 	dprintf(fd, "i = %d\n", it->i);
 	// dprintf(fd, "nb_lines = %d\n", it->nb_current_line);
 	dprintf(fd, "str = %s\n", str);
 	// dprintf(fd, "str2 = %s\n", str2);
 	// dprintf(fd, "str3 = %s\n", str3);
-	dprintf(fd, "buffer = %c\n", buffer);
+	// dprintf(fd, "buffer = %c\n", buffer);
 	dprintf(fd, "---------------------\n");
 	close(fd);
 }

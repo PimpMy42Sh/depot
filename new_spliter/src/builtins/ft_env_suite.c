@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 15:59:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/22 10:51:27 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/05 17:37:32 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void 		env_loop(char **av, t_norme *flags, int j)
 	tmp = NULL;
 	while (av[i])
 	{
-		debug("LOOP", i);
 		if (av[i][0] != '=' && ft_strchr(av[i] + 1, '='))
 		{
 			tmp = return_variable(av[i]);

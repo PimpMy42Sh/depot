@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 15:53:36 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/21 17:03:46 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/08/05 17:07:54 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void		del_current(t_it *it)
 	int size;
 
 	size = it->len + it->offset;
+	if (it->eof && !it->len)
+		return ;
 	if (!it->line[0])
 		ft_exit(NULL, NULL);
 	del_char_buffer(it, 0);

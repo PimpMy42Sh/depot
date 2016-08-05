@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 11:10:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/04 16:23:58 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/05 16:59:27 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static void	next_check(t_it *it)
 
 static int	no_reverse_video(t_it *it)
 {
-	if (!it->eof)
-	{
 		if (it->buffer == KU || it->buffer == KD || it->buffer == RET)
 			print_history(it);
 		else if (it->buffer == CTRL_U && it->line)
@@ -72,13 +70,12 @@ static int	no_reverse_video(t_it *it)
 			if (it->line)
 				ft_putstr(it->line);
 		}
-	}
-	if (!it->line)
-	{
-		if (it->buffer == CTRL_D)
-			ft_exit(NULL, NULL);
-		return (1);
-	}
+		else if (!it->line)
+		{
+			if (it->buffer == CTRL_D)
+				ft_exit(NULL, NULL);
+			return (1);
+		}
 	return (0);
 }
 
@@ -88,8 +85,11 @@ void		edit_line(t_it *it)
 		put_reverse(it);
 	if (!it->r_video)
 	{
-		if (no_reverse_video(it))
-			return ;
+		if (!it->eof)
+		{
+			if (no_reverse_video(it))
+				return ;
+		}
 		if (it->buffer == CTRL_D && it->i >= 0)
 			del_current(it);
 		else if (it->buffer == DEL && it->i > 0)

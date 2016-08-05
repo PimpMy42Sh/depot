@@ -14,11 +14,14 @@ static void				hdoc(char *eof, int fd)
 	ft_putstr("> ");
 	while (read(0, &it->buffer, 4))
 	{
+		if (it->buffer == CTRL_D && !it->len)
+			break ;
 		parse_line(it);
 		if (it->buffer == '\n')
 		{
 			if (it->line)
 			{
+				debug("hdoc", it->buffer);
 				if (!ft_strcmp(it->line, eof))
 					break ;
 				ft_putendl_fd(it->line, fd);

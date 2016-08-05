@@ -18,7 +18,7 @@ CC = gcc
 
 NAME = libft.a
 
-INC = -I libft.h
+INC = -I .
 
 OBJ = $(SRC:.c=.o)
 
@@ -43,7 +43,7 @@ $(NAME): $(OBJ)
 	   ar rc $(NAME) $(OBJ)
 		  ranlib $(NAME)
 
-%.o:	%.c
+%.o: %.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 clean: 

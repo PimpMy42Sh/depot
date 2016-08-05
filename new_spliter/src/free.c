@@ -15,10 +15,8 @@
 void		free_env(char *path, char **path_env)
 {
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	ft_memdel((void**)&path);
 	while (path_env[i])
 	{

@@ -20,12 +20,10 @@ void		copy_tmpline(t_it *it)
 
 static void	paste_existing_line(t_it *it)
 {
-	int			j;
 	char		*tmp;
 	char		*tmp2;
 	char		*tmp3;
 
-	j = 0;
 	tmp = ft_memalloc(sizeof(char) * it->len + ft_strlen(it->tmp_buffer) + 1);
 	ft_strncpy(tmp, it->line, it->i);
 	tmp2 = ft_strsub(it->line, it->i, it->len);

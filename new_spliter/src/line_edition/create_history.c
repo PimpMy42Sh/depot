@@ -67,9 +67,7 @@ void					print_history(t_it *it)
 {
 	t_history			*history;
 	static t_history	*list = NULL;
-	int					i;
 
-	i = 0;
 	history = ft_stock_history(NULL);
 	if (!history)
 		return ;

@@ -18,7 +18,7 @@
 **	fd:		file desc. a dupliquer
 **	mask:	mot binaire (bit a 1 signifie un fd a dupliquer)
 */
-static inline void		do__agregateur(int fd, int mask)
+static void		do__agregateur(int fd, int mask)
 {
 	int	index;
 
@@ -40,7 +40,7 @@ static inline void		do__agregateur(int fd, int mask)
 **	fd:		file desc. a dupliquer
 **	lst:	liste de redirection
 */
-static inline void		do__redirection(int cfg, int fd, t_list *lst)
+static void		do__redirection(int cfg, int fd, t_list *lst)
 {
 	t_redirection	*r;
 
@@ -68,18 +68,12 @@ static inline void		do__redirection(int cfg, int fd, t_list *lst)
 **	cfg:			mask binaire (CFG_ALL_REDIRECTION_IN/OUT)
 **	redirections:	donnees de redirections
 */
-void					do_redirections(int cfg, t_redirections *redirs)
+void			do_redirections(int cfg, t_redirections *redirs)
 {
 	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, STDIN_FILENO, redirs->in);
 	do__agregateur(STDIN_FILENO, redirs->fd_in);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, STDOUT_FILENO, redirs->out);
 	do__agregateur(STDOUT_FILENO, redirs->fd_out);
-	while (redirs->hdoc)
-	{
-		write(0, redirs->hdoc->content, ft_strlen(redirs->hdoc->content));
-	//	printf("hdoc = %s", t->hdoc->content);
-		redirs->hdoc = redirs->hdoc->next;
-	}
 }
 
 
@@ -90,7 +84,7 @@ void					do_redirections(int cfg, t_redirections *redirs)
 **	type:	adresse du type
 **	cmd:	adresse de la ligne de commande
 */
-static inline void	normalize_build_redirection(int *fd, int *type, char **cmd)
+static void		normalize_build_redirection(int *fd, int *type, char **cmd)
 {
 	if (ft_isalpha(**cmd))
 	{
@@ -112,7 +106,7 @@ static inline void	normalize_build_redirection(int *fd, int *type, char **cmd)
 		*type = CHEVRON_GAUCHE;
 		(*cmd)++;
 	}
-	else
+	else if (**cmd == '>')
 	{
 		*type = CHEVRON_DROIT;
 		(*cmd)++;
@@ -139,10 +133,6 @@ int				build_redirection(t_redirections *r, char **cmd)
 		if (**cmd == '&')
 		{
 			printf("AGre\n");
-			if (type & 1)
-				use_agregator_redirection(r, fd, *((*cmd) + 1) - '0');
-			else
-				use_agregator_redirection(r, *((*cmd) + 1) - '0', fd);
 			cmd++;
 		}
 		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')

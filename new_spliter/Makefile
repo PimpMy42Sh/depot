@@ -63,15 +63,15 @@ VPATH = $(shell find $(SRC_PATH) -type d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	MAKE -C $(LIB_PATH)
-	$(CXX) $(FLAGS) -ltermcap $(LIB) $(LIB_NAME) $(OBJ) -o $(NAME)
+	make -C $(LIB_PATH)
+	$(CXX) $(FLAGS) $(LIB) $(LIB_NAME) $(OBJ) -o $(NAME) -lft -ltermcap 
 
 $(OBJ_PATH)%.o: %.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
 	$(CXX) $(FLAGS) $(INC) -c $< -o $@
 
 clean:
-	MAKE -C $(LIB_PATH) clean
+	make -C $(LIB_PATH) clean
 	rm -fv $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
 

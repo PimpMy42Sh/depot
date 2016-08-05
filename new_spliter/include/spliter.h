@@ -46,7 +46,7 @@ typedef struct		s_redirections
 	int				fd_in;
 	t_list			*out;
 	t_list			*in;
-	t_list 			*hdoc;
+	int				hdoc;
 }					t_redirections;
 
 typedef struct		s_pipeline

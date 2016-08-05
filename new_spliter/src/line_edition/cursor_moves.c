@@ -45,9 +45,6 @@ void	move_begin(t_it *it)
 
 void	move_up_and_down(t_it *it)
 {
-	int		i;
-
-	i = 0;
 	if (it->buffer == ALT_UP)
 	{
 		if (it->i - (it->ws_col + 1) > 0)

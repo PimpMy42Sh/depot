@@ -1,4 +1,5 @@
 #include <spliter.h>
+#include "../../include/minishell.h"
 
 /*
 **	Permet de determiner si on peux executer un ficher
@@ -35,6 +36,7 @@ static int			start_prgm(char **env, char **argv, int child)
 		return (0);
 	else
 	{
+		argv[0] = hash_cmd(argv[0], env);
 		execve(argv[0], argv, env);
 		write(2, "Command not found\n", 18);
 		exit(1);

@@ -9,7 +9,15 @@
 /*   Updated: 2016/03/30 00:49:31 by fjacquem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <spliter.h>
+
+void	init_norme_com(t_norme_com *n, char **cmd)
+{
+	n->cmd = cmd;
+	n->cpy = ft_strnew(1024);
+	n->str = (char*)n->cpy;
+}
 
 char	*ft_strword(char *s)
 {

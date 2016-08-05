@@ -7,9 +7,7 @@
 # define CFG_ALL_REDIRECTION_IN 1
 # define CFG_ALL_REDIRECTION_OUT 2
 # define CFG_ALL_REDIRECTION_ERR 4
-# define PARSING_IS_CMDNAME 1
-# define PARSING_IS_ARG 2
-# define PARSING_IS_REDIR 3
+# define HDOC_TMP_FILENAME "hdoc"
 # include "../libft/libft.h"
 # include <sys/wait.h>
 # include <dirent.h>
@@ -72,13 +70,24 @@ typedef struct		s_command
 	t_list			*pipeline;
 	int				need_redir;
 }					t_command;
+
+typedef struct		s_norme_com
+{
+	char			*str;
+	char			*cpy;
+	char			**cmd;
+}					t_norme_com;
+
 /*
 **	alloc_redirections.c
 **
 **	Initialisation, allocation et liberation
 */
-t_redirection		*new_redirection_err(t_redirections *t, int type, char *filename);
-t_redirection		*new_redirection(t_redirections *t, int type, char *filename);
+void				prepare_hdoc(t_redirections *t, t_redirection *r);
+t_redirection		*new_redirection_err(t_redirections *t, int type,
+					char *filename);
+t_redirection		*new_redirection(t_redirections *t, int type,
+					char *filename);
 void				end_redirection(t_redirection *r);
 void				end_redirections(t_redirections *redirs);
 
@@ -95,6 +104,8 @@ void				do_redirections(int cfg, t_redirections *redirs);
 **
 **	Parser de commande
 */
+int					is_a_redirection(char *cmd);
+char				**lst_to_tab(t_list *lst);
 t_command			get_next_command(char **cmd);
 void				exec_command(t_command *cmd, char **env);
 
@@ -103,6 +114,7 @@ void				exec_command(t_command *cmd, char **env);
 **
 **	Dependances
 */
+void				init_norme_com(t_norme_com *n, char **cmd);
 char				*ft_strword(char *s);
 t_list				*ft_lstnew_noalloc(void *cnt, size_t cnt_size);
 int					ft_lstsize(t_list *t);

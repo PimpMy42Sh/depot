@@ -1,13 +1,16 @@
 #include <spliter.h>
 
-//gcc *.c -I. libft.a -g -Wall -Wextra
+/*
+**	gcc *.c -I. libft.a -g -Wall -Wextra
+*/
 
 int					main(int argc, char **argv, char **env)
 {
-	char		*cmd = "/bin/ls -l | /bin/cat -e > out; /bin/cat < out";
+	char		*cmd;
 	t_command	c;
 	char		**split;
 
+	cmd = "/bin/ls -l | /bin/cat -e > out; /bin/cat < out";
 	split = ft_strsplit(cmd, ';');
 	while (*split)
 	{

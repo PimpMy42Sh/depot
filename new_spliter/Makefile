@@ -48,6 +48,7 @@ init/init_terminal_data.c init/suspend_terminal.c\
 line_edition/cursor_moves_one_word_left.c\
 spliter/alloc_redirection.c spliter/deps.c spliter/exec.c\
 spliter/make_redirection.c spliter/split_cmd.c\
+spliter/get_next_command.c spliter/hdoc.c\
 
 
 LIB_NAME = -lft

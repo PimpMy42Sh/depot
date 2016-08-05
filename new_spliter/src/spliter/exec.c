@@ -1,9 +1,10 @@
 #include <spliter.h>
 
 /*
-**	Permet de determiner si on peux executer un ficher 
+**	Permet de determiner si on peux executer un ficher
 */
-static inline int	test_access(char *name)
+
+static int			test_access(char *name)
 {
 	DIR	*d;
 	int	value;
@@ -27,7 +28,8 @@ static inline int	test_access(char *name)
 **
 **	En premier lieu, il faut ajouter la gestion du path
 */
-static inline int	start_prgm(char **env, char **argv, int child)
+
+static int			start_prgm(char **env, char **argv, int child)
 {
 	if (test_access(argv[0]))
 		return (0);
@@ -43,7 +45,8 @@ static inline int	start_prgm(char **env, char **argv, int child)
 /*
 **	By ayoub
 */
-static inline int	more_pipe(int in, int out, t_list *cmd, char **env)
+
+static int			more_pipe(int in, int out, t_list *cmd, char **env)
 {
 	pid_t	pid;
 
@@ -61,13 +64,14 @@ static inline int	more_pipe(int in, int out, t_list *cmd, char **env)
 		}
 		start_prgm(env, (char**)cmd->content, pid);
 	}
-	return(pid);
+	return (pid);
 }
 
 /*
 **	By ayoub
 */
-static inline int	ft_pipes(t_list *cmds, int child, char **env)
+
+static int			ft_pipes(t_list *cmds, int child, char **env)
 {
 	int		in;
 	int		fd[2];
@@ -77,14 +81,14 @@ static inline int	ft_pipes(t_list *cmds, int child, char **env)
 	{
 		while (cmds->next)
 		{
-			pipe (fd);
-			more_pipe (in, fd[1], cmds, env);
-			close (fd[1]);
+			pipe(fd);
+			more_pipe(in, fd[1], cmds, env);
+			close(fd[1]);
 			in = fd[0];
 			cmds = cmds->next;
 		}
 		if (in != 0)
-			dup2 (in, 0);
+			dup2(in, 0);
 		start_prgm(env, (char**)cmds->content, child);
 	}
 	return (0);
@@ -93,26 +97,31 @@ static inline int	ft_pipes(t_list *cmds, int child, char **env)
 /*
 **	Execute une commande
 */
+
 void				exec_command(t_command *cmd, char **env)
 {
 	t_list			*pipes;
 	t_list			*next;
 	pid_t			child;
 
-	if ((pipes = cmd->pipeline) && !(child = fork()))
+	if ((pipes = cmd->pipeline))
 	{
-		if (cmd->need_redir)
-			do_redirections(0, &cmd->redirs);
-		ft_pipes(pipes, child, env);
-		while (pipes)
+		child = fork();
+		if (!child)
 		{
-			next = pipes->next;
-			delete_tab((char**)pipes->content);
-			free(pipes);
-			pipes = next;
+			if (cmd->need_redir)
+				do_redirections(0, &cmd->redirs);
+			ft_pipes(pipes, child, env);
+			while (pipes)
+			{
+				next = pipes->next;
+				delete_tab((char**)pipes->content);
+				free(pipes);
+				pipes = next;
+			}
+			if (cmd->need_redir)
+				end_redirections(&cmd->redirs);
 		}
-		if (cmd->need_redir)
-			end_redirections(&cmd->redirs);
+		wait(NULL);
 	}
-	wait(NULL);
 }

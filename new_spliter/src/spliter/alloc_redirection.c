@@ -11,46 +11,12 @@
 /* ************************************************************************** */
 
 #include <spliter.h>
-#include "../../include/minishell.h"
-#define HDOC_TMP_FILENAME "hdoc"
 
-/*
-**	J'ouvre un fd et le ferme pour sauvegarder son contenu
-*/
-void				hdoc(char *eof, int fd)
-{
-	t_it			*it;
-
-	it = init_it_struct();
-	it->eof = 1;
-	ft_putstr("> ");
-	while (read(0, &it->buffer, 4))
-	{
-		parse_line(it);
-		if (it->buffer == '\n')
-		{
-			if (it->line)
-			{
-				if (!ft_strcmp(it->line, eof))
-					break ;
-				it->i = 0;
-				it->buffer = 0;
-				ft_putendl_fd(it->line, fd);
-				it->len = 0;
-				it->line = 0;
-			}
-			ft_putstr("\n> ");
-		}
-		it->buffer = 0;
-	}
-	it->eof = 0;
-	close(fd);
-}
-
-t_redirection		*new_redirection_err(t_redirections *t, int type, char *filename)
+t_redirection		*new_redirection_err(t_redirections *t, int type,
+					char *filename)
 {
 	t_redirection	*r;
-	printf("ERR\n");
+
 	r = (t_redirection*)malloc(sizeof(t_redirection));
 	ft_memset(r, 0, sizeof(t_redirection));
 	r->fd = -1;
@@ -69,7 +35,8 @@ t_redirection		*new_redirection_err(t_redirections *t, int type, char *filename)
 	return (r);
 }
 
-t_redirection		*new_redirection(t_redirections *t, int type, char *filename)
+t_redirection		*new_redirection(t_redirections *t, int type,
+					char *filename)
 {
 	t_redirection	*r;
 
@@ -94,13 +61,7 @@ t_redirection		*new_redirection(t_redirections *t, int type, char *filename)
 		ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
 	}
 	else if (type == DCHEVRON_GAUCHE)
-	{
-		r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		hdoc(filename, r->fd);
-		r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_RDONLY);
-		write(1, "\n", 1);
-		ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
-	}
+		prepare_hdoc(t, r);
 	return (r);
 }
 

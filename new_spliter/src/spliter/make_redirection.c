@@ -19,6 +19,7 @@
 **	fd:		file desc. a dupliquer
 **	lst:	liste de redirection
 */
+
 static void		do__redirection(int cfg, int fd, t_list *lst)
 {
 	t_redirection	*r;
@@ -47,13 +48,13 @@ static void		do__redirection(int cfg, int fd, t_list *lst)
 **	cfg:			mask binaire (CFG_ALL_REDIRECTION_IN/OUT)
 **	redirections:	donnees de redirections
 */
+
 void			do_redirections(int cfg, t_redirections *redirs)
 {
 	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, STDIN_FILENO, redirs->in);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, STDOUT_FILENO, redirs->out);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_ERR, STDERR_FILENO, redirs->err);
 }
-
 
 /*
 **	Pre-initialise une redirection
@@ -62,6 +63,7 @@ void			do_redirections(int cfg, t_redirections *redirs)
 **	type:	adresse du type
 **	cmd:	adresse de la ligne de commande
 */
+
 static void		normalize_build_redirection(int *fd, int *type, char **cmd)
 {
 	if (ft_isdigit(**cmd))
@@ -98,6 +100,7 @@ static void		normalize_build_redirection(int *fd, int *type, char **cmd)
 **	r:		adresse ou enregistrer la redirection
 **	cmd:	adresse de la ligne de commande
 */
+
 int				build_redirection(t_redirections *r, char **cmd)
 {
 	int				fd;

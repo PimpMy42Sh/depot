@@ -62,6 +62,7 @@ VPATH = $(shell find $(SRC_PATH) -type d)
 
 all: $(NAME)
 
+#$(CXX) $(FLAGS) $(LIB) -ltermcap $(LIB_NAME) $(OBJ) -o $(NAME)
 $(NAME): $(OBJ)
 	make -C $(LIB_PATH)
 	$(CXX) $(FLAGS) $(LIB) $(LIB_NAME) $(OBJ) -o $(NAME) -lft -ltermcap 

@@ -6,6 +6,7 @@
 # define DCHEVRON_GAUCHE 4
 # define CFG_ALL_REDIRECTION_IN 1
 # define CFG_ALL_REDIRECTION_OUT 2
+# define CFG_ALL_REDIRECTION_ERR 4
 # define PARSING_IS_CMDNAME 1
 # define PARSING_IS_ARG 2
 # define PARSING_IS_REDIR 3
@@ -46,6 +47,7 @@ typedef struct		s_redirections
 	int				fd_in;
 	t_list			*out;
 	t_list			*in;
+	t_list			*err;
 	int				hdoc;
 }					t_redirections;
 
@@ -75,7 +77,7 @@ typedef struct		s_command
 **
 **	Initialisation, allocation et liberation
 */
-void				use_agregator_redirection(t_redirections *r, int fd_in, int fd_out);
+t_redirection		*new_redirection_err(t_redirections *t, int type, char *filename);
 t_redirection		*new_redirection(t_redirections *t, int type, char *filename);
 void				end_redirection(t_redirection *r);
 void				end_redirections(t_redirections *redirs);

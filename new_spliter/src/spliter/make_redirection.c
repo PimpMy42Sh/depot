@@ -13,27 +13,6 @@
 #include <spliter.h>
 
 /*
-**	Execute les agregateurs de file desc.
-**
-**	fd:		file desc. a dupliquer
-**	mask:	mot binaire (bit a 1 signifie un fd a dupliquer)
-*/
-static void		do__agregateur(int fd, int mask)
-{
-	int	index;
-
-	index = 0;
-	while (mask >> index)
-	{
-		if ((mask >> index) & 1)
-		{
-			dup2(index, fd);
-			close(index);
-		}
-	}
-}
-
-/*
 **	Execute une/des redirection(s)
 **
 **	cfg:	0 <=> seul le premier maillon de la liste, sinon toute la liste
@@ -71,9 +50,8 @@ static void		do__redirection(int cfg, int fd, t_list *lst)
 void			do_redirections(int cfg, t_redirections *redirs)
 {
 	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, STDIN_FILENO, redirs->in);
-	do__agregateur(STDIN_FILENO, redirs->fd_in);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, STDOUT_FILENO, redirs->out);
-	do__agregateur(STDOUT_FILENO, redirs->fd_out);
+	do__redirection(cfg & CFG_ALL_REDIRECTION_ERR, STDERR_FILENO, redirs->err);
 }
 
 
@@ -86,7 +64,7 @@ void			do_redirections(int cfg, t_redirections *redirs)
 */
 static void		normalize_build_redirection(int *fd, int *type, char **cmd)
 {
-	if (ft_isalpha(**cmd))
+	if (ft_isdigit(**cmd))
 	{
 		*fd = **cmd - '0';
 		(*cmd)++;
@@ -126,15 +104,18 @@ int				build_redirection(t_redirections *r, char **cmd)
 	int				type;
 
 	type = 0;
-	if ((ft_isdigit(**cmd) && (*((*cmd) + 1) == '<' || *((*cmd) + 1) == '>')) ||
-		(**cmd == '<' || **cmd == '>'))
+	fd = -1;
+	normalize_build_redirection(&fd, &type, cmd);
+	if (fd == 2 && type & 1)
 	{
-		normalize_build_redirection(&fd, &type, cmd);
-		if (**cmd == '&')
-		{
-			printf("AGre\n");
-			cmd++;
-		}
+		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')
+			(*cmd)++;
+		new_redirection_err(r, type, ft_strword(*cmd));
+		while (ft_isalnum(**cmd))
+			(*cmd)++;
+	}
+	else if (type >= 1 && type <= 4)
+	{
 		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')
 			(*cmd)++;
 		new_redirection(r, type, ft_strword(*cmd));

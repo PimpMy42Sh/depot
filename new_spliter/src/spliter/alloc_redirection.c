@@ -47,6 +47,28 @@ void				hdoc(char *eof, int fd)
 	close(fd);
 }
 
+t_redirection		*new_redirection_err(t_redirections *t, int type, char *filename)
+{
+	t_redirection	*r;
+	printf("ERR\n");
+	r = (t_redirection*)malloc(sizeof(t_redirection));
+	ft_memset(r, 0, sizeof(t_redirection));
+	r->fd = -1;
+	r->type = type;
+	r->filename = filename;
+	if (type == CHEVRON_DROIT)
+	{
+		r->fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		ft_lstadd(&t->err, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+	}
+	else if (type == DCHEVRON_DROIT)
+	{
+		r->fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		ft_lstadd(&t->err, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+	}
+	return (r);
+}
+
 t_redirection		*new_redirection(t_redirections *t, int type, char *filename)
 {
 	t_redirection	*r;
@@ -57,22 +79,28 @@ t_redirection		*new_redirection(t_redirections *t, int type, char *filename)
 	r->type = type;
 	r->filename = filename;
 	if (type == CHEVRON_DROIT)
+	{
 		r->fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		ft_lstadd(&t->out, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+	}
 	else if (type == DCHEVRON_DROIT)
+	{
 		r->fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		ft_lstadd(&t->out, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+	}
 	else if (type == CHEVRON_GAUCHE)
+	{
 		r->fd = open(filename, O_RDONLY | O_APPEND);
+		ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+	}
 	else if (type == DCHEVRON_GAUCHE)
 	{
 		r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		hdoc(filename, r->fd);
 		r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_RDONLY);
 		write(1, "\n", 1);
-	}
-	if (type & 1)
-		ft_lstadd(&t->out, ft_lstnew_noalloc(r, sizeof(t_redirection)));
-	else
 		ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+	}
 	return (r);
 }
 

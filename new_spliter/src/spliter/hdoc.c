@@ -21,12 +21,14 @@ static void				hdoc(char *eof, int fd)
 			{
 				if (!ft_strcmp(it->line, eof))
 					break ;
-				it->i = 0;
-				it->buffer = 0;
 				ft_putendl_fd(it->line, fd);
-				it->len = 0;
-				it->line = 0;
 			}
+			else
+				write(fd, "\n", 1);
+			it->i = 0;
+			it->buffer = 0;
+			it->len = 0;
+			it->line = 0;
 			ft_putstr("\n> ");
 		}
 		it->buffer = 0;

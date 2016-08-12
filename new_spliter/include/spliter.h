@@ -7,7 +7,7 @@
 # define CFG_ALL_REDIRECTION_IN 1
 # define CFG_ALL_REDIRECTION_OUT 2
 # define CFG_ALL_REDIRECTION_ERR 4
-# define HDOC_TMP_FILENAME "hdoc"
+# define HDOC_TMP_FILENAME "/tmp/hdoc"
 # include "../libft/libft.h"
 # include <sys/wait.h>
 # include <dirent.h>

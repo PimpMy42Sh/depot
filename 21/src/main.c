@@ -36,9 +36,8 @@ static void	split_cmd(t_it *it, t_env *env)
 {
 	char				**cmd;
 	int					i;
-	t_command		c;
+	t_command			c;
 	char				*s;
-
 	static t_history	*history = NULL;
 
 	ft_putchar('\n');
@@ -48,14 +47,10 @@ static void	split_cmd(t_it *it, t_env *env)
 	while (cmd[i])
 	{
 		s = cmd[i];
-		//if (!(check_line(cmd[i], env, 0)))
-		//{
-			// split_cmd_suite(i, env->environ, cmd);
-			ft_bzero(&c, sizeof(t_command));
-			c = get_next_command(&cmd[i]);
-			exec_command(&c, env->environ);
-			resumed_terminal();
-		//}
+		ft_bzero(&c, sizeof(t_command));
+		c = get_next_command(&cmd[i]);
+		exec_command(&c, env->environ);
+		resumed_terminal();
 		free(s);
 		i++;
 	}

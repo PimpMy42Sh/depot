@@ -163,6 +163,8 @@ void										no_such_file(char *path);
 /*
 **	builtins
 */
+t_list										*check_bultins_command(
+											t_list *pipelines, char **env);
 int											check_bultins(char **av,
 											char **env);
 int											ft_setenv(char **av, t_env *env);

@@ -102,7 +102,6 @@ static int			ft_pipes(t_list *cmds, int child, char **env)
 /*
 **	Execute une commande
 */
-
 void				exec_command(t_command *cmd, char **env)
 {
 	t_list			*pipes;
@@ -111,26 +110,23 @@ void				exec_command(t_command *cmd, char **env)
 
 	if ((pipes = cmd->pipeline))
 	{
-		if (!check_bultins(pipes->content, env))
+		pipes = check_bultins_command(pipes, env);
+		child = fork();
+		if (!child)
 		{
-			printf("fork\n");
-			child = fork();
-			if (!child)
+			if (cmd->need_redir)
+				do_redirections(0, &cmd->redirs);
+			ft_pipes(pipes, child, env);
+			while (pipes)
 			{
-				if (cmd->need_redir)
-					do_redirections(0, &cmd->redirs);
-				ft_pipes(pipes, child, env);
-				while (pipes)
-				{
-					next = pipes->next;
-					delete_tab((char**)pipes->content);
-					free(pipes);
-					pipes = next;
-				}
-				if (cmd->need_redir)
-					end_redirections(&cmd->redirs);
+				next = pipes->next;
+				delete_tab((char**)pipes->content);
+				free(pipes);
+				pipes = next;
 			}
-			wait(NULL);
+			if (cmd->need_redir)
+				end_redirections(&cmd->redirs);
 		}
+		wait(NULL);
 	}
 }

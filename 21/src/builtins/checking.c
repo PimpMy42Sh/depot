@@ -25,3 +25,15 @@ int					check_bultins(char **av, char **env)
 	return (1);
 }
 
+t_list				*check_bultins_command(t_list *pipelines, char **env)
+{
+	t_list			*next;
+
+	while (pipelines && check_bultins(pipelines->content, env))
+	{
+		next = pipelines->next;
+		free(pipelines);
+		pipelines = next;
+	}
+	return (pipelines);
+}

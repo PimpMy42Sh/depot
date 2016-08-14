@@ -5,10 +5,31 @@
 **	J'ouvre un fd et le ferme pour sauvegarder son contenu
 */
 
+static int				is_a_newline(t_it *it, int fd, char *eof)
+{
+	int		delta;
+
+	delta = (it->len + 2) / it->ws_col;
+	move_begin(it);
+	while (delta)
+	{
+		tputs(tgetstr(DOWN, NULL), 0, my_putchar);
+		delta--;
+	}
+	if (it->line)
+	{
+		if (!ft_strcmp(it->line, eof))
+			return (0);
+		ft_putendl_fd(it->line, fd);
+	}
+	else
+		write(fd, "\n", 1);
+	return (1);
+}
+
 static void				hdoc(char *eof, int fd)
 {
 	t_it			*it;
-	int				delta;
 
 	it = init_it_struct();
 	it->eof = 1;
@@ -20,21 +41,8 @@ static void				hdoc(char *eof, int fd)
 		parse_line(it);
 		if (it->buffer == '\n')
 		{
-			move_begin(it);
-			delta = (it->len + 2) / it->ws_col;
-			while (delta)
-			{
-				tputs(tgetstr(DOWN, NULL), 0, my_putchar);
-				delta--;
-			}
-			if (it->line)
-			{
-				if (!ft_strcmp(it->line, eof))
-					break ;
-				ft_putendl_fd(it->line, fd);
-			}
-			else
-				write(fd, "\n", 1);
+			if (!is_a_newline(it, fd, eof))
+				break ;
 			it->i = 0;
 			it->buffer = 0;
 			it->len = 0;

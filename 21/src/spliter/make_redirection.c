@@ -51,6 +51,10 @@ static void		do__redirection(int cfg, int fd, t_list *lst)
 
 void			do_redirections(int cfg, t_redirections *redirs)
 {
+	if (redirs->fd_agr1 && redirs->fd_agr2)
+		dup2(redirs->fd_agr2, redirs->fd_agr1);
+	else if (redirs->close_fd)
+		close(redirs->fd_agr1);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, STDIN_FILENO, redirs->in);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, STDOUT_FILENO, redirs->out);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_ERR, STDERR_FILENO, redirs->err);
@@ -109,7 +113,16 @@ int				build_redirection(t_redirections *r, char **cmd)
 	type = 0;
 	fd = -1;
 	normalize_build_redirection(&fd, &type, cmd);
-	if (fd == 2 && type & 1)
+	if (fd >= 0 && **cmd == '&')
+	{
+		(*cmd)++;
+		r->fd_agr1 = fd;
+		if (**cmd == '-')
+			r->close_fd = 1;
+		else
+			r->fd_agr2 = **cmd - '0';
+	}
+	else if (fd == 2 && type & 1)
 	{
 		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')
 			(*cmd)++;

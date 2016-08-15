@@ -55,10 +55,7 @@ static void				end_gnc(t_norme_com *n, t_command *com, t_list **tmp)
 		my_pipeline(&com->pipeline, tmp);
 	ft_memset(&com->redirs, 0, sizeof(t_redirections));
 	if (is_a_redirection(*n->cmd))
-	{
-		build_redirection(&com->redirs, n->cmd);
-		com->need_redir = 1;
-	}
+		com->need_redir = build_redirection(&com->redirs, n->cmd);
 }
 
 /*

@@ -78,8 +78,9 @@ void				end_redirections(t_redirections *redirs)
 	t_list			*lst;
 	t_list			*next;
 
-	redirs->fd_in = 0;
-	redirs->fd_out = 0;
+	redirs->fd_agr1 = 0;
+	redirs->fd_agr2 = 0;
+	redirs->close_fd = 0;
 	lst = redirs->in;
 	while (lst)
 	{

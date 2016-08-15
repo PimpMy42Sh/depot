@@ -110,9 +110,9 @@ void				exec_command(t_command *cmd, char **env)
 
 	if ((pipes = cmd->pipeline))
 	{
-		pipes = check_bultins_command(pipes, env);
-		child = fork();
-		if (!child)
+		if (!cmd->need_redir)
+			pipes = check_bultins_command(pipes, env);
+		if (pipes && !(child = fork()))
 		{
 			if (cmd->need_redir)
 				do_redirections(0, &cmd->redirs);

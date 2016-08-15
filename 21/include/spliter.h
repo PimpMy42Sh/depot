@@ -41,8 +41,9 @@ typedef struct		s_redirection
 */
 typedef struct		s_redirections
 {
-	int				fd_out;
-	int				fd_in;
+	int				fd_agr1;
+	int				fd_agr2;
+	int				close_fd;
 	t_list			*out;
 	t_list			*in;
 	t_list			*err;

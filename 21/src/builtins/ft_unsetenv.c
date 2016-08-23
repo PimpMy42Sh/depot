@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 14:24:01 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/08 18:21:15 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/23 17:05:37 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,4 @@ void		ft_unsetenv(char **av, t_env *env)
 	}
 	else
 		loop_remove_env(av, env);
-	ft_putchar('\n');
 }

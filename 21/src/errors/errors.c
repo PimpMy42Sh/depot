@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 14:49:45 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/21 17:18:02 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/08/23 17:48:21 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void		undefined_variable(char *str)
 void		env_error(void)
 {
 	ft_putstr_fd(RED, 2);
-	ft_putchar('\n');
 	ft_putstr_fd("env: option requires an argument -- u\n", 2);
 	ft_putstr_fd("usage: env [-iv] [-P utilpath] [-S string] [-u name]\n", 2);
 	ft_putstr_fd("\t   [name=value ...] [utility [argument ...]]\n", 2);

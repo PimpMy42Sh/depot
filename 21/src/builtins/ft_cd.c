@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 19:00:18 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/22 10:39:38 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/23 17:24:00 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int		cd_too_many_args(void)
 {
+	ft_putstr_fd(RED, 2);
 	ft_putstr_fd("cd: Too many arguments.\n", 2);
+	ft_putstr_fd(RESET, 2);
 	return (1);
 }
 
@@ -108,7 +110,6 @@ int			ft_cd(char **av, t_env *env)
 
 	oldpwd = NULL;
 	i = 0;
-	ft_putchar('\n');
 	while (av[i])
 		i++;
 	if (i >= 3)

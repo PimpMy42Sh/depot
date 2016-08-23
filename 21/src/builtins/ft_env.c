@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 11:55:33 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/08 18:20:37 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/23 17:09:15 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,7 @@ static int		ft_env_suite(char **av, char **environ, t_norme *flags)
 		g_father = 0;
 	}
 	else
-	{
-		ft_putchar('\n');
 		parse_arguments(flags->copy, flags->str, 1);
-	}
 	return (0);
 }
 
@@ -118,7 +115,6 @@ int				ft_env(char **av, char **environ)
 		env_error();
 	else if (av[1] && !ft_strcmp(av[1], "-i") && !av[2])
 	{
-		ft_putchar('\n');
 		free_struct(flags);
 		return (1);
 	}

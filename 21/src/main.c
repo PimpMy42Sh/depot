@@ -6,31 +6,31 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/05 18:26:44 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/23 16:51:49 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/spliter.h"
 
-void	split_cmd_suite(int i, char **environ, char **cmd)
-{
-	int			status;
-
-	g_father = fork();
-	if (g_father > 0)
-	{
-		wait(&status);
-		g_father = 0;
-	}
-	else
-	{
-		if (i == 0)
-			ft_putchar('\n');
-		parse_arguments(environ, cmd[i], 1);
-	}
-	resumed_terminal();
-}
+// void	split_cmd_suite(int i, char **environ, char **cmd)
+// {
+// 	int			status;
+//
+// 	g_father = fork();
+// 	if (g_father > 0)
+// 	{
+// 		wait(&status);
+// 		g_father = 0;
+// 	}
+// 	else
+// 	{
+// 		if (i == 0)
+// 			ft_putchar('\n');
+// 		parse_arguments(environ, cmd[i], 1);
+// 	}
+// 	resumed_terminal();
+// }
 
 static void	split_cmd(t_it *it, t_env *env)
 {

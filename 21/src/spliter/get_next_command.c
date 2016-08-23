@@ -78,7 +78,7 @@ t_command				get_next_command(char **cmd)
 	init_norme_com(&n, cmd);
 	tmp = NULL;
 	ft_memset(&com, 0, sizeof(t_command));
-	while (**n.cmd && !is_a_redirection(*n.cmd) && **n.cmd != ';')
+	while (**n.cmd && !is_a_redirection(*n.cmd))
 	{
 		if (**n.cmd == '|')
 			add_pipe(&n, &com, &tmp);

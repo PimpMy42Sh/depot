@@ -47,13 +47,13 @@ typedef struct		s_redirections
 	t_list			*out;
 	t_list			*in;
 	t_list			*err;
-	int				hdoc;
+	// int				hdoc;
 }					t_redirections;
 
-typedef struct		s_pipeline
-{
-	char			**args;
-}					t_pipeline;
+// typedef struct		s_pipeline
+// {
+// 	char			**args;
+// }					t_pipeline;
 
 /*
 **	Commande
@@ -65,8 +65,8 @@ typedef struct		s_pipeline
 */
 typedef struct		s_command
 {
-	int				mask;
-	int				split_type;
+	// int				mask;
+	// int				split_type;
 	t_redirections	redirs;
 	t_list			*pipeline;
 	int				need_redir;

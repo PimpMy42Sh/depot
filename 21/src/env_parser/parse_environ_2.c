@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 18:43:17 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/21 17:11:31 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/08/23 17:14:43 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void			print_env(char **environ)
 	int		i;
 
 	i = 0;
-	ft_putchar('\n');
 	while (environ[i])
 	{
 		ft_putstr(environ[i]);

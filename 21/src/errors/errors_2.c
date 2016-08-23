@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 14:47:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:39:01 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/23 17:48:44 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void		permission_denied(char *str, char *path)
 void		setenv_error(int boolean)
 {
 	ft_putstr_fd(RED, 2);
-	ft_putchar('\n');
 	if (boolean)
 		ft_putstr_fd("setenv: Too many arguments.\n", 2);
 	else

@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/23 16:51:49 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/24 11:45:41 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	split_cmd(t_it *it, t_env *env)
 		s = cmd[i];
 		ft_bzero(&c, sizeof(t_command));
 		c = get_next_command(&cmd[i]);
-		exec_command(&c, env->environ);
+		exec_command(&c, env);
 		resumed_terminal();
 		free(s);
 		i++;

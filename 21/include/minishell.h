@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/23 19:26:11 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/24 11:47:23 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,9 @@ void										no_such_file(char *path);
 **	builtins
 */
 t_list										*check_bultins_command(
-											t_list *pipelines, char **env);
+											t_list *pipelines, t_env *env);
 int											check_bultins(char **av,
-											char **env);
+											t_env *env);
 int											ft_setenv(char **av, t_env *env);
 void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);

@@ -15,6 +15,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "minishell.h"
 
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
@@ -108,7 +109,7 @@ void				do_redirections(int cfg, t_redirections *redirs);
 int					is_a_redirection(char *cmd);
 char				**lst_to_tab(t_list *lst);
 t_command			get_next_command(char **cmd);
-void				exec_command(t_command *cmd, char **env);
+void				exec_command(t_command *cmd, t_env *env);
 
 /*
 **	deps.c

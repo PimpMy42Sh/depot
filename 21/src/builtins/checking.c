@@ -1,22 +1,18 @@
 #include <minishell.h>
 
-int					check_bultins(char **av, char **env)
+int					check_bultins(char **av, t_env *env)
 {
-	t_env			*e;
-
-	e = malloc(sizeof(t_env));
-	e->environ = env;
 	if (!ft_strcmp(av[0], "exit"))
-		ft_exit(av, e);
+		ft_exit(av, env);
 	else if (!ft_strcmp(av[0], "cd"))
-		ft_cd(av, e);
+		ft_cd(av, env);
 	else if (!ft_strcmp(av[0], "setenv"))
-		ft_setenv(av, e);
+		ft_setenv(av, env);
 	else if (!ft_strcmp(av[0], "unsetenv"))
-		ft_unsetenv(av, e);
+		ft_unsetenv(av, env);
 	else if (!ft_strcmp(av[0], "env"))
 	{
-		ft_env(av, e->environ);
+		ft_env(av, env->environ);
 		resumed_terminal();
 	}
 	else
@@ -25,7 +21,7 @@ int					check_bultins(char **av, char **env)
 	return (1);
 }
 
-t_list				*check_bultins_command(t_list *pipelines, char **env)
+t_list				*check_bultins_command(t_list *pipelines, t_env *env)
 {
 	t_list			*next;
 

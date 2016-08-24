@@ -102,7 +102,7 @@ static int			ft_pipes(t_list *cmds, int child, char **env)
 /*
 **	Execute une commande
 */
-void				exec_command(t_command *cmd, char **env)
+void				exec_command(t_command *cmd, t_env *env)
 {
 	t_list			*pipes;
 	t_list			*next;
@@ -116,7 +116,7 @@ void				exec_command(t_command *cmd, char **env)
 		{
 			if (cmd->need_redir)
 				do_redirections(0, &cmd->redirs);
-			ft_pipes(pipes, child, env);
+			ft_pipes(pipes, child, env->environ);
 			while (pipes)
 			{
 				next = pipes->next;

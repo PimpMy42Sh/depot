@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/08/04 15:20:06 by Marco            ###   ########.fr        #
+#    Updated: 2016/08/25 17:31:38 by Marco            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ line_edition/cursor_moves_one_word_left.c\
 spliter/alloc_redirection.c spliter/deps.c spliter/exec.c\
 spliter/make_redirection.c spliter/split_cmd.c\
 spliter/get_next_command.c spliter/hdoc.c\
-buitlins/checking.c
+buitlins/checking.c line_edition/check_parentheses.c\
+line_edition/check_line_is_close.c
 
 
 LIB_NAME = -lft
@@ -67,7 +68,7 @@ all: $(NAME)
 #$(CXX) $(FLAGS) $(LIB) -ltermcap $(LIB_NAME) $(OBJ) -o $(NAME)
 $(NAME): $(OBJ)
 	make -C $(LIB_PATH)
-	$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB) $(LIB_NAME) -ltermcap 
+	$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB) $(LIB_NAME) -ltermcap
 
 $(OBJ_PATH)%.o: %.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null

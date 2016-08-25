@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 11:10:43 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/05 18:09:03 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/25 14:13:45 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ static int	no_reverse_video(t_it *it)
 		else if (!it->line)
 		{
 			if (it->buffer == CTRL_D)
+			{
+				ft_putchar('\n');
 				ft_exit(NULL, NULL);
+			}
 			return (1);
 		}
 	return (0);

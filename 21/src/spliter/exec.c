@@ -36,7 +36,7 @@ static int			start_prgm(char **env, char **argv, int child)
 		return (0);
 	else
 	{
-		check_tilde_and_dollar(env, argv, 1);
+		check_tilde_and_dollar(env, argv, 0);
 		argv[0] = hash_cmd(argv[0], env);
 		map_environ(env);
 		suspend_terminal();

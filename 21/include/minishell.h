@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/25 17:30:03 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/31 16:28:24 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void										copy_environ(char **av,
 											char **environ, t_norme *flags);
 void										ft_exit(char **av, t_env *env);
 char										*return_pwd(void);
+void										ft_echo(char **av, char **environ);
 
 /*
 **	free
@@ -216,9 +217,8 @@ void										free_cmd(char **cmd);
 */
 void										parse_arguments(char **environ,
 											char *line, int boolean);
-void										check_tilde_and_dollar(char
-											**environ, char **av,
-											int boolean);
+void										check_tilde_and_dollar(char **environ, char **av,
+												int boolean);
 void										replace_envrion_suite_2(char *ret,
 											char *search,
 											t_norme *norme, char **av);

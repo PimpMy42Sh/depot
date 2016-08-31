@@ -15,6 +15,8 @@ int					check_bultins(char **av, t_env *env)
 		ft_env(av, env->environ);
 		resumed_terminal();
 	}
+	else if (!ft_strcmp(av[0], "echo"))
+		ft_echo(av, env->environ);
 	else
 		return (0);
 	free_double_array(av);

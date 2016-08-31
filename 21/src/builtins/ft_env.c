@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 11:55:33 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/23 17:09:15 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/31 16:53:39 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int		ft_env_suite(char **av, char **environ, t_norme *flags)
 		g_father = 0;
 	}
 	else
-		parse_arguments(flags->copy, flags->str, 1);
+		parse_arguments(flags->copy, flags->str, 0);
 	return (0);
 }
 

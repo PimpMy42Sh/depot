@@ -18,7 +18,7 @@ void		suspend_terminal(void)
 
 	tty = NULL;
 	tty = ft_stock_term(NULL);
-//	tty->term.c_lflag |= (ICANON | ECHO);
+	//tty->term.c_lflag |= (ICANON | ECHO);
 	tcsetattr(0, TCSANOW, &tty->backup);
 }
 

@@ -59,7 +59,7 @@ static void				hdoc(char *eof, int fd)
 }
 
 /*
-**	faire tout les eofs d'un coup
+**	faire tout les hdocs d'un coup
 */
 void					do_all_hdoc(char *cmd)
 {
@@ -74,6 +74,7 @@ void					do_all_hdoc(char *cmd)
 			cmd += 2;
 			eof = ft_strword(cmd);
 			hdoc(eof, fd);
+			write(1, "\n", 1);
 			free(eof);
 		}
 		else
@@ -81,6 +82,73 @@ void					do_all_hdoc(char *cmd)
 	}
 }
 
+/*
+char					*get_filename(int i)
+{
+	char				*i_to_a;
+	char				*s;
+
+	i_to_a = ft_itoa(i);
+	s = ft_strjoin(HDOC_TMP_FILENAME, i_to_a);
+	free(i_to_a);
+	return (s);
+}
+
+int						*create_hdoc_tab(char *cmd)
+{
+	int		*fds;
+	int		size;
+	char	*s;
+	char	*eof;
+
+	s = cmd;
+	size = 0;
+	while (*cmd)
+	{
+		if (*cmd == '<' && *(cmd + 1) == '<')
+		{
+			size++;
+			cmd += 2;
+		}
+		else
+			cmd++;
+	}
+	fds = (int*)malloc(sizeof(int) * (size + 1));
+	ft_memset(fds, 0, sizeof(int) * (size + 1));
+	cmd = s;
+	size = 0;
+	while (*cmd)
+	{
+		if (*cmd == '<' && *(cmd + 1) == '<')
+		{
+			s = get_filename(size);
+			fds[size++] = open(s, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			cmd += 2;
+			eof = ft_strword(cmd);
+			hdoc(eof, fds[size]);
+			write(1, "\n", 1);
+			free(s);
+			free(eof);
+		}
+		else
+			cmd++;
+	}
+	return (fds);
+}
+
+
+void					do_hdoc(int *fds, int in)
+{
+	while (*fds == -1)
+		fds++;
+	if (*fds != 0)
+	{
+		dup2(*fds, in);
+		close(*fds);
+	}
+	*fds = -1;
+}
+*/
 void					prepare_hdoc(t_redirections *t, t_redirection *r)
 {
 	r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_RDONLY);

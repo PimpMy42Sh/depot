@@ -16,7 +16,7 @@ static void	exit_no_args(t_env *env)
 {
 	if (env)
 	{
-		free_double_array(*env);
+		free_double_array(env->environ);
 		ft_memdel((void**)&env);
 	}
 	reset_term();
@@ -32,7 +32,7 @@ static void	exit_with_args(char **av, t_env *env)
 	// ft_putchar('\n');
 	if (env)
 	{
-		free_double_array(*env);
+		free_double_array(env->environ);
 		ft_memdel((void**)&env);
 	}
 	reset_term();

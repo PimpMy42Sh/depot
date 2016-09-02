@@ -43,12 +43,12 @@ void			append_item_environ(t_env *env, char *environ, char *av)
 	char	**new_environ;
 	char	*tmp;
 
-	i = return_env_size(*env);
+	i = return_env_size(env->environ);
 	new_environ = (char**)ft_memalloc(sizeof(char*) * (i + 2));
 	i = 0;
-	while ((*env)[i])
+	while (env->environ[i])
 	{
-		new_environ[i] = (*env)[i];
+		new_environ[i] = env->environ[i];
 		i++;
 	}
 	new_environ[i] = ft_strjoin(environ, "=");
@@ -60,8 +60,8 @@ void			append_item_environ(t_env *env, char *environ, char *av)
 	}
 	i++;
 	new_environ[i] = NULL;
-	ft_memdel((void**)&(*env));
-	*env = new_environ;
+	ft_memdel((void**)&env->environ);
+	env->environ = new_environ;
 }
 
 void			loop_remove_env(char **av, t_env *env)
@@ -74,12 +74,12 @@ void			loop_remove_env(char **av, t_env *env)
 	j = 0;
 	while (av[i])
 	{
-		while ((*env)[j])
+		while (env->environ[j])
 		{
-			env_var = ft_strsplit((*env)[j], '=');
+			env_var = ft_strsplit(env->environ[j], '=');
 			if (!ft_strncmp(env_var[0], av[i], ft_strlen(av[i])))
 			{
-				remove_env(*env, j);
+				remove_env(env->environ, j);
 				j--;
 			}
 			j++;

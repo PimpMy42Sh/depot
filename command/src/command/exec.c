@@ -55,7 +55,7 @@ static int			more_pipe(int in, int out, t_command *cmd, t_env *env)
 			dup2(out, 1);
 			close(out);
 		}
-		start_prgm(*env, cmd->argv);
+		start_prgm(env->environ, cmd->argv);
 	}
 	return (WEXITSTATUS(&pid));
 }
@@ -92,7 +92,7 @@ int					ft_pipes(t_list *cmds, int child, t_env *env)
 		dup2(in, 0);
 		close(in);
 	}
-	start_prgm(*env, c->argv);
+	start_prgm(env->environ, c->argv);
 	return (WEXITSTATUS(&child));
 }
 
@@ -119,7 +119,7 @@ void				execution(t_list *pipeline, t_env *e)
 				{
 					if (c->need_redir)
 						do_redirections(0, &c->redirs, 0, 1);
-					start_prgm(*e, c->argv);
+					start_prgm(e->environ, c->argv);
 				}
 				wait(NULL);
 			}

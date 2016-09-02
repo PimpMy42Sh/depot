@@ -63,7 +63,7 @@ static int		move_to_env(t_env *environ, char *env, char *av, char *oldpwd)
 		av = ft_strdup(tmp);
 	}
 	oldpwd = getcwd(buffer, 256);
-	pwd = return_env(*environ, env);
+	pwd = return_env(environ->environ, env);
 	if (!pwd)
 	{
 		cant_move_home();

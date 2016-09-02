@@ -25,10 +25,10 @@ static void		incremente_shlvl(t_env *env, int i, char *lvl)
 	else
 		intlvl = 1;
 	lvl = ft_itoa(intlvl);
-	tmp = ft_strdup((*env)[i]);
+	tmp = ft_strdup(env->environ[i]);
 	tmp[6] = 0;
-	ft_memdel((void**)&(*env)[i]);
-	(*env)[i] = ft_strjoin(tmp, lvl);
+	ft_memdel((void**)&env->environ[i]);
+	env->environ[i] = ft_strjoin(tmp, lvl);
 	ft_memdel((void**)&tmp);
 	ft_memdel((void**)&lvl);
 }
@@ -37,12 +37,12 @@ static void		create_shlvl(t_env *env)
 {
 	int			i;
 
-	if (!(*env)[0])
+	if (!env->environ[0])
 		i = 0;
 	else
-		i = return_env_size(*env);
-	(*env)[i] = ft_strdup("SHLVL=1");
-	(*env)[i + 1] = 0;
+		i = return_env_size(env->environ);
+	env->environ[i] = ft_strdup("SHLVL=1");
+	env->environ[i + 1] = 0;
 }
 
 void			check_shlvl(t_env *env)
@@ -52,11 +52,11 @@ void			check_shlvl(t_env *env)
 
 	i = 0;
 	charlvl = NULL;
-	while ((*env)[i])
+	while (env->environ[i])
 	{
-		if (!ft_strncmp((*env)[i], "SHLVL", 5))
+		if (!ft_strncmp(env->environ[i], "SHLVL", 5))
 		{
-			charlvl = ft_strsub((*env)[i], 6, ft_strlen((*env)[i]));
+			charlvl = ft_strsub(env->environ[i], 6, ft_strlen(env->environ[i]));
 			if (charlvl)
 				incremente_shlvl(env, i, charlvl);
 			else

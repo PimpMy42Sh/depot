@@ -90,20 +90,20 @@ static void	init_copy_environ(t_env *env, char **environment)
 
 	if (!environment[0])
 	{
-		*env = (char**)ft_memalloc(sizeof(char*));
+		env->environ = (char**)ft_memalloc(sizeof(char*));
 		path_manager(env);
 		return ;
 	}
 	i = return_env_size(environment);
-	*env = (char**)ft_memalloc(sizeof(char*) * (i + 1));
+	env->environ = (char**)ft_memalloc(sizeof(char*) * (i + 1));
 	i = 0;
 	while (environment[i])
 	{
-		(*env)[i] = ft_strdup(environment[i]);
+		env->environ[i] = ft_strdup(environment[i]);
 		i++;
 	}
-	(*env)[i] = NULL;
-	if ((i = return_env_indice(*env, "PATH")) == -1)
+	env->environ[i] = NULL;
+	if ((i = return_env_indice(env->environ, "PATH")) == -1)
 		path_manager(env);
 }
 
@@ -114,9 +114,9 @@ int			main(int argc, char **argv, char **environment)
 
 	(void)argv;
 	(void)argc;
-	env = (t_env*)ft_memalloc(sizeof(t_env));
+	env = (t_env*)ft_memalloc(sizeof(struct s_env));
 	init_copy_environ(env, environment);
-	parse_path_directories(*env);
+	parse_path_directories(env->environ);
 	tty = (t_tty*)ft_memalloc(sizeof(struct s_tty));
 	if (init_terminal_data(tty))
 		return (-1);

@@ -51,12 +51,6 @@ t_list			*get_pipeline(char **s, t_env *e)
 			c = get_command(s, e);
 		else if (**s == '|')
 		{
-			if (!c)
-			{
-				write(2, "syntax error near unexpected token `|'", 38);
-				(*s)++;
-				break ;
-			}
 			(*s)++;
 			ft_lstadd_end(&cmds, ft_lstnew_noalloc(c, sizeof(t_command)));
 			c = NULL;
@@ -110,7 +104,7 @@ t_command		*get_command(char **s, t_env *e)
 		ft_lstadd(&c->args, ft_lstnew(str, cpy - str + 2));
 	free(str);
 	c->argv = lst_to_tab(c->args);
-	check_tilde_and_dollar(*e, c->argv, 1);
+	check_tilde_and_dollar(e->environ, c->argv, 1);
 	//print_command(c);
 	return (c);
 }

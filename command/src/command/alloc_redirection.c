@@ -57,7 +57,7 @@ t_redirection		*new_redirection(t_redirections *t, int type,
 	}
 	else if (type == CHEVRON_GAUCHE)
 	{
-		r->fd = open(filename, O_RDONLY | O_APPEND);
+		r->fd = open(filename, O_RDONLY | O_APPEND | O_CREAT, 0644);
 		ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
 	}
 	else if (type == DCHEVRON_GAUCHE)

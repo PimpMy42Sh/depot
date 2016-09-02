@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 17:42:35 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/23 17:35:06 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/31 16:51:02 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,16 @@ static void	replace_environ(char **av, char **environ, char *str,
 	free_elements(cat, search, ret, tmp);
 	ft_memdel((void**)&tmp2);
 }
+
+/*
+** Si le boolean est égale à 1, et que l'on essaye d'accéder à une variable
+** d'environnement qui n'éxiste pas (ex $FAKE), le programme affiche
+** "undefined_variable" sur la sortie d'erreur et exit(1). Il faut donc être
+** dans un processus fils car sinon le shell quitte.
+** Si le boolean est 0, alors le programme affichera $FAKE car il n'aura pas
+** trouvé de correspondance dans l'environnement. Il n'éxit pas et peut donc
+** être appelé en dehors d'un fork().
+*/
 
 void		check_tilde_and_dollar(char **environ, char **av, int boolean)
 {

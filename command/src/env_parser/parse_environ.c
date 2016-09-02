@@ -18,14 +18,14 @@ static void	move_old_and_pwd_suite(t_norme *norme, t_env *env,
 	char	*ret;
 	char	buffer[256];
 
-	if (return_env_indice(*env, "PWD"))
+	if (return_env_indice(env->environ, "PWD"))
 		norme->current = 0;
 	if (norme->current || norme->previous)
 	{
 		if (old && norme->previous)
 		{
-			ft_memdel((void**)&(*env)[norme->i]);
-			(*env)[norme->i] = ft_strjoin("OLDPWD=", old);
+			ft_memdel((void**)&env->environ[norme->i]);
+			env->environ[norme->i] = ft_strjoin("OLDPWD=", old);
 			norme->i++;
 		}
 		if (norme->current)
@@ -35,8 +35,8 @@ static void	move_old_and_pwd_suite(t_norme *norme, t_env *env,
 				permission_denied("cd", "");
 			else
 			{
-				ft_memdel((void**)&(*env)[norme->i]);
-				(*env)[norme->i] = ft_strjoin("PWD=", ret);
+				ft_memdel((void**)&env->environ[norme->i]);
+				env->environ[norme->i] = ft_strjoin("PWD=", ret);
 			}
 		}
 	}
@@ -50,18 +50,18 @@ void		move_old_and_pwd(t_env *env, char *old, char *pwd)
 	norme->i = 0;
 	norme->current = 1;
 	norme->previous = 1;
-	while ((*env)[norme->i])
+	while (env->environ[norme->i])
 	{
-		if (old && !ft_strncmp((*env)[norme->i], "OLDPWD", 6))
+		if (old && !ft_strncmp(env->environ[norme->i], "OLDPWD", 6))
 		{
-			ft_memdel((void**)&(*env)[norme->i]);
-			(*env)[norme->i] = ft_strjoin("OLDPWD=", old);
+			ft_memdel((void**)&env->environ[norme->i]);
+			env->environ[norme->i] = ft_strjoin("OLDPWD=", old);
 			norme->previous = 0;
 		}
-		if (pwd && !ft_strncmp((*env)[norme->i], "PWD", 3))
+		if (pwd && !ft_strncmp(env->environ[norme->i], "PWD", 3))
 		{
-			ft_memdel((void**)&(*env)[norme->i]);
-			(*env)[norme->i] = ft_strjoin("PWD=", pwd);
+			ft_memdel((void**)&env->environ[norme->i]);
+			env->environ[norme->i] = ft_strjoin("PWD=", pwd);
 			norme->current = 0;
 		}
 		norme->i++;

@@ -35,6 +35,7 @@ static void				hdoc(char *eof, int fd)
 	it = init_it_struct();
 	it->eof = 1;
 	ft_putstr("> ");
+	resumed_terminal();
 	while (read(0, &it->buffer, 4))
 	{
 		if ((it->buffer == CTRL_D && !it->len) || !it->eof)
@@ -52,6 +53,7 @@ static void				hdoc(char *eof, int fd)
 		}
 		it->buffer = 0;
 	}
+	suspend_terminal();
 	it->eof = 0;
 	close(fd);
 }

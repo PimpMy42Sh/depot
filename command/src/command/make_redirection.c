@@ -135,7 +135,7 @@ int				build_redirection(t_redirections *r, char **cmd)
 		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')
 			(*cmd)++;
 		new_redirection_err(r, type, ft_strword(*cmd));
-		while (ft_isalnum(**cmd))
+		while (**cmd != ' ' && **cmd)
 			(*cmd)++;
 	}
 	else if (type >= 1 && type <= 4)
@@ -143,7 +143,7 @@ int				build_redirection(t_redirections *r, char **cmd)
 		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')
 			(*cmd)++;
 		new_redirection(r, type, ft_strword(*cmd));
-		while (ft_isalnum(**cmd))
+		while (**cmd != ' ' && **cmd)
 			(*cmd)++;
 	}
 	return (type);

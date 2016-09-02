@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/24 11:47:23 by Marco            ###   ########.fr       */
+/*   Updated: 2016/08/31 16:28:24 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,25 @@
 # define CTRL_T			20
 # define U_CUT			117
 # define MAX_SIZE		1
+
+
+# define QUOTES			'\''
+# define D_QUOTES		'"'
+# define B_QUOTES		'`'
+# define PARENTHESES	'('
+# define C_PARENTHESES	')'
+# define ACCOLADES 		'{'
+# define C_ACCOLADES 	'}'
+# define CROCHETS 		'['
+# define C_CROCHETS 	']'
+# define BAD_QUOTES 	1
+# define BAD_D_QUOTES	2
+# define BAD_B_QUOTES	3
+# define BAD_PARENTHESE	4
+# define BAD_ACCOLADES	5
+# define BAD_CROCHETS 	6
+# define SYNTAX_ERROR 	7
+
 
 /*
 ** SCHOOL
@@ -105,7 +124,10 @@ typedef struct								s_tty
 	struct termios							backup;
 }											t_tty;
 
-typedef char**								t_env;
+typedef struct								s_env
+{
+	char									**environ;
+}											t_env;
 
 typedef struct								s_it
 {
@@ -176,6 +198,7 @@ void										copy_environ(char **av,
 											char **environ, t_norme *flags);
 void										ft_exit(char **av, t_env *env);
 char										*return_pwd(void);
+void										ft_echo(char **av, char **environ);
 
 /*
 **	free
@@ -194,9 +217,8 @@ void										free_cmd(char **cmd);
 */
 void										parse_arguments(char **environ,
 											char *line, int boolean);
-void										check_tilde_and_dollar(char
-											**environ, char **av,
-											int boolean);
+void										check_tilde_and_dollar(char **environ, char **av,
+												int boolean);
 void										replace_envrion_suite_2(char *ret,
 											char *search,
 											t_norme *norme, char **av);
@@ -251,6 +273,8 @@ void										init_struct(t_norme *norme);
 void										parse_line(t_it *it);
 void										edit_line(t_it *it);
 int											return_offset(void);
+int											check_line_is_close(char *line);
+int											check_parentheses(char *line);
 
 /*
 **	cursor_moves

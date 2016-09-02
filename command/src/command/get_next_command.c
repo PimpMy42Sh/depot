@@ -16,6 +16,7 @@ void			print_command(t_command *c)
 		printf("%s\n", *args);
 		args++;
 	}
+	printf("(%d %d %d)\n", ft_lstsize(c->redirs.in), ft_lstsize(c->redirs.out), ft_lstsize(c->redirs.err));
 }
 
 void		free_command(t_command *c)
@@ -44,17 +45,9 @@ t_list			*get_pipeline(char **s, t_env *e)
 	c = NULL;
 	while (**s && **s != ';')
 	{
-		if (is_a_redirection(*s))
-		{
-			if (!c)
-			{
-				c = malloc(sizeof(t_command));
-				c->args = NULL;
-				c->argv = NULL;
-			}
-			c->need_redir = build_redirection(&c->redirs, s);
-		}
-		else if (!is_a_spec_char(**s))
+		while (**s == ' ')
+			(*s)++;
+		if (!is_a_spec_char(**s))
 			c = get_command(s, e);
 		else if (**s == '|')
 		{
@@ -85,6 +78,7 @@ t_command		*get_command(char **s, t_env *e)
 	cpy = str;
 	if (c)
 	{
+		//printf("%s\n", *s);
 		ft_bzero(c, sizeof(t_command));
 		while (**s && !is_a_spec_char(**s) && !is_a_redirection(*s))
 		{
@@ -105,11 +99,18 @@ t_command		*get_command(char **s, t_env *e)
 		}
 		while (**s == ' ')
 			(*s)++;
+		while (is_a_redirection(*s))
+		{
+			c->need_redir = build_redirection(&c->redirs, s);
+			while (**s == ' ')
+				(*s)++;
+		}
 	}
 	if (*str)
 		ft_lstadd(&c->args, ft_lstnew(str, cpy - str + 2));
 	free(str);
 	c->argv = lst_to_tab(c->args);
 	check_tilde_and_dollar(*e, c->argv, 1);
+	//print_command(c);
 	return (c);
 }

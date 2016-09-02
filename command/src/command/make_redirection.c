@@ -49,7 +49,7 @@ static void		do__redirection(int cfg, int fd, t_list *lst)
 **	redirections:	donnees de redirections
 */
 
-void			do_redirections(int cfg, t_redirections *redirs)
+void			do_redirections(int cfg, t_redirections *redirs, int in, int out)
 {
 	int			i;
 
@@ -62,8 +62,8 @@ void			do_redirections(int cfg, t_redirections *redirs)
 			close(redirs->fd_agr1[i]);
 		i++;
 	}
-	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, STDIN_FILENO, redirs->in);
-	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, STDOUT_FILENO, redirs->out);
+	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, in, redirs->in);
+	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, out, redirs->out);
 	do__redirection(cfg & CFG_ALL_REDIRECTION_ERR, STDERR_FILENO, redirs->err);
 }
 

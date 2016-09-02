@@ -36,21 +36,10 @@ static void			start_prgm(char **env, char **argv)
 }
 
 /*
-**	Execute une commande
-*/
-
-void				exec_command(t_command *cmd, t_env *env)
-{
-	if (cmd->need_redir)
-		do_redirections(0, &cmd->redirs);
-	start_prgm(*env, cmd->argv);
-}
-
-/*
 **	By ayoub
 */
 
-static int			more_pipe(int in, int out, t_list *cmd, t_env *env)
+static int			more_pipe(int in, int out, t_command *cmd, t_env *env)
 {
 	pid_t			pid;
 
@@ -66,7 +55,7 @@ static int			more_pipe(int in, int out, t_list *cmd, t_env *env)
 			dup2(out, 1);
 			close(out);
 		}
-		exec_command((t_command*)cmd->content, env);
+		start_prgm(*env, cmd->argv);
 	}
 	return (WEXITSTATUS(&pid));
 }
@@ -79,22 +68,31 @@ int					ft_pipes(t_list *cmds, int child, t_env *env)
 {
 	int				in;
 	int				fd[2];
+	t_command		*c;
 
 	in = 0;
 	while (cmds->next)
 	{
 		pipe(fd);
-		more_pipe(in, fd[1], cmds, env);
+		c = cmds->content;
+		//print_command(c);
+		if (c->need_redir)
+			do_redirections(0, &c->redirs, in, fd[1]);
+		more_pipe(in, fd[1], c, env);
 		close(fd[1]);
 		in = fd[0];
 		cmds = cmds->next;
 	}
+	c = cmds->content;
+	//print_command(c);
+	if (c->need_redir)
+		do_redirections(0, &c->redirs, in, STDOUT_FILENO);
 	if (in != 0)
 	{
 		dup2(in, 0);
 		close(in);
 	}
-	exec_command((t_command*)cmds->content, env);
+	start_prgm(*env, c->argv);
 	return (WEXITSTATUS(&child));
 }
 
@@ -103,6 +101,7 @@ void				execution(t_list *pipeline, t_env *e)
 	t_command		*c;
 	pid_t			p;
 
+	//printf("exec\n");
 	if (pipeline)
 	{
 		if (pipeline->next)
@@ -117,7 +116,11 @@ void				execution(t_list *pipeline, t_env *e)
 			if (!check_bultins(c->argv, e))
 			{
 				if (!(p = fork()))
-					exec_command(c, e);
+				{
+					if (c->need_redir)
+						do_redirections(0, &c->redirs, 0, 1);
+					start_prgm(*e, c->argv);
+				}
 				wait(NULL);
 			}
 		}

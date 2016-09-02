@@ -95,7 +95,6 @@ void				do_all_hdoc(char *cmd);
 */
 
 int					build_redirection(t_redirections *r, char **cmd);
-void				do_redirections(int cfg, t_redirections *redirs);
 int					ft_pipes(t_list *cmds, int child, t_env *env);
 
 /*
@@ -129,5 +128,6 @@ void		free_command(t_command *c);
 t_list			*get_pipeline(char **s, t_env *e);
 void				execution(t_list *pipeline, t_env *e);
 int					check_bultins_exit(char **av, t_env *env);
+void			do_redirections(int cfg, t_redirections *redirs, int in, int out);
 
 #endif

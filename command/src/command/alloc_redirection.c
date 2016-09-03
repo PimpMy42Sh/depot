@@ -57,7 +57,7 @@ t_redirection		*new_redirection(t_redirections *t, int type,
 	}
 	else if (type == CHEVRON_GAUCHE)
 	{
-		r->fd = open(filename, O_RDONLY | O_APPEND | O_CREAT, 0644);
+		r->fd = open(filename, O_RDONLY);
 		ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
 	}
 	else if (type == DCHEVRON_GAUCHE)
@@ -78,9 +78,9 @@ void				end_redirections(t_redirections *redirs)
 	t_list			*lst;
 	t_list			*next;
 
-	ft_memset(redirs->fd_agr1, -1, sizeof(redirs->fd_agr1));
+	ft_memset(redirs->fd_agr1, 0, sizeof(redirs->fd_agr1));
 	ft_memset(redirs->fd_agr2, -1, sizeof(redirs->fd_agr1));
-	ft_memset(redirs->close_fd, -1, sizeof(redirs->fd_agr1));
+	ft_memset(redirs->close_fd, 0, sizeof(redirs->fd_agr1));
 
 	lst = redirs->in;
 	while (lst)

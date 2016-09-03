@@ -13,25 +13,6 @@
 #include "../include/minishell.h"
 #include "../include/command.h"
 
-// void	split_cmd_suite(int i, char **environ, char **cmd)
-// {
-// 	int			status;
-//
-// 	g_father = fork();
-// 	if (g_father > 0)
-// 	{
-// 		wait(&status);
-// 		g_father = 0;
-// 	}
-// 	else
-// 	{
-// 		if (i == 0)
-// 			ft_putchar('\n');
-// 		parse_arguments(environ, cmd[i], 1);
-// 	}
-// 	resumed_terminal();
-// }
-
 static void	split_cmd(t_it *it, t_env *env)
 {
 	char				*s;
@@ -39,15 +20,28 @@ static void	split_cmd(t_it *it, t_env *env)
 	static t_history	*history = NULL;
 
 	ft_putchar('\n');
-	do_all_hdoc(it->line);
 	history = create_elem(history, it->line);
 	s = it->line;
+	if (verification_line(s))
+		return ;
 	while (*s)
 	{
 		while ((c = get_pipeline(&s, env)))
+		{
 			execution(c, env);
+			s += (*s == ';');
+		}
 		s += (*s == ';');
 	}
+}
+
+static void	parse(t_it *it, t_env *env)
+{
+	suspend_terminal();
+	split_cmd(it, env);
+	ft_memdel((void**)&it->line);
+	resumed_terminal();
+	print_prompt();
 }
 
 static void	main_loop(t_env *env)
@@ -63,13 +57,7 @@ static void	main_loop(t_env *env)
 		{
 			check_only_space(it);
 			if (it->line && ft_strlen(it->line))
-			{
-				suspend_terminal();
-				split_cmd(it, env);
-				ft_memdel((void**)&it->line);
-				resumed_terminal();
-				print_prompt();
-			}
+				parse(it, env);
 			else
 			{
 				go_to_bottom(it);

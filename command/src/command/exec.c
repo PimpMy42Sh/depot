@@ -75,7 +75,7 @@ int					ft_pipes(t_list *cmds, int child, t_env *env)
 	{
 		pipe(fd);
 		c = cmds->content;
-		//print_command(c);
+//		print_command(c);
 		if (c->need_redir)
 			do_redirections(0, &c->redirs, in, fd[1]);
 		more_pipe(in, fd[1], c, env);
@@ -84,7 +84,7 @@ int					ft_pipes(t_list *cmds, int child, t_env *env)
 		cmds = cmds->next;
 	}
 	c = cmds->content;
-	//print_command(c);
+//	print_command(c);
 	if (c->need_redir)
 		do_redirections(0, &c->redirs, in, STDOUT_FILENO);
 	if (in != 0)
@@ -101,8 +101,7 @@ void				execution(t_list *pipeline, t_env *e)
 	t_command		*c;
 	pid_t			p;
 
-	//printf("exec\n");
-	if (pipeline)
+	if (pipeline && !verification_pipeline(pipeline))
 	{
 		if (pipeline->next)
 		{
@@ -124,8 +123,8 @@ void				execution(t_list *pipeline, t_env *e)
 				wait(NULL);
 			}
 		}
+		wait(NULL);
 	}
-	wait(NULL);
 
 	t_list	*tmp;
 

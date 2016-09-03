@@ -82,6 +82,13 @@ void					do_all_hdoc(char *cmd)
 	}
 }
 
+void					prepare_hdoc(t_redirections *t, t_redirection *r)
+{
+	r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_RDONLY);
+	write(1, "\n", 1);
+	ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+}
+
 /*
 char					*get_filename(int i)
 {
@@ -149,9 +156,3 @@ void					do_hdoc(int *fds, int in)
 	*fds = -1;
 }
 */
-void					prepare_hdoc(t_redirections *t, t_redirection *r)
-{
-	r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_RDONLY);
-	write(1, "\n", 1);
-	ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
-}

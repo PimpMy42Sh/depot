@@ -56,10 +56,11 @@ void			do_redirections(int cfg, t_redirections *redirs, int in, int out)
 	i = 0;
 	while (i < MAX_AGR)
 	{
-		if (redirs->fd_agr1[i] && redirs->fd_agr2[i])
-			dup2(redirs->fd_agr2[i], redirs->fd_agr1[i]);
+//		printf("%d, %d, %d\n", i, redirs->fd_agr1[i], redirs->fd_agr2[i]);
+		if (redirs->fd_agr1[i])
+			dup2(redirs->fd_agr2[i], i);
 		else if (redirs->close_fd[i])
-			close(redirs->fd_agr1[i]);
+			close(i);
 		i++;
 	}
 	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, in, redirs->in);
@@ -132,7 +133,7 @@ int				build_redirection(t_redirections *r, char **cmd)
 	}
 	else if (fd == 2 && type & 1)
 	{
-		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')
+		while (**cmd == ' ')
 			(*cmd)++;
 		new_redirection_err(r, type, ft_strword(*cmd));
 		while (**cmd != ' ' && **cmd)
@@ -140,11 +141,14 @@ int				build_redirection(t_redirections *r, char **cmd)
 	}
 	else if (type >= 1 && type <= 4)
 	{
-		while (**cmd == ' ' || **cmd == '\t' || **cmd == '\n')
+		while (**cmd == ' ')
 			(*cmd)++;
 		new_redirection(r, type, ft_strword(*cmd));
-		while (**cmd != ' ' && **cmd)
+		while (**cmd != ' ' && **cmd != '|' && **cmd != '<' &&
+			**cmd != '>' && **cmd != ';' && **cmd)
 			(*cmd)++;
 	}
+	else
+		return (0);
 	return (type);
 }

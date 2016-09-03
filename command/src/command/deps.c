@@ -24,12 +24,12 @@ char	*ft_strword(char *s)
 	while (*s == ' ' || *s == '\t')
 		s++;
 	cpy = s;
-	while (*s != ' ' && *s != '\t' && *s)
+	while (*s != ' ' && *s != '|' && *s != '<' && *s != '>' && *s != ';' && *s)
 	{
 		index++;
 		s++;
 	}
-	if ((new_word = ft_strnew(index)))
+	if ((new_word = ft_strnew(index + 2)))
 		ft_strncpy(new_word, cpy, index);
 	return (new_word);
 }

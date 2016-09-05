@@ -21,7 +21,7 @@ char	*ft_strword(char *s)
 	new_word = 0;
 	index = 0;
 	cpy = 0;
-	while (*s == ' ' || *s == '\t')
+	while (*s == ' ')
 		s++;
 	cpy = s;
 	while (*s != ' ' && *s != '|' && *s != '<' && *s != '>' && *s != ';' && *s)
@@ -29,7 +29,8 @@ char	*ft_strword(char *s)
 		index++;
 		s++;
 	}
-	if ((new_word = ft_strnew(index + 2)))
+	new_word = ft_strnew(index + 2);
+	if (index)
 		ft_strncpy(new_word, cpy, index);
 	return (new_word);
 }

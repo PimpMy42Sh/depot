@@ -7,7 +7,7 @@ static int			verification_redirection_list(t_list *lst)
 	while (lst)
 	{
 		r = (t_redirection*)lst->content;
-		if (r->type != DCHEVRON_GAUCHE && !*r->filename)
+		if (r->type != DCHEVRON_GAUCHE && (!*r->filename || !ft_isprint(*r->filename)))
 		{
 			write(2, "Need a filename\n", 16);
 			return (1);

@@ -90,6 +90,13 @@ t_command		*get_command(char **s, t_env *e)
 				c->need_redir = build_redirection(&c->redirs, s);
 				while (**s == ' ')
 					(*s)++;
+				if (*str)
+				{
+					ft_lstadd(&c->args, ft_lstnew(str, cpy - str + 2));
+					free(str);
+					str = ft_strnew(1024);
+					cpy = str;
+				}
 			}
 			else
 				*(cpy++) = *((*s)++);

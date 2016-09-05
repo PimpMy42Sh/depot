@@ -7,9 +7,8 @@ static int			verification_redirection_list(t_list *lst)
 	while (lst)
 	{
 		r = (t_redirection*)lst->content;
-		if (!*r->filename)
+		if (r->type != DCHEVRON_GAUCHE && !*r->filename)
 		{
-			ft_putstr_fd(r->filename, 2);
 			write(2, "Need a filename\n", 16);
 			return (1);
 		}
@@ -69,9 +68,5 @@ int			verification_pipeline(t_list *pipeline)
 
 int					verification_line(char *s)
 {
-	if (!check_parentheses(s))
-		do_all_hdoc(s);
-	else
-		return (1);
-	return (0);
+	return (check_parentheses(s) || check_line_is_close(s));
 }

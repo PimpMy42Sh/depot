@@ -85,7 +85,7 @@ t_redirection		*new_redirection(t_redirections *t, int type,
 					char *filename);
 void				end_redirection(t_redirection *r);
 void				end_redirections(t_redirections *redirs);
-void				do_all_hdoc(char *cmd);
+int					do_all_hdoc(char *cmd);
 
 
 /*
@@ -131,6 +131,6 @@ int					check_bultins_exit(char **av, t_env *env);
 void			do_redirections(int cfg, t_redirections *redirs, int in, int out);
 int					verification_line(char *s);
 int					verification_pipeline(t_list *pipeline);
-
+int					nhdoc(int reset);
 
 #endif

@@ -22,8 +22,9 @@ static void	split_cmd(t_it *it, t_env *env)
 	ft_putchar('\n');
 	history = create_elem(history, it->line);
 	s = it->line;
-	if (verification_line(s))
+	if (verification_line(s) || do_all_hdoc(s))
 		return ;
+	nhdoc(0);
 	while (*s)
 	{
 		while ((c = get_pipeline(&s, env)))

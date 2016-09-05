@@ -50,6 +50,8 @@ static void	next_check(t_it *it)
 		else if (!it->r_video && ((it->buffer == ALT_UP) ||
 		(it->buffer == ALT_DOWN)))
 			move_up_and_down(it);
+		//else if (it->buffer == '\t')
+			//completion(it, 1);
 	}
 }
 

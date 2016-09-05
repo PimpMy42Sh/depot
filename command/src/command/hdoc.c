@@ -1,6 +1,18 @@
 #include "../../include/minishell.h"
 #include <command.h>
 
+int					nhdoc(int reset)
+{
+	static int			n = 0;
+
+	if (reset > 0)
+		n++;
+	else if (reset < 0)
+		n--;
+	else
+		n = 0;
+	return (n);
+}
 
 /*
 **	J'ouvre un fd et le ferme pour sauvegarder son contenu
@@ -58,39 +70,7 @@ static void				hdoc(char *eof, int fd)
 	close(fd);
 }
 
-/*
-**	faire tout les hdocs d'un coup
-*/
-void					do_all_hdoc(char *cmd)
-{
-	int		fd;
-	char	*eof;
-
-	while (*cmd)
-	{
-		if (*cmd == '<' && *(cmd + 1) == '<')
-		{
-			fd = open(HDOC_TMP_FILENAME, O_RDWR | O_CREAT | O_TRUNC, 0644);
-			cmd += 2;
-			eof = ft_strword(cmd);
-			hdoc(eof, fd);
-			write(1, "\n", 1);
-			free(eof);
-		}
-		else
-			cmd++;
-	}
-}
-
-void					prepare_hdoc(t_redirections *t, t_redirection *r)
-{
-	r->fd = open(HDOC_TMP_FILENAME, O_RDWR | O_RDONLY);
-	write(1, "\n", 1);
-	ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
-}
-
-/*
-char					*get_filename(int i)
+static char				*get_filename(int i)
 {
 	char				*i_to_a;
 	char				*s;
@@ -101,58 +81,55 @@ char					*get_filename(int i)
 	return (s);
 }
 
-int						*create_hdoc_tab(char *cmd)
-{
-	int		*fds;
-	int		size;
-	char	*s;
-	char	*eof;
+/*
+**	faire tout les hdocs d'un coup
+*/
 
-	s = cmd;
-	size = 0;
+int						do_all_hdoc(char *cmd)
+{
+	int				fd;
+	char			*eof;
+	char			*s;
+
+	s = NULL;
+	nhdoc(0);
 	while (*cmd)
 	{
 		if (*cmd == '<' && *(cmd + 1) == '<')
 		{
-			size++;
-			cmd += 2;
-		}
-		else
-			cmd++;
-	}
-	fds = (int*)malloc(sizeof(int) * (size + 1));
-	ft_memset(fds, 0, sizeof(int) * (size + 1));
-	cmd = s;
-	size = 0;
-	while (*cmd)
-	{
-		if (*cmd == '<' && *(cmd + 1) == '<')
-		{
-			s = get_filename(size);
-			fds[size++] = open(s, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			s = get_filename(nhdoc(1));
+			fd = open(s, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			cmd += 2;
 			eof = ft_strword(cmd);
-			hdoc(eof, fds[size]);
-			write(1, "\n", 1);
-			free(s);
-			free(eof);
+			if (*eof)
+			{
+				hdoc(eof, fd);
+				write(1, "\n", 1);
+				free(eof);
+				free(s);
+				close(fd);
+			}
+			else
+			{
+				write(2, "Need an end string\n", 19);
+				free(eof);
+				free(s);
+				close(fd);
+				return (1);
+			}
 		}
 		else
 			cmd++;
 	}
-	return (fds);
+	return (0);
 }
 
-
-void					do_hdoc(int *fds, int in)
+void					prepare_hdoc(t_redirections *t, t_redirection *r)
 {
-	while (*fds == -1)
-		fds++;
-	if (*fds != 0)
-	{
-		dup2(*fds, in);
-		close(*fds);
-	}
-	*fds = -1;
+	char				*s;
+
+	s = get_filename(nhdoc(1));
+	r->fd = open(s, O_RDONLY);
+	r->filename = s;
+	ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
 }
-*/

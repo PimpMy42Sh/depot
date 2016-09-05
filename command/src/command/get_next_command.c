@@ -9,7 +9,7 @@ void			print_command(t_command *c)
 {
 	char		**args;
 
-	printf("==== %p ===\n", c);
+	printf("==== %p ====\n", c);
 	args = c->argv;
 	while (*args)
 	{
@@ -34,7 +34,6 @@ void		reset_copy(char **cpy, char **str)
 	*cpy = ft_strnew(1024);
 	*str = *cpy;
 }
-
 
 t_list			*get_pipeline(char **s, t_env *e)
 {

@@ -50,8 +50,8 @@ command/alloc_redirection.c command/deps.c command/exec.c\
 command/make_redirection.c command/split_cmd.c\
 command/get_next_command.c command/verification.c command/hdoc.c\
 buitlins/checking.c line_edition/check_parentheses.c\
-line_edition/check_line_is_close.c buitlins/ft_echo.c
-
+line_edition/check_line_is_close.c buitlins/ft_echo.c\
+#bonus/completion.c
 
 LIB_NAME = -lft
 

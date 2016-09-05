@@ -59,7 +59,7 @@ void			do_redirections(int cfg, t_redirections *redirs, int in, int out)
 //		printf("%d, %d, %d\n", i, redirs->fd_agr1[i], redirs->fd_agr2[i]);
 		if (redirs->fd_agr1[i])
 			dup2(redirs->fd_agr2[i], i);
-		else if (redirs->close_fd[i])
+		if (redirs->close_fd[i])
 			close(i);
 		i++;
 	}
@@ -84,25 +84,17 @@ static void		normalize_build_redirection(int *fd, int *type, char **cmd)
 		(*cmd)++;
 	}
 	if (!ft_strncmp(*cmd, "<<", 2))
-	{
 		*type = DCHEVRON_GAUCHE;
-		(*cmd) += 2;
-	}
 	else if (!ft_strncmp(*cmd, ">>", 2))
-	{
 		*type = DCHEVRON_DROIT;
-		(*cmd) += 2;
-	}
 	else if (**cmd == '<')
-	{
 		*type = CHEVRON_GAUCHE;
-		(*cmd)++;
-	}
 	else if (**cmd == '>')
-	{
 		*type = CHEVRON_DROIT;
+	while (**cmd == '>' || **cmd == '<')
 		(*cmd)++;
-	}
+	if (*fd == -1 && **cmd == '&')
+		*fd = *type & 1;
 }
 
 /*

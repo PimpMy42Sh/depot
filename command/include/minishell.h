@@ -50,6 +50,8 @@
 # define CTRL_R			18
 # define CTRL_L			12
 # define CTRL_T			20
+# define CTRL_H
+# define TABULATION		'\t'
 # define U_CUT			117
 # define MAX_SIZE		1
 
@@ -363,4 +365,9 @@ void										check_signal(void);
 **	DEBUG
 */
 void										debug(char *str, int l);
+
+/*
+**	Other bonus
+*/
+void										completion(t_it *it, int reset);
 #endif

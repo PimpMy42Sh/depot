@@ -57,7 +57,7 @@ static int			more_pipe(int in, int out, t_command *cmd, t_env *env)
 		}
 		start_prgm(env->environ, cmd->argv);
 	}
-	return (WEXITSTATUS(&pid));
+	return (WEXITSTATUS(pid));
 }
 
 /*
@@ -93,7 +93,7 @@ int					ft_pipes(t_list *cmds, int child, t_env *env)
 		close(in);
 	}
 	start_prgm(env->environ, c->argv);
-	return (WEXITSTATUS(&child));
+	return (WEXITSTATUS(child));
 }
 
 void				execution(t_list *pipeline, t_env *e)

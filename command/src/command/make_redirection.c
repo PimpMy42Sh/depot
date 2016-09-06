@@ -54,6 +54,9 @@ void			do_redirections(int cfg, t_redirections *redirs, int in, int out)
 	int			i;
 
 	i = 0;
+	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, in, redirs->in);
+	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, out, redirs->out);
+	do__redirection(cfg & CFG_ALL_REDIRECTION_ERR, STDERR_FILENO, redirs->err);
 	while (i < MAX_AGR)
 	{
 //		printf("%d, %d, %d\n", i, redirs->fd_agr1[i], redirs->fd_agr2[i]);
@@ -63,9 +66,6 @@ void			do_redirections(int cfg, t_redirections *redirs, int in, int out)
 			close(i);
 		i++;
 	}
-	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, in, redirs->in);
-	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, out, redirs->out);
-	do__redirection(cfg & CFG_ALL_REDIRECTION_ERR, STDERR_FILENO, redirs->err);
 }
 
 /*
@@ -116,7 +116,7 @@ int				build_redirection(t_redirections *r, char **cmd)
 	if (fd >= 0 && fd < MAX_AGR && **cmd == '&')
 	{
 		(*cmd)++;
-		r->fd_agr1[fd] = 1;
+		r->fd_agr1[fd] = 1;	//r->fd_arg1 |= 1 << fd
 		if (**cmd == '-')
 			r->close_fd[fd] = 1;
 		else

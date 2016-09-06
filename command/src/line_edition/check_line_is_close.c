@@ -44,6 +44,9 @@ static int			check_quotes(char *line)
 		{
 			if (check_close_quotes(line, D_QUOTES))
 				return (BAD_D_QUOTES);
+			i++;
+			while (line[i] != D_QUOTES && line[i])
+				i++;
 		}
 		else if (line[i] == B_QUOTES)
 		{
@@ -101,11 +104,11 @@ static int	   check_syntax_error(char *line)
 	return (0);
 }
 
-int			      check_line_is_close(char *line)
+int			      check_line_is_close(char **line)
 {
 	int			i;
 
-	if ((i = check_syntax_error(line)))
+	if ((i = check_syntax_error(*line)))
 		return (i);
 	else if ((i = check_quotes(line)))
 		return (i);

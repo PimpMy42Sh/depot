@@ -275,7 +275,7 @@ void										init_struct(t_norme *norme);
 void										parse_line(t_it *it);
 void										edit_line(t_it *it);
 int											return_offset(void);
-int											check_line_is_close(char *line);
+int											check_line_is_close(char **s, t_list **lst);
 int											check_parentheses(char *line);
 
 /*

@@ -129,7 +129,7 @@ t_list			*get_pipeline(char **s, t_env *e);
 void				execution(t_list *pipeline, t_env *e);
 int					check_bultins_exit(char **av, t_env *env);
 void			do_redirections(int cfg, t_redirections *redirs, int in, int out);
-int					verification_line(char *s);
+int					verification_line(char **s, t_it *it);
 int					verification_pipeline(t_list *pipeline);
 int					nhdoc(int reset);
 

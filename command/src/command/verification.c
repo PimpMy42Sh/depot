@@ -35,9 +35,7 @@ static int			verification_redirections(t_redirections *rs)
 int			verification_pipeline(t_list *pipeline)
 {
 	t_command		*c;
-	t_command		*last_c;
 
-	last_c = NULL;
 	while (pipeline)
 	{
 		c = pipeline->content;
@@ -46,27 +44,103 @@ int			verification_pipeline(t_list *pipeline)
 			write(2, "Need a valide command\n", 22);
 			return (1);
 		}
+		if (!c->args)
+		{
+			write(2, "Need a valide command\n", 22);
+			return (1);
+		}
 		//print_command(c);
 		if (verification_redirections(&c->redirs))
 			return (2);
-		/*if (last_c && !c->argv)
-		{
-			write(2, "Need a valid command after a '|'\n", 27);
-			return (3);
-		}*/
 		if (c->need_redir && !c->args)
 		{
 			write(2, "Need a valide command\n", 22);
 			return (4);
 		}
-		last_c = c;
 		pipeline = pipeline->next;
 	}
 	return (0);
-	(void)last_c;
 }
 
-int					verification_line(char *s)
+static int				is_a_newline(t_it *it, char eof)
 {
-	return (check_parentheses(s) || check_line_is_close(s));
+	int		delta;
+
+	delta = (it->len + 2) / it->ws_col;
+	move_begin(it);
+	while (delta)
+	{
+		tputs(tgetstr(DOWN, NULL), 0, my_putchar);
+		delta--;
+	}
+	if (it->line)
+	{
+		if (it->buffer == eof)
+			return (0);
+		ft_putendl(it->line);
+	}
+	else
+		write(1, "\n", 1);
+	return (1);
+}
+
+static char				*not_close(char **s, char eof, t_it *it)
+{
+	it->eof = 1;
+	printf("%c\n", eof);
+	if (verification_line(s, it))
+	{
+		ft_putstr("> ");
+		resumed_terminal();
+		while (read(0, &it->buffer, 4))
+		{
+			if ((it->buffer == CTRL_D && !it->len) || !it->eof)
+				break ;
+			parse_line(it);
+			if (it->buffer == '\n')
+			{
+				if (!is_a_newline(it, eof))
+					break ;
+				it->i = 0;
+				it->buffer = 0;
+				it->len = 0;
+				it->line = 0;
+				ft_putstr("\n> ");
+			}
+			it->buffer = 0;
+		}
+		suspend_terminal();
+	}
+	it->eof = 0;
+	return (NULL);
+}
+
+static char			check_eof(int ref)
+{
+	if (ref == BAD_QUOTES)
+		return (39);
+	if (ref == BAD_D_QUOTES)
+		return (34);
+	if (ref == BAD_B_QUOTES)
+		return ('`');
+	if (ref == BAD_PARENTHESE)
+		return (')');
+	if (ref == BAD_CROCHETS)
+		return (']');
+	if (ref == BAD_ACCOLADES)
+		return ('}');
+	return (0);
+}
+
+int					verification_line(char **s, t_it *it)
+{
+	int			i;
+	char		eof;
+
+	if ((i = check_line_is_close(*s)))
+	{
+		eof = check_eof(i);
+		not_close(s, eof, it);
+	}
+	return (0);
 }

@@ -31,7 +31,7 @@ static int				is_a_newline(t_it *it, int fd, char *eof)
 	}
 	if (it->line)
 	{
-		if (!ft_strcmp(it->line, eof))
+		if (!ft_strcmp(it->, eof))
 			return (0);
 		ft_putendl_fd(it->line, fd);
 	}

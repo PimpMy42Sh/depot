@@ -65,6 +65,15 @@ t_redirection		*new_redirection(t_redirections *t, int type,
 	return (r);
 }
 
+void				end_agr(t_agregateur *a)
+{
+	if (a->fd_1 != -1 && a->fd_1 > 2)
+		close(a->fd_1);
+	if (a->fd_2 != -1 && a->fd_2 > 2)
+		close(a->fd_2);
+	free(a->filename);
+}
+
 void				end_redirection(t_redirection *r)
 {
 	if (r->fd != -1)
@@ -78,10 +87,14 @@ void				end_redirections(t_redirections *redirs)
 	t_list			*lst;
 	t_list			*next;
 
-	ft_memset(redirs->fd_agr1, 0, sizeof(redirs->fd_agr1));
-	ft_memset(redirs->fd_agr2, -1, sizeof(redirs->fd_agr1));
-	ft_memset(redirs->close_fd, 0, sizeof(redirs->fd_agr1));
-
+	lst = redirs->agr;
+	while (lst)
+	{
+		next = lst->next;
+		end_agr(lst->content);
+		free(lst);
+		lst = next;
+	}
 	lst = redirs->in;
 	while (lst)
 	{

@@ -7,11 +7,9 @@
 
 int						is_a_redirection(char *cmd)
 {
-	return (((ft_isdigit(*cmd) || *cmd == '&') &&
-				(*(cmd + 1) == '<' || *(cmd + 1) == '>') &&
-				!(*(cmd + 3) == '<' || *(cmd + 3) == '>')) ||
-			((*cmd == '<' || *cmd == '>') &&
-			!(*(cmd + 2) == '<' || *(cmd + 2) == '>')));
+	while (ft_isdigit(*cmd))
+		cmd++;
+	return (*cmd == '>' || *cmd == '<');
 }
 
 /*

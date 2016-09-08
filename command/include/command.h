@@ -10,7 +10,7 @@
 # define CFG_ALL_REDIRECTION_OUT 2
 # define CFG_ALL_REDIRECTION_ERR 4
 # define HDOC_TMP_FILENAME "/tmp/hdoc"
-# define MAX_AGR 9
+# define MAX_AGR 10
 # include "../libft/libft.h"
 # include <sys/wait.h>
 # include <dirent.h>
@@ -23,6 +23,13 @@
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 
+typedef struct		s_agregateur
+{
+	int				fd_1;
+	int				fd_2;
+	int				close;
+	char			*filename;
+}					t_agregateur;
 /*
 **	Redirection data structure
 **
@@ -47,10 +54,7 @@ typedef struct		s_redirection
 
 typedef struct		s_redirections
 {
-	int				fd_agr1[MAX_AGR];
-	int				fd_agr2[MAX_AGR];
-	int				close_fd[MAX_AGR];
-
+	t_list			*agr;
 	t_list			*out;
 	t_list			*in;
 	t_list			*err;

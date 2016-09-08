@@ -60,13 +60,14 @@ static void				hdoc(char *eof, int fd)
 			it->i = 0;
 			it->buffer = 0;
 			it->len = 0;
-			it->line = 0;
+			ft_memdel((void**)&it->line);
 			ft_putstr("\n> ");
 		}
 		it->buffer = 0;
 	}
 	suspend_terminal();
 	it->eof = 0;
+	free(eof);
 	close(fd);
 }
 

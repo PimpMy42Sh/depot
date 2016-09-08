@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/31 16:28:24 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/08 14:15:24 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,8 +275,6 @@ void										init_struct(t_norme *norme);
 void										parse_line(t_it *it);
 void										edit_line(t_it *it);
 int											return_offset(void);
-int											check_line_is_close(char **s, t_list **lst);
-int											check_parentheses(char *line);
 
 /*
 **	cursor_moves

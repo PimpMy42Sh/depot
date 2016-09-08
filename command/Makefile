@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/08/04 15:20:06 by Marco            ###   ########.fr        #
+#    Updated: 2016/09/08 14:11:21 by mfamilar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,7 @@ line_edition/cursor_moves_one_word_left.c\
 command/alloc_redirection.c command/deps.c command/exec.c\
 command/make_redirection.c command/split_cmd.c\
 command/get_next_command.c command/verification.c command/hdoc.c\
-buitlins/checking.c line_edition/check_parentheses.c\
-line_edition/check_line_is_close.c buitlins/ft_echo.c\
+buitlins/checking.c buitlins/ft_echo.c\
 #bonus/completion.c
 
 LIB_NAME = -lft

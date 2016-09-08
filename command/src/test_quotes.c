@@ -93,7 +93,7 @@ void	dbg(char *s)
 
 int		main()
 {
-	char	*s = "\'\"()\"";
+	char	*s = "\'\"()";
 	dbg(s);
 	return (0);
 }

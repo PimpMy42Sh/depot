@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/24 11:45:41 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/08 14:14:16 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	split_cmd(t_it *it, t_env *env)
 	ft_putchar('\n');
 	history = create_elem(history, it->line);
 	s = it->line;
-	if (verification_line(s, it) || do_all_hdoc(s))
+	if (do_all_hdoc(s))
 		return ;
 	nhdoc(0);
 	while (*s)

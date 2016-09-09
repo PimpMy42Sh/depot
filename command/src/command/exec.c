@@ -111,8 +111,8 @@ static void   execute_pipes(t_list *cmds, t_env *env)
 	close_pipes(pipes, n_cmds);
 	while (i <= n)
 	{
-	wait(NULL);
-	i++;
+		wait(NULL);
+		i++;
 	}
 	free(pipes);
 	exit(1);

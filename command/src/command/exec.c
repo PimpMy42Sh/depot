@@ -39,58 +39,87 @@ static void			start_prgm(char **env, char **argv)
 **	By ayoub
 */
 
-static int			more_pipe(int in, int out, t_command *cmd, t_env *env)
-{
-	pid_t			pid;
-
-	if ((pid = fork()) == 0)
-	{
-		if (in != 0)
-		{
-			dup2(in, 0);
-			close(in);
-		}
-		if (out != 1)
-		{
-			dup2(out, 1);
-			close(out);
-		}
-		start_prgm(env->environ, cmd->argv);
-	}
-	return (WEXITSTATUS(pid));
-}
+// static int			more_pipe(int in, int out, t_command *cmd, t_env *env)
+// {
+// 	pid_t			pid;
+//
+// 	if ((pid = fork()) == 0)
+// 	{
+// 		if (in != 0)
+// 		{
+// 			dup2(in, 0);
+// 			close(in);
+// 		}
+// 		if (out != 1)
+// 		{
+// 			dup2(out, 1);
+// 			close(out);
+// 		}
+// 		start_prgm(env->environ, cmd->argv);
+// 	}
+// 	return (WEXITSTATUS(pid));
+// }
 
 /*
 **	By ayoub
 */
 
+// int					ft_pipes(t_list *cmds, int child, t_env *env)
+// {
+// 	int				in;
+// 	int				fd[2];
+// 	t_command		*c;
+//
+// 	in = 0;
+// 	while (cmds->next)
+// 	{
+// 		pipe(fd);
+// 		c = cmds->content;
+// 		if (c->need_redir)
+// 			do_redirections(&c->redirs, in, fd[1]);
+// 		more_pipe(in, fd[1], c, env);
+// 		close(fd[1]);
+// 		in = fd[0];
+// 		cmds = cmds->next;
+// 	}
+// 	c = cmds->content;
+// 	if (c->need_redir)
+// 		do_redirections(&c->redirs, in, STDOUT_FILENO);
+// 	if (in != 0)
+// 	{
+// 		dup2(in, 0);
+// 		close(in);
+// 	}
+// 	start_prgm(env->environ, c->argv);
+// 	return (WEXITSTATUS(child));
+// }
+
 int					ft_pipes(t_list *cmds, int child, t_env *env)
 {
-	int				in;
-	int				fd[2];
+	int pipefd[2];
+	int	pid;
 	t_command		*c;
 
-	in = 0;
-	while (cmds->next)
-	{
-		pipe(fd);
-		c = cmds->content;
-		if (c->need_redir)
-			do_redirections(&c->redirs, in, fd[1]);
-		more_pipe(in, fd[1], c, env);
-		close(fd[1]);
-		in = fd[0];
-		cmds = cmds->next;
-	}
 	c = cmds->content;
-	if (c->need_redir)
-		do_redirections(&c->redirs, in, STDOUT_FILENO);
-	if (in != 0)
+	pipe(pipefd);
+	pid = fork();
+	if (pid == 0)
 	{
-		dup2(in, 0);
-		close(in);
+		c = cmds->next->content;
+		if (c->need_redir)
+			do_redirections(&c->redirs, pipefd[0], STDOUT_FILENO);
+		dup2(pipefd[0], 0);
+		close(pipefd[1]);
+		start_prgm(env->environ, c->argv);
 	}
-	start_prgm(env->environ, c->argv);
+	else
+	{
+		if (c->need_redir)
+			do_redirections(&c->redirs, STDIN_FILENO, pipefd[1]);
+		dup2(pipefd[1], 1);
+		close(pipefd[0]);
+		start_prgm(env->environ, c->argv);
+	}
 	return (WEXITSTATUS(child));
 }
 

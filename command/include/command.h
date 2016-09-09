@@ -81,12 +81,13 @@ typedef struct		s_command
 **
 **	Initialisation, allocation et liberation
 */
-void				prepare_hdoc(t_redirections *t, t_redirection *r);
+void				prepare_hdoc(t_redirection *r);
 t_redirection		*new_redirection(t_redirections *t, int fd, int type,
 					char *filename);
 void				end_redirection(t_redirection *r);
 void				end_redirections(t_redirections *redirs);
 int					do_all_hdoc(char *cmd);
+void				redirection_add(t_list **alst, t_redirection *new);
 
 
 /*

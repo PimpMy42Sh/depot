@@ -12,7 +12,7 @@
 
 #include <command.h>
 
-static void	redirection_add(t_list **alst, t_redirection *new)
+void	redirection_add(t_list **alst, t_redirection *new)
 {
 	int				ok;
 	t_list			*tmp;
@@ -55,7 +55,7 @@ t_redirection		*new_redirection(t_redirections *t, int fd, int type,
 	else if (type == CHEVRON_GAUCHE)
 		r->fd = open(filename, O_RDONLY);
 	else if (type == DCHEVRON_GAUCHE)
-		prepare_hdoc(t, r);
+		prepare_hdoc(r);
 	redirection_add(&t->normal, r);
 	return (r);
 }

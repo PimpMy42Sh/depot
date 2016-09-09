@@ -76,19 +76,19 @@ static int    recursive_execution(t_env *e, t_list *cmds, int *pipes, int n, int
 		c = (t_command*)cmds->content;
 		if (!fork())
 		{
-			if (!n) //connect 1 => pipes[1]
+			if (!n) //connect first output => pipes[1]
 				dup2(pipes[1], STDOUT_FILENO);
-			else if (n >= (n_cmds - 1) * 2) //last output => new_input
+			else if (n >= (n_cmds - 1) * 2) //last output => final input
 				dup2(pipes[n - 2], STDIN_FILENO);
 			else //connect last output command => new input command
 			{
 				dup2(pipes[n - 2], STDIN_FILENO);
 				dup2(pipes[n + 1], STDOUT_FILENO);
-		}
-		close_pipes(pipes, n_cmds);
-		if (c->need_redir)
-			do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
-		start_prgm(e->environ, c->argv);
+			}
+			close_pipes(pipes, n_cmds);
+			if (c->need_redir)
+				do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
+			start_prgm(e->environ, c->argv);
 		}
 		else
 			ret = recursive_execution(e, cmds->next, pipes, n + 2, n_cmds);

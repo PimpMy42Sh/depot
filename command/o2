@@ -1,0 +1,12 @@
+total 3400
+-rwxr-xr-x  1 r2d2 r2d2  150818 Sep  9 18:25 21sh
+-rw-r--r--  1 r2d2 r2d2 1622320 Sep  9 16:55 21sh.fr.pdf
+-rw-r--r--  1 r2d2 r2d2      10 Sep  9 16:55 auteur
+-rw-r--r--  1 r2d2 r2d2 1671491 Sep  9 16:55 bareme_21sh.pdf
+drwxr-xr-x  2 r2d2 r2d2    4096 Sep  9 16:55 include
+drwxr-xr-x  2 r2d2 r2d2    4096 Sep  9 17:53 libft
+-rw-r--r--  1 r2d2 r2d2    3123 Sep  9 16:55 Makefile
+-rw-r--r--  1 r2d2 r2d2      77 Sep  9 18:29 o1
+-rw-r--r--  1 r2d2 r2d2       0 Sep  9 18:29 o2
+drwxr-xr-x  2 r2d2 r2d2    4096 Sep  9 18:25 obj
+drwxr-xr-x 10 r2d2 r2d2    4096 Sep  9 16:55 src

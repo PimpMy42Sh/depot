@@ -67,7 +67,6 @@ static void				hdoc(char *eof, int fd)
 	}
 	suspend_terminal();
 	it->eof = 0;
-	free(eof);
 	close(fd);
 }
 
@@ -125,12 +124,10 @@ int						do_all_hdoc(char *cmd)
 	return (0);
 }
 
-void					prepare_hdoc(t_redirections *t, t_redirection *r)
+void					prepare_hdoc(t_redirection *r)
 {
 	char				*s;
 
 	s = get_filename(nhdoc(1));
 	r->fd = open(s, O_RDONLY);
-	r->filename = s;
-	ft_lstadd(&t->normal, ft_lstnew_noalloc(r, sizeof(t_redirection)));
 }

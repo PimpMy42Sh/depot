@@ -35,92 +35,87 @@ static void			start_prgm(char **env, char **argv)
 	exit(1);
 }
 
-/*
-**	By ayoub
-*/
-
-// static int			more_pipe(int in, int out, t_command *cmd, t_env *env)
-// {
-// 	pid_t			pid;
-//
-// 	if ((pid = fork()) == 0)
-// 	{
-// 		if (in != 0)
-// 		{
-// 			dup2(in, 0);
-// 			close(in);
-// 		}
-// 		if (out != 1)
-// 		{
-// 			dup2(out, 1);
-// 			close(out);
-// 		}
-// 		start_prgm(env->environ, cmd->argv);
-// 	}
-// 	return (WEXITSTATUS(pid));
-// }
-
-/*
-**	By ayoub
-*/
-
-// int					ft_pipes(t_list *cmds, int child, t_env *env)
-// {
-// 	int				in;
-// 	int				fd[2];
-// 	t_command		*c;
-//
-// 	in = 0;
-// 	while (cmds->next)
-// 	{
-// 		pipe(fd);
-// 		c = cmds->content;
-// 		if (c->need_redir)
-// 			do_redirections(&c->redirs, in, fd[1]);
-// 		more_pipe(in, fd[1], c, env);
-// 		close(fd[1]);
-// 		in = fd[0];
-// 		cmds = cmds->next;
-// 	}
-// 	c = cmds->content;
-// 	if (c->need_redir)
-// 		do_redirections(&c->redirs, in, STDOUT_FILENO);
-// 	if (in != 0)
-// 	{
-// 		dup2(in, 0);
-// 		close(in);
-// 	}
-// 	start_prgm(env->environ, c->argv);
-// 	return (WEXITSTATUS(child));
-// }
-
-int					ft_pipes(t_list *cmds, int child, t_env *env)
+static int    *open_pipes(int n_cmds)
 {
-	int pipefd[2];
-	int	pid;
-	t_command		*c;
+	int     *pipes;
+	int     i;
 
-	c = cmds->content;
-	pipe(pipefd);
-	pid = fork();
-	if (pid == 0)
+	pipes = (int*)malloc(sizeof(int) * ((n_cmds - 1) * 2));
+	i = 0;
+	while (i < (n_cmds - 1) * 2)
 	{
-		c = cmds->next->content;
-		if (c->need_redir)
-			do_redirections(&c->redirs, pipefd[0], STDOUT_FILENO);
-		dup2(pipefd[0], 0);
-		close(pipefd[1]);
-		start_prgm(env->environ, c->argv);
+		pipe(pipes + i);
+		i += 2;
 	}
-	else
+	return (pipes);
+}
+
+static void   close_pipes(int *pipes, int n_cmds)
+{
+	int     i;
+
+	i = 0;
+	while (i < (n_cmds - 1) * 2)
 	{
-		if (c->need_redir)
-			do_redirections(&c->redirs, STDIN_FILENO, pipefd[1]);
-		dup2(pipefd[1], 1);
-		close(pipefd[0]);
-		start_prgm(env->environ, c->argv);
+		if (pipes[i] > 2)
+			close(pipes[i]);
+		if (pipes[i + 1] > 2)
+			close(pipes[i + 1]);
+		i += 2;
 	}
-	return (WEXITSTATUS(child));
+}
+
+static int    recursive_execution(t_env *e, t_list *cmds, int *pipes, int n, int n_cmds)
+{
+	t_command *c;
+	int     ret;
+
+	ret = 0;
+	if (cmds)
+	{
+		c = (t_command*)cmds->content;
+		if (!fork())
+		{
+			if (!n) //connect 1 => pipes[1]
+				dup2(pipes[1], STDOUT_FILENO);
+			else if (n >= (n_cmds - 1) * 2) //last output => new_input
+				dup2(pipes[n - 2], STDIN_FILENO);
+			else //connect last output command => new input command
+			{
+				dup2(pipes[n - 2], STDIN_FILENO);
+				dup2(pipes[n + 1], STDOUT_FILENO);
+		}
+		close_pipes(pipes, n_cmds);
+		if (c->need_redir)
+			do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
+		start_prgm(e->environ, c->argv);
+		}
+		else
+			ret = recursive_execution(e, cmds->next, pipes, n + 2, n_cmds);
+	}
+	return (ret + 1);
+}
+
+
+static void   execute_pipes(t_list *cmds, t_env *env)
+{
+	int     *pipes;
+	int     n_cmds;
+	int     i;
+	int     n;
+
+	i = 0;
+	n_cmds = ft_lstsize(cmds);
+	pipes = open_pipes(n_cmds);
+	n = recursive_execution(env, cmds, pipes, 0, n_cmds);
+	close_pipes(pipes, n_cmds);
+	while (i <= n)
+	{
+	wait(NULL);
+	i++;
+	}
+	free(pipes);
+	exit(1);
 }
 
 void				execution(t_list *pipeline, t_env *e)
@@ -133,7 +128,7 @@ void				execution(t_list *pipeline, t_env *e)
 		if (pipeline->next)
 		{
 			if (!(p = fork()))
-				ft_pipes(pipeline, p, e);
+				execute_pipes(pipeline, e);
 			wait(NULL);
 		}
 		else

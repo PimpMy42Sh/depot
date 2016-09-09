@@ -16,7 +16,7 @@ void			print_command(t_command *c)
 		printf("%s\n", *args);
 		args++;
 	}
-	printf("(%d %d %d)\n", ft_lstsize(c->redirs.in), ft_lstsize(c->redirs.out), ft_lstsize(c->redirs.err));
+	printf("(%d %d)\n", ft_lstsize(c->redirs.normal), ft_lstsize(c->redirs.agr));
 }
 
 void		free_command(t_command *c)

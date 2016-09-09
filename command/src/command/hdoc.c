@@ -132,5 +132,5 @@ void					prepare_hdoc(t_redirections *t, t_redirection *r)
 	s = get_filename(nhdoc(1));
 	r->fd = open(s, O_RDONLY);
 	r->filename = s;
-	ft_lstadd(&t->in, ft_lstnew_noalloc(r, sizeof(t_redirection)));
+	ft_lstadd(&t->normal, ft_lstnew_noalloc(r, sizeof(t_redirection)));
 }

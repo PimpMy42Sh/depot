@@ -38,6 +38,7 @@ static int			verification_agregateur_list(t_list *lst)
 		}
 		else if (a->fd_2 >= MAX_AGR || a->fd_1 >= MAX_AGR)
 		{
+			ft_putnbr_fd((a->fd_1 >= MAX_AGR) ? a->fd_1 : a->fd_2, 2);
 			write(2, ": Bad file descriptor\n", 22);
 			return (1);
 		}
@@ -48,9 +49,7 @@ static int			verification_agregateur_list(t_list *lst)
 
 static int			verification_redirections(t_redirections *rs)
 {
-	if (verification_redirection_list(rs->in) ||
-		verification_redirection_list(rs->out) ||
-		verification_redirection_list(rs->err) ||
+	if (verification_redirection_list(rs->normal) ||
 		verification_agregateur_list(rs->agr))
 		return (1);
 	return (0);

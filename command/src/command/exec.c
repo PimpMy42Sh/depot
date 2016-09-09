@@ -75,18 +75,16 @@ int					ft_pipes(t_list *cmds, int child, t_env *env)
 	{
 		pipe(fd);
 		c = cmds->content;
-//		print_command(c);
 		if (c->need_redir)
-			do_redirections(0, &c->redirs, in, fd[1]);
+			do_redirections(&c->redirs, in, fd[1]);
 		more_pipe(in, fd[1], c, env);
 		close(fd[1]);
 		in = fd[0];
 		cmds = cmds->next;
 	}
 	c = cmds->content;
-//	print_command(c);
 	if (c->need_redir)
-		do_redirections(0, &c->redirs, in, STDOUT_FILENO);
+		do_redirections(&c->redirs, in, STDOUT_FILENO);
 	if (in != 0)
 	{
 		dup2(in, 0);
@@ -117,7 +115,7 @@ void				execution(t_list *pipeline, t_env *e)
 				if (!(p = fork()))
 				{
 					if (c->need_redir)
-						do_redirections(0, &c->redirs, 0, 1);
+						do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
 					start_prgm(e->environ, c->argv);
 				}
 				wait(NULL);

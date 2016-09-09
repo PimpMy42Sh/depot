@@ -54,7 +54,7 @@ void			build_agregateur(t_redirections *r, int fd, int type, char **cmd)
 	}
 	while (**cmd == ' ')
 		(*cmd)++;
-	(*cmd) += ft_strlen(word);
+	(*cmd) += ft_strlen(word) + 1;
 	ft_lstadd(&r->agr, ft_lstnew(&a, sizeof(t_agregateur)));
 }
 
@@ -92,25 +92,20 @@ void		do__agr_dup(t_list *lst)
 **	lst:	liste de redirection
 */
 
-static void		do__redirection(int cfg, int fd, t_list *lst)
+static void		do__redirection(int in, int out, t_list *lst)
 {
 	t_redirection	*r;
-
-	if (cfg)
-	{
-		while (lst)
-		{
-			r = (t_redirection*)lst->content;
-			dup2(r->fd, fd);
-			close(r->fd);
-			lst = lst->next;
-		}
-	}
-	else if (lst)
+	while (lst)
 	{
 		r = (t_redirection*)lst->content;
-		dup2(r->fd, fd);
+		if (r->stdfd == 1)
+			dup2(r->fd, out);
+		else if (r->stdfd == 0)
+			dup2(r->fd, in);
+		else
+			dup2(r->fd, r->stdfd);
 		close(r->fd);
+		lst = lst->next;
 	}
 }
 
@@ -121,12 +116,10 @@ static void		do__redirection(int cfg, int fd, t_list *lst)
 **	redirections:	donnees de redirections
 */
 
-void			do_redirections(int cfg, t_redirections *redirs, int in, int out)
+void			do_redirections(t_redirections *redirs, int in, int out)
 {
 	do__agr_close(redirs->agr);
-	do__redirection(cfg & CFG_ALL_REDIRECTION_IN, in, redirs->in);
-	do__redirection(cfg & CFG_ALL_REDIRECTION_OUT, out, redirs->out);
-	do__redirection(cfg & CFG_ALL_REDIRECTION_ERR, STDERR_FILENO, redirs->err);
+	do__redirection(in, out, redirs->normal);
 	do__agr_dup(redirs->agr);
 }
 
@@ -189,24 +182,15 @@ int				build_redirection(t_redirections *r, char **cmd)
 		(*cmd)++;
 		build_agregateur(r, fd, type, cmd);
 	}
-	else if (fd == 2 && type & 1)
+	else
 	{
+		if (fd == -1)
+			fd = type & 1;
 		while (**cmd == ' ')
 			(*cmd)++;
-		new_redirection_err(r, type, ft_strword(*cmd));
+		new_redirection(r, fd, type, ft_strword(*cmd));
 		while (**cmd != ' ' && **cmd)
 			(*cmd)++;
 	}
-	else if (type >= 1 && type <= 4)
-	{
-		while (**cmd == ' ')
-			(*cmd)++;
-		new_redirection(r, type, ft_strword(*cmd));
-		while (**cmd != ' ' && **cmd != '|' && **cmd != '<' &&
-			**cmd != '>' && **cmd != ';' && **cmd)
-			(*cmd)++;
-	}
-	else
-		return (0);
 	return (type);
 }

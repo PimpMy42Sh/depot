@@ -43,6 +43,7 @@ typedef struct		s_redirection
 	int				type;
 	char			*filename;
 	int				fd;
+	int				stdfd;
 }					t_redirection;
 
 /*
@@ -55,9 +56,7 @@ typedef struct		s_redirection
 typedef struct		s_redirections
 {
 	t_list			*agr;
-	t_list			*out;
-	t_list			*in;
-	t_list			*err;
+	t_list			*normal;
 }					t_redirections;
 
 /*
@@ -83,9 +82,7 @@ typedef struct		s_command
 **	Initialisation, allocation et liberation
 */
 void				prepare_hdoc(t_redirections *t, t_redirection *r);
-t_redirection		*new_redirection_err(t_redirections *t, int type,
-					char *filename);
-t_redirection		*new_redirection(t_redirections *t, int type,
+t_redirection		*new_redirection(t_redirections *t, int fd, int type,
 					char *filename);
 void				end_redirection(t_redirection *r);
 void				end_redirections(t_redirections *redirs);
@@ -132,7 +129,7 @@ void		free_command(t_command *c);
 t_list			*get_pipeline(char **s, t_env *e);
 void				execution(t_list *pipeline, t_env *e);
 int					check_bultins_exit(char **av, t_env *env);
-void			do_redirections(int cfg, t_redirections *redirs, int in, int out);
+void			do_redirections(t_redirections *redirs, int in, int out);
 int					verification_pipeline(t_list *pipeline);
 int					nhdoc(int reset);
 

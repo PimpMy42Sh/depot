@@ -33,33 +33,7 @@ t_list		*open_file(char *path, char *file)
 	return (lst);
 }
 
-char				*get_name(t_it *it, int *delt)
-{
-	char			*s;
-	int				i;
 
-	i = it->i;
-	s = it->line + i;
-	while (i)
-	{
-		if (*s == ' ' || *s == '|' || *s == ';' || *s == '>' || *s == '<')
-		{
-			i++;
-			s++;
-			break;
-		}
-		s--;
-		i--;
-	}
-	printf("%d, %s\n", i, s);
-	*delt = i;
-	return (s);
-}
-
-char				*get_path()
-{
-	
-}
 
 void				delete_list(t_list *lst)
 {

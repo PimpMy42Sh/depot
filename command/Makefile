@@ -51,8 +51,7 @@ command/make_redirection.c command/identification.c\
 command/get_command.c command/verification.c command/hdoc.c\
 command/hdoc_utils.c command/agregateur.c command/build.c\
 command/pipes.c command/get_pipeline.c command/dbg_command.c\
-buitlins/checking.c buitlins/ft_echo.c\
-#bonus/completion.c
+buitlins/checking.c buitlins/ft_echo.c
 
 LIB_NAME = -lft
 

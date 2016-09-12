@@ -103,7 +103,7 @@ static int		move_to_dir(t_env *env, char *path)
 	}
 }
 
-int			ft_cd(char **av, t_env *env)
+int				ft_cd(char **av, t_env *env)
 {
 	int		i;
 	char	*oldpwd;

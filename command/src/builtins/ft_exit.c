@@ -29,7 +29,6 @@ static void	exit_with_args(char **av, t_env *env)
 
 	i = ft_atoi(av[1]);
 	free_double_array(av);
-	// ft_putchar('\n');
 	if (env)
 	{
 		free_double_array(env->environ);
@@ -42,7 +41,6 @@ static void	exit_with_args(char **av, t_env *env)
 static void	exit_failure(void)
 {
 	ft_putstr_fd(RED, 2);
-	// ft_putchar('\n');
 	ft_putstr_fd("exit: Expression Syntax.\n", 2);
 	ft_putstr_fd(RESET, 2);
 }

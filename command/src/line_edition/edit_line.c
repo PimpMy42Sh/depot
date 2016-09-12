@@ -50,37 +50,35 @@ static void	next_check(t_it *it)
 		else if (!it->r_video && ((it->buffer == ALT_UP) ||
 		(it->buffer == ALT_DOWN)))
 			move_up_and_down(it);
-		//else if (it->buffer == '\t')
-			//completion(it, 1);
 	}
 }
 
 static int	no_reverse_video(t_it *it)
 {
-		if (it->buffer == KU || it->buffer == KD || it->buffer == RET)
-			print_history(it);
-		else if (it->buffer == CTRL_U && it->line)
-			cut_line(it);
-		else if (it->buffer == CTRL_T && it->line)
-			copy_tmpline(it);
-		else if (it->buffer == CTRL_P)
-			paste_line(it);
-		else if (it->buffer == CTRL_L)
+	if (it->buffer == KU || it->buffer == KD || it->buffer == RET)
+		print_history(it);
+	else if (it->buffer == CTRL_U && it->line)
+		cut_line(it);
+	else if (it->buffer == CTRL_T && it->line)
+		copy_tmpline(it);
+	else if (it->buffer == CTRL_P)
+		paste_line(it);
+	else if (it->buffer == CTRL_L)
+	{
+		tputs(tgetstr(CLEAR_TERM, NULL), 0, my_putchar);
+		print_prompt();
+		if (it->line)
+			ft_putstr(it->line);
+	}
+	else if (!it->line)
+	{
+		if (it->buffer == CTRL_D)
 		{
-			tputs(tgetstr(CLEAR_TERM, NULL), 0, my_putchar);
-			print_prompt();
-			if (it->line)
-				ft_putstr(it->line);
+			ft_putchar('\n');
+			ft_exit(NULL, NULL);
 		}
-		else if (!it->line)
-		{
-			if (it->buffer == CTRL_D)
-			{
-				ft_putchar('\n');
-				ft_exit(NULL, NULL);
-			}
-			return (1);
-		}
+		return (1);
+	}
 	return (0);
 }
 

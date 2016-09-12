@@ -12,10 +12,10 @@
 
 #include "../../include/minishell.h"
 
-void			copy_environ(char **av, char **environ, t_norme *flags)
+void				copy_environ(char **av, char **environ, t_norme *flags)
 {
-	int		i;
-	int		j;
+	int				i;
+	int				j;
 
 	i = return_env_size(environ);
 	j = return_env_size(av);
@@ -29,10 +29,10 @@ void			copy_environ(char **av, char **environ, t_norme *flags)
 	flags->copy[i] = 0;
 }
 
-static void		remove_variables(char **av)
+static void			remove_variables(char **av)
 {
-	int		i;
-	int		bol;
+	int				i;
+	int				bol;
 
 	i = 0;
 	bol = 0;
@@ -53,11 +53,11 @@ static void		remove_variables(char **av)
 	}
 }
 
-static void 		env_loop(char **av, t_norme *flags, int j)
+static void			env_loop(char **av, t_norme *flags, int j)
 {
-	char	*tmp;
-	char	*tmp2;
-	int 	i;
+	char			*tmp;
+	char			*tmp2;
+	int				i;
 
 	i = 0;
 	tmp2 = NULL;
@@ -80,10 +80,10 @@ static void 		env_loop(char **av, t_norme *flags, int j)
 	}
 }
 
-void			check_variables(t_norme *flags, char **av,
-			char **environ)
+void				check_variables(t_norme *flags, char **av,
+					char **environ)
 {
-	int		j;
+	int				j;
 
 	if (!flags->copy)
 	{
@@ -98,9 +98,9 @@ void			check_variables(t_norme *flags, char **av,
 	remove_variables(av);
 }
 
-void			remove_flags(char **av, t_norme *flags)
+void				remove_flags(char **av, t_norme *flags)
 {
-	int		i;
+	int				i;
 
 	i = 0;
 	remove_env(av, 0);

@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 16:45:27 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 18:19:11 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,29 @@ static void	split_cmd(t_it *it, t_env *env)
 
 static void	parse(t_it *it, t_env *env)
 {
+	t_tty			*s;
+
+	s = ft_stock_term(NULL);
 	suspend_terminal();
+	s->bol = 0;
 	split_cmd(it, env);
 	ft_memdel((void**)&it->line);
 	resumed_terminal();
-	print_prompt();
+	if (!s->bol)
+		print_prompt();
+	s->bol = 1;
 }
 
 static void	main_loop(t_env *env)
 {
 	t_it			*it;
+	t_tty			*s;
 
 	it = init_it_struct();
+	s = ft_stock_term(0);
 	while (read(0, &it->buffer, 4))
 	{
+		s->bol = 0;
 		parse_line(it);
 		ft_stock_it(it);
 		if (it->buffer == '\n')
@@ -67,7 +76,8 @@ static void	main_loop(t_env *env)
 			{
 				go_to_bottom(it);
 				ft_putchar('\n');
-				print_prompt();
+				if (!s->bol)
+					print_prompt();
 			}
 			ft_memdel((void**)&it->line);
 			it->i = 0;

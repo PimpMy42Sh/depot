@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 16:44:25 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 18:46:16 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@
 # define RESTORE 		"rc"
 # define CLEAR_TERM "cl"
 
-pid_t										g_father;
+pid_t													g_father;
 
 typedef struct								s_norme
 {
@@ -122,6 +122,7 @@ typedef struct								s_tty
 {
 	struct termios							term;
 	struct termios							backup;
+	int													bol;
 }											t_tty;
 
 typedef struct								s_env
@@ -184,8 +185,6 @@ void										no_such_file(char *path);
 */
 t_list										*check_bultins_command(
 											t_list *pipelines, t_env *env);
-int											check_bultins(char **av,
-											t_env *env);
 int											ft_setenv(char **av, t_env *env);
 void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);

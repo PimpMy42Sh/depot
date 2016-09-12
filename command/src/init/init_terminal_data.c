@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 10:48:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/21 17:13:26 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 17:56:23 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int		modifiy_term(t_tty *tty)
 	tty->term.c_lflag &= ~(ECHO);
 	tty->term.c_cc[VMIN] = 1;
 	tty->term.c_cc[VTIME] = 0;
+	tty->bol = 1;
 	if (tcsetattr(0, TCSANOW, &tty->term) == -1)
 	{
 		tcsetattr_error();

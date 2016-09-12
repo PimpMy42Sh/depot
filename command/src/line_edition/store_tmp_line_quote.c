@@ -1,5 +1,15 @@
 #include "../../include/minishell.h"
 
+static void free_structure(t_list *args)
+{
+	while (args)
+	{
+		ft_memdel((void**)&args->content);
+		args = args->next;
+	}
+	ft_memdel((void**)&args);
+}
+
 void		convert_it_line(t_it *it, t_list *args, char **back)
 {
 	int		compteur;
@@ -22,4 +32,5 @@ void		convert_it_line(t_it *it, t_list *args, char **back)
 		args = args->next;
 	}
 	*back = it->line;
+	free_structure(args);
 }

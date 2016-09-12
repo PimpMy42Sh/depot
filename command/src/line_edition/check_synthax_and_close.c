@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/12 15:25:19 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 16:42:12 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 17:35:58 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int		check_line_is_close(char **s, char **back)
 		}
 		(*s)++;
 	}
-	free(begin);
+	ft_memdel((void**)&begin);
 	return (0);
 }
 

@@ -117,6 +117,7 @@ void					execute_pipes(t_list *cmds, t_env *env);
 **	Exec.c
 */
 void					start_prgm(char **env, char **argv);
+int						execution__simple_command(t_command *c, t_env *e);
 int						execution(t_list *pipeline, t_env *e);
 
 /*
@@ -143,4 +144,9 @@ char					*get_filename(int i);
 void					build_agregateur(t_redirections *r, int fd,
 							int type, char **cmd);
 int						build_redirection(t_redirections *r, char **cmd);
+
+/*
+**	Other
+*/
+int						check_bultins(t_command *c, t_env *e);
 #endif

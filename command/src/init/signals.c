@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/05 17:51:45 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/12 18:16:28 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static void				ctrl_c(void)
 {
 	t_it		*it;
+	t_tty		*s;
 
+	s = ft_stock_term(NULL);
 	it = ft_stock_it(NULL);
 	tputs(tgetstr(DEFAULT, NULL), 0, my_putchar);
 	if (it)
@@ -29,11 +31,9 @@ static void				ctrl_c(void)
 		it->first = 1;
 		ft_stock_it(it);
 	}
-	if (g_father == 0)
-	{
 		ft_putchar('\n');
 		print_prompt();
-	}
+		s->bol = 1;
 }
 
 static void				signal_handler(int signum)

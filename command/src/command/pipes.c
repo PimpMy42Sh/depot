@@ -46,9 +46,7 @@ static void			process_execution(void **norme_it,
 		dup2(pipes[n + 1], STDOUT_FILENO);
 	}
 	close_pipes(pipes, n_cmds);
-	if (c->need_redir)
-		do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
-	start_prgm(((t_env*)norme_it[1])->environ, c->argv);
+	execution__simple_command(c, ((t_env*)norme_it[1]));
 }
 
 static int			recursive_execution(void **norme_it,

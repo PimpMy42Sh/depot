@@ -47,8 +47,10 @@ errors/errors_2.c errors/errors_3.c init/struct.c\
 init/init_terminal_data.c init/suspend_terminal.c\
 line_edition/cursor_moves_one_word_left.c\
 command/alloc_redirection.c command/deps.c command/exec.c\
-command/make_redirection.c command/split_cmd.c\
-command/get_next_command.c command/verification.c command/hdoc.c\
+command/make_redirection.c command/identification.c\
+command/get_command.c command/verification.c command/hdoc.c\
+command/hdoc_utils.c command/agregateur.c command/build.c\
+command/pipes.c command/get_pipeline.c command/dbg_command.c\
 buitlins/checking.c buitlins/ft_echo.c\
 #bonus/completion.c
 

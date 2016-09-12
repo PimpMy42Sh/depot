@@ -23,115 +23,124 @@
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 
-typedef struct		s_agregateur
+typedef struct			s_agregateur
 {
-	int				fd_1;
-	int				fd_2;
-	int				close;
-	char			*filename;
-}					t_agregateur;
-/*
-**	Redirection data structure
-**
-**	type:		type de redirection
-**	filename:	nom du fichier
-**	fd:			file descriptor
-*/
+	int					fd_1;
+	int					fd_2;
+	int					close;
+	char				*filename;
+}						t_agregateur;
 
-typedef struct		s_redirection
+typedef struct			s_redirection
 {
-	int				type;
-	char			*filename;
-	int				fd;
-	int				stdfd;
-}					t_redirection;
+	int					type;
+	char				*filename;
+	int					fd;
+	int					stdfd;
+}						t_redirection;
 
-/*
-**	Redirections datas 	(MERCI MERLIN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
-**
-**	fd_out/in:		bit a 1 <=>	redirection dans le fd du n_bit (argregateur)
-**	out/in:			liste de redirection a faire
-*/
-
-typedef struct		s_redirections
+typedef struct			s_redirections
 {
-	t_list			*agr;
-	t_list			*normal;
-}					t_redirections;
+	t_list				*agr;
+	t_list				*normal;
+}						t_redirections;
 
-/*
-**	Commande
-**
-**	fd: 		pipe
-**	split_type:	spliter par ;, || ou bien &&
-**	redirs:		redirections des entrees/sorties d'une suite de commande
-**	pipeline;	liste de commande (dont les contents sont les args)
-*/
-
-typedef struct		s_command
+typedef struct			s_command
 {
-	t_redirections	redirs;
-	t_list			*args;
-	char			**argv;
-	int				need_redir;
-}					t_command;
+	t_redirections		redirs;
+	t_list				*args;
+	char				**argv;
+	int					need_redir;
+}						t_command;
 
 /*
-**	alloc_redirections.c
-**
-**	Initialisation, allocation et liberation
+**	Alloc_redirections.c
 */
-void				prepare_hdoc(t_redirection *r);
-t_redirection		*new_redirection(t_redirections *t, int fd, int type,
-					char *filename);
-void				end_redirection(t_redirection *r);
-void				end_redirections(t_redirections *redirs);
-int					do_all_hdoc(char *cmd);
-void				redirection_add(t_list **alst, t_redirection *new);
-
+t_redirection			*new_redirection(t_redirections *t, int fd, int type,
+						char *filename);
+void					redirection_add(t_list **alst, t_redirection *new);
+void					end_redirections(t_redirections *redirs);
 
 /*
-**	make_redirections.c
-**
-**	Parsing et execution
+**	Make_redirections.c
 */
-
-int					build_redirection(t_redirections *r, char **cmd);
-int					ft_pipes(t_list *cmds, int child, t_env *env);
+void					do_redirections(t_redirections *redirs,
+						int in, int out);
 
 /*
-**	split_cmd.c
-**
-**	Parser de commande
+**	Identification.c
 */
-
-int					is_a_redirection(char *cmd);
-char				**lst_to_tab(t_list *lst);
-t_command			*get_command(char **s, t_env *e);
-void					exec_command(t_command *cmd, t_env *env);
+int						is_a_redirection(char *cmd);
+int						is_a_spec_char(int c);
 
 /*
-**	deps.c
-**
-**	Dependances
+**	Deps.c
 */
-
-char				*ft_strword(char *s);
-t_list				*ft_lstnew_noalloc(void *cnt, size_t cnt_size);
-int					ft_lstsize(t_list *t);
-void				delete_tab(char **t);
+char					*ft_strword(char *s);
+t_list					*ft_lstnew_noalloc(void *cnt, size_t cnt_size);
+int						ft_lstsize(t_list *t);
+void					ft_lstadd_end(t_list **addr, t_list *lst);
+char					**lst_to_tab(t_list *lst);
 
 /*
-**	eval.c
+**	Get_pipeline.c
 */
-void			print_command(t_command *c);
-void			ft_lstadd_end(t_list **addr, t_list *lst);
-void		free_command(t_command *c);
-t_list			*get_pipeline(char **s, t_env *e);
-void				execution(t_list *pipeline, t_env *e);
-int					check_bultins_exit(char **av, t_env *env);
-void			do_redirections(t_redirections *redirs, int in, int out);
-int					verification_pipeline(t_list *pipeline);
-int					nhdoc(int reset);
+t_list					*get_pipeline(char **s, t_env *e);
 
+/*
+**	Get_command.c
+*/
+t_command				*get_command(char **s, t_env *e);
+
+/*
+**	Dbg_command.c
+*/
+void					print_command(t_command *c);
+void					free_command(t_command *c);
+
+/*
+**	Verification.c
+*/
+int						verification_pipeline(t_list *pipeline);
+
+/*
+**	Identification.c
+*/
+int						is_a_spec_char(int c);
+
+/*
+**	Pipes.c
+*/
+void					execute_pipes(t_list *cmds, t_env *env);
+
+/*
+**	Exec.c
+*/
+void					start_prgm(char **env, char **argv);
+int						execution(t_list *pipeline, t_env *e);
+
+/*
+**	Agregateur.c
+*/
+void					do__agr_close(t_list *lst);
+void					do__agr_dup(t_list *lst);
+
+/*
+**	Hdoc.c
+*/
+int						do_all_hdoc(char *cmd);
+
+/*
+**	Hdoc_utils.c
+*/
+int						nhdoc(int reset);
+void					prepare_hdoc(t_redirection *r);
+char					*get_filename(int i);
+
+/*
+**	Build.c
+*/
+void					build_agregateur(t_redirections *r, int fd,
+							int type, char **cmd);
+int						build_redirection(t_redirections *r, char **cmd);
 #endif

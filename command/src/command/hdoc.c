@@ -1,22 +1,14 @@
 #include "../../include/minishell.h"
 #include <command.h>
 
-int					nhdoc(int reset)
+static void				hdoc__reset(t_it *it)
 {
-	static int			n = 0;
-
-	if (reset > 0)
-		n++;
-	else if (reset < 0)
-		n--;
-	else
-		n = 0;
-	return (n);
+	it->i = 0;
+	it->buffer = 0;
+	it->len = 0;
+	ft_memdel((void**)&it->line);
+	ft_putstr("\n> ");
 }
-
-/*
-**	J'ouvre un fd et le ferme pour sauvegarder son contenu
-*/
 
 static int				is_a_newline(t_it *it, int fd, char *eof)
 {
@@ -57,11 +49,7 @@ static void				hdoc(char *eof, int fd)
 		{
 			if (!is_a_newline(it, fd, eof))
 				break ;
-			it->i = 0;
-			it->buffer = 0;
-			it->len = 0;
-			ft_memdel((void**)&it->line);
-			ft_putstr("\n> ");
+			hdoc__reset(it);
 		}
 		it->buffer = 0;
 	}
@@ -70,64 +58,44 @@ static void				hdoc(char *eof, int fd)
 	close(fd);
 }
 
-static char				*get_filename(int i)
+static int				do_all_hdoc__normalize(char **cmd)
 {
-	char				*i_to_a;
 	char				*s;
+	char				*eof;
+	int					fd;
 
-	i_to_a = ft_itoa(i);
-	s = ft_strjoin(HDOC_TMP_FILENAME, i_to_a);
-	free(i_to_a);
-	return (s);
+	s = get_filename(nhdoc(1));
+	fd = open(s, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	*cmd += 2;
+	eof = ft_strword(*cmd);
+	if (*eof)
+	{
+		hdoc(eof, fd);
+		write(1, "\n", 1);
+		free(eof);
+		free(s);
+		close(fd);
+		return (0);
+	}
+	write(2, "Need an end string\n", 19);
+	free(eof);
+	free(s);
+	close(fd);
+	return (1);
 }
-
-/*
-**	faire tout les hdocs d'un coup
-*/
 
 int						do_all_hdoc(char *cmd)
 {
-	int				fd;
-	char			*eof;
-	char			*s;
-
-	s = NULL;
 	nhdoc(0);
 	while (*cmd)
 	{
 		if (*cmd == '<' && *(cmd + 1) == '<')
 		{
-			s = get_filename(nhdoc(1));
-			fd = open(s, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			cmd += 2;
-			eof = ft_strword(cmd);
-			if (*eof)
-			{
-				hdoc(eof, fd);
-				write(1, "\n", 1);
-				free(eof);
-				free(s);
-				close(fd);
-			}
-			else
-			{
-				write(2, "Need an end string\n", 19);
-				free(eof);
-				free(s);
-				close(fd);
+			if (do_all_hdoc__normalize(&cmd))
 				return (1);
-			}
 		}
 		else
 			cmd++;
 	}
 	return (0);
-}
-
-void					prepare_hdoc(t_redirection *r)
-{
-	char				*s;
-
-	s = get_filename(nhdoc(1));
-	r->fd = open(s, O_RDONLY);
 }

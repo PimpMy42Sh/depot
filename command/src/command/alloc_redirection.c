@@ -1,18 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   alloc_redirection.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fjacquem <fjacquem@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 10:16:42 by fjacquem          #+#    #+#             */
-/*   Updated: 2016/08/05 17:54:16 by Marco            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <command.h>
 
-void	redirection_add(t_list **alst, t_redirection *new)
+static void			end_agr(t_agregateur *a)
+{
+	if (a->fd_1 > 2)
+		close(a->fd_1);
+	if (a->fd_2 > 2)
+		close(a->fd_2);
+	free(a->filename);
+	free(a);
+}
+
+static void			end_redirection(t_redirection *r)
+{
+	if (r->fd != -1)
+		close(r->fd);
+	if (r->stdfd > 2)
+		close(r->stdfd);
+	free(r->filename);
+	free(r);
+}
+
+void				redirection_add(t_list **alst, t_redirection *new)
 {
 	int				ok;
 	t_list			*tmp;
@@ -28,14 +36,13 @@ void	redirection_add(t_list **alst, t_redirection *new)
 			ok = 0;
 			end_redirection(r);
 			tmp->content = new;
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 	}
 	if (ok)
 		ft_lstadd(alst, ft_lstnew_noalloc(new, sizeof(t_redirection)));
 }
-
 
 t_redirection		*new_redirection(t_redirections *t, int fd, int type,
 					char *filename)
@@ -58,26 +65,6 @@ t_redirection		*new_redirection(t_redirections *t, int fd, int type,
 		prepare_hdoc(r);
 	redirection_add(&t->normal, r);
 	return (r);
-}
-
-void				end_agr(t_agregateur *a)
-{
-	if (a->fd_1 > 2)
-		close(a->fd_1);
-	if (a->fd_2 > 2)
-		close(a->fd_2);
-	free(a->filename);
-	free(a);
-}
-
-void				end_redirection(t_redirection *r)
-{
-	if (r->fd != -1)
-		close(r->fd);
-	if (r->stdfd > 2)
-		close(r->stdfd);
-	free(r->filename);
-	free(r);
 }
 
 void				end_redirections(t_redirections *redirs)

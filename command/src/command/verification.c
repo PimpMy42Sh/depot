@@ -7,7 +7,8 @@ static int			verification_redirection_list(t_list *lst)
 	while (lst)
 	{
 		r = (t_redirection*)lst->content;
-		if (r->type != DCHEVRON_GAUCHE && (!*r->filename || !ft_isprint(*r->filename)))
+		if (r->type != DCHEVRON_GAUCHE &&
+			(!*r->filename || !ft_isprint(*r->filename)))
 		{
 			write(2, "Need a filename\n", 16);
 			return (1);
@@ -55,7 +56,7 @@ static int			verification_redirections(t_redirections *rs)
 	return (0);
 }
 
-int			verification_pipeline(t_list *pipeline)
+int					verification_pipeline(t_list *pipeline)
 {
 	t_command		*c;
 
@@ -72,7 +73,6 @@ int			verification_pipeline(t_list *pipeline)
 			write(2, "Need a valide command\n", 22);
 			return (1);
 		}
-		//print_command(c);
 		if (verification_redirections(&c->redirs))
 			return (2);
 		if (c->need_redir && !c->args)

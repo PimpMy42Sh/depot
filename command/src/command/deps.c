@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   deps.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fjacquem <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/30 00:49:19 by fjacquem          #+#    #+#             */
-/*   Updated: 2016/03/30 00:49:31 by fjacquem         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <command.h>
 
-char	*ft_strword(char *s)
+char		*ft_strword(char *s)
 {
 	int		index;
 	char	*new_word;
@@ -35,7 +23,7 @@ char	*ft_strword(char *s)
 	return (new_word);
 }
 
-t_list	*ft_lstnew_noalloc(void *cnt, size_t cnt_size)
+t_list		*ft_lstnew_noalloc(void *cnt, size_t cnt_size)
 {
 	t_list	*lst;
 
@@ -50,9 +38,9 @@ t_list	*ft_lstnew_noalloc(void *cnt, size_t cnt_size)
 	return (lst);
 }
 
-int		ft_lstsize(t_list *t)
+int			ft_lstsize(t_list *t)
 {
-	int	n;
+	int		n;
 
 	n = 0;
 	while (t)
@@ -63,7 +51,7 @@ int		ft_lstsize(t_list *t)
 	return (n);
 }
 
-void	ft_lstadd_end(t_list **addr, t_list *lst)
+void		ft_lstadd_end(t_list **addr, t_list *lst)
 {
 	t_list	*tmp;
 
@@ -75,4 +63,28 @@ void	ft_lstadd_end(t_list **addr, t_list *lst)
 	}
 	else
 		*addr = lst;
+}
+
+/*
+**	Transforme une liste de char * en tableau de char **
+**	Utiliser pour transformer les pipelines en argv
+*/
+
+char		**lst_to_tab(t_list *lst)
+{
+	char	**args;
+	t_list	*next;
+	int		n;
+
+	n = ft_lstsize(lst);
+	args = (char**)malloc(sizeof(char*) * (n + 1));
+	ft_bzero(args, sizeof(char**) * (n + 1));
+	while (lst)
+	{
+		next = lst->next;
+		args[--n] = (char*)lst->content;
+		free(lst);
+		lst = next;
+	}
+	return (args);
 }

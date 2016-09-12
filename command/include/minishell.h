@@ -55,7 +55,6 @@
 # define U_CUT			117
 # define MAX_SIZE		1
 
-
 # define QUOTES			'\''
 # define D_QUOTES		'"'
 # define B_QUOTES		'`'
@@ -72,7 +71,6 @@
 # define BAD_ACCOLADES	5
 # define BAD_CROCHETS 	6
 # define SYNTAX_ERROR 	7
-
 
 /*
 ** SCHOOL
@@ -219,8 +217,9 @@ void										free_cmd(char **cmd);
 */
 void										parse_arguments(char **environ,
 											char *line, int boolean);
-void										check_tilde_and_dollar(char **environ, char **av,
-												int boolean);
+void										check_tilde_and_dollar(
+											char **environ, char **av,
+											int boolean);
 void										replace_envrion_suite_2(char *ret,
 											char *search,
 											t_norme *norme, char **av);

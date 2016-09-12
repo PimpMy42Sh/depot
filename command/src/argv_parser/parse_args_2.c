@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 17:42:35 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 16:47:13 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 19:50:03 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static void	replace_environ(char **av, char **environ, char *str,
 	if (tmp && cat)
 		tmp2 = ft_strjoin(tmp, cat);
 	if (tmp2)
-		replace_envrion_suite_2(tmp2, search, norme, av);
+		replace_envrion_suite_2(tmp2, norme, av);
 	else
-		replace_envrion_suite_2(tmp, search, norme, av);
+		replace_envrion_suite_2(tmp, norme, av);
 	free_elements(cat, search, ret, tmp);
 	ft_memdel((void**)&tmp2);
 }

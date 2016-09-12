@@ -6,17 +6,20 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 17:39:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 16:46:44 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 19:50:12 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	replace_envrion_suite_2(char *ret, char *search, t_norme *norme,
+void	replace_envrion_suite_2(char *ret, t_norme *norme,
 		char **av)
 {
-	if (!ret && norme->boolean)
-		undefined_variable(search);
+	if (!ret)
+	{
+		ft_memdel((void**)&av[norme->i]);
+		av[norme->i] = ft_strnew(1);
+	}
 	if (ret)
 	{
 		ft_memdel((void**)&av[norme->i]);

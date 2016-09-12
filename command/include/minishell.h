@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 18:46:16 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 19:49:38 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,6 @@ void										check_tilde_and_dollar(
 											char **environ, char **av,
 											int boolean);
 void										replace_envrion_suite_2(char *ret,
-											char *search,
 											t_norme *norme, char **av);
 char										*parse_search(char *ret);
 int											return_av_size(char **av);

@@ -3,13 +3,17 @@
 static void			print_string(char **av, char **environ, int delta)
 {
 	int				i;
+	int				ok;
 
+	ok = 0;
 	i = delta;
 	check_tilde_and_dollar(environ, av, 0);
 	while (av[i])
 	{
 		ft_putstr(av[i]);
-		if (av[i + 1])
+		if (*av[i])
+			ok = 1;
+		if (ok && av[i + 1])
 			ft_putchar(' ');
 		i++;
 	}

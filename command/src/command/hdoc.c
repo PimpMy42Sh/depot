@@ -1,13 +1,17 @@
 #include "../../include/minishell.h"
 #include <command.h>
 
-static void				hdoc__reset(t_it *it)
+static void				hdoc__reset(t_it *it, int prompt)
 {
 	it->i = 0;
 	it->buffer = 0;
 	it->len = 0;
 	ft_memdel((void**)&it->line);
-	ft_putstr("\n> ");
+	ft_memdel((void**)&it->tmp_line);
+	if (prompt)
+		ft_putstr("\n> ");
+	else
+		free(it);
 }
 
 static int				is_a_newline(t_it *it, int fd, char *eof)
@@ -49,12 +53,13 @@ static void				hdoc(char *eof, int fd)
 		{
 			if (!is_a_newline(it, fd, eof))
 				break ;
-			hdoc__reset(it);
+			hdoc__reset(it, 1);
 		}
 		it->buffer = 0;
 	}
 	suspend_terminal();
 	it->eof = 0;
+	hdoc__reset(it, 0);
 	close(fd);
 }
 

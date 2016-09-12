@@ -6,34 +6,11 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 17:39:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/11 14:40:04 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/12 16:46:44 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-/*
-int		check_builtins(char **av, t_env *env)
-{
-	int		i;
-
-	i = 1;
-	if (av[0] && !ft_strcmp(av[0], "exit"))
-		ft_exit(av, env);
-	if (av[0] && !ft_strcmp(av[0], "cd"))
-		ft_cd(av, env);
-	if (av[0] && !ft_strcmp(av[0], "setenv"))
-		ft_setenv(av, env);
-	if (av[0] && !ft_strcmp(av[0], "unsetenv"))
-		ft_unsetenv(av, env);
-	if (!ft_strcmp(av[0], "env"))
-	{
-		i = ft_env(av, env->environ);
-		resumed_terminal();
-	}
-	free_double_array(av);
-	return (i);
-}
-*/
 
 void	replace_envrion_suite_2(char *ret, char *search, t_norme *norme,
 		char **av)

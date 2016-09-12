@@ -6,35 +6,12 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 17:42:35 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/31 16:51:02 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/12 16:47:13 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-/*
-int			check_line(char *line, t_env *env, int boolean)
-{
-	char	**av;
 
-	if (!line)
-		return (1);
-	convert_tab(line);
-	av = ft_strsplit(line, ' ');
-	if (!av[0])
-	{
-		free_double_array(av);
-		return (1);
-	}
-	check_tilde_and_dollar(env->environ, av, boolean);
-	map_environ(env->environ);
-	if (!(ft_strcmp(av[0], "cd")) || !(ft_strcmp(av[0], "setenv")) ||
-			!(ft_strcmp(av[0], "unsetenv")) || !(ft_strcmp(av[0], "exit"))
-			|| !ft_strcmp(av[0], "env"))
-		return (check_builtins(av, env));
-	free_double_array(av);
-	return (0);
-}
-*/
 static char	*replace_environ_suite(char **environ, char *search)
 {
 	int		j;

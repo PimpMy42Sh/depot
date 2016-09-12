@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/09/08 14:11:21 by mfamilar         ###   ########.fr        #
+#    Updated: 2016/09/12 16:40:26 by mfamilar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ command/make_redirection.c command/identification.c\
 command/get_command.c command/verification.c command/hdoc.c\
 command/hdoc_utils.c command/agregateur.c command/build.c\
 command/pipes.c command/get_pipeline.c command/dbg_command.c\
-buitlins/checking.c buitlins/ft_echo.c
+buitlins/checking.c buitlins/ft_echo.c line_edition/check_synthax_and_close.c\
+line_edition/not_close.c line_edition/store_tmp_line_quote.c\
 
 LIB_NAME = -lft
 
@@ -67,7 +68,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(LIB_PATH)
-	$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB) $(LIB_NAME) -ltermcap 
+	$(CXX) $(FLAGS) $(OBJ) -o $(NAME) $(LIB) $(LIB_NAME) -ltermcap
 
 $(OBJ_PATH)%.o: %.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null

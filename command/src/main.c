@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/08 14:14:16 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 16:45:27 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ static void	split_cmd(t_it *it, t_env *env)
 	char				*s;
 	t_list				*c;
 	static t_history	*history = NULL;
+	char				*back;
 
+	back = NULL;
 	ft_putchar('\n');
 	history = create_elem(history, it->line);
 	s = it->line;
-	if (do_all_hdoc(s))
+	if (check_line_quotes(s, &back) || do_all_hdoc(s))
 		return ;
+	if (back)
+		s = back;
 	nhdoc(0);
 	while (*s)
 	{

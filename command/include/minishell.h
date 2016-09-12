@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/08 14:15:24 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/12 16:44:25 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,16 @@ void										init_struct(t_norme *norme);
 void										parse_line(t_it *it);
 void										edit_line(t_it *it);
 int											return_offset(void);
+
+/*
+**	quotes gestion
+*/
+int											check_line_quotes(char *s,
+											char **back);
+void										quote_not_close(char *begin,
+											char end, char **back);
+void										convert_it_line(t_it *it,
+											t_list *args, char **back);
 
 /*
 **	cursor_moves

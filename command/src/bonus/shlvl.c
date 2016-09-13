@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 16:49:49 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 10:19:28 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/13 12:20:41 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ static void		incremente_shlvl(t_env *env, int i, char *lvl)
 	ft_memdel((void**)&lvl);
 }
 
-static void		create_shlvl(t_env *env)
-{
-	int			i;
-
-	if (!env->environ[0])
-		i = 0;
-	else
-		i = return_env_size(env->environ);
-	append_item_environ(env, "SHLVL", "1");
-	(void)i;
-}
-
 void			check_shlvl(t_env *env)
 {
 	int		i;
@@ -66,5 +54,5 @@ void			check_shlvl(t_env *env)
 		}
 		i++;
 	}
-	create_shlvl(env);
+	append_item_environ(env, "SHLVL", "1");
 }

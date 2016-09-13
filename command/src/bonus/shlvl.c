@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 16:49:49 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/08 18:21:30 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/13 10:19:28 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static void		create_shlvl(t_env *env)
 		i = 0;
 	else
 		i = return_env_size(env->environ);
-	env->environ[i] = ft_strdup("SHLVL=1");
-	env->environ[i + 1] = 0;
+	append_item_environ(env, "SHLVL", "1");
 }
 
 void			check_shlvl(t_env *env)

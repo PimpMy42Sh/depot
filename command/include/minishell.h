@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 19:49:38 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/13 09:11:29 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ typedef struct								s_it
 	int										ws_col;
 	int										nb_current_line;
 	int										eof;
+	int										ctrl_c;
 }											t_it;
 
 typedef struct								s_hist

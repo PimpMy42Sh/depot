@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 18:16:28 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/13 09:11:51 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void				ctrl_c(void)
 	if (it)
 	{
 		it->eof = 0;
+		it->ctrl_c = 1;
 		it->r_video = 0;
 		go_to_bottom(it);
 		ft_memdel((void**)&it->line);

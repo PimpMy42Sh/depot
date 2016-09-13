@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 12:31:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/22 15:23:32 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/13 10:45:44 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,20 @@ static void	move_old_and_pwd_suite(t_norme *norme, t_env *env,
 		if (old && norme->previous)
 		{
 			ft_memdel((void**)&env->environ[norme->i]);
-			env->environ[norme->i] = ft_strjoin("OLDPWD=", old);
+			append_item_environ(env, "OLDPWD", old);
 			norme->i++;
 		}
 		if (norme->current)
 		{
+			printf("HEEERE\n");
 			ret = getcwd(buffer, 256);
 			if (!ret)
 				permission_denied("cd", "");
 			else
 			{
 				ft_memdel((void**)&env->environ[norme->i]);
-				env->environ[norme->i] = ft_strjoin("PWD=", ret);
+				append_item_environ(env, "PWD", ret);
+				// env->environ[norme->i] = ft_strjoin("PWD=", ret);
 			}
 		}
 	}

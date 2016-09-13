@@ -36,7 +36,17 @@ static int				is_a_newline(t_it *it, int fd, char *eof)
 	return (1);
 }
 
-static void				hdoc(char *eof, int fd)
+static void 			put_back(t_it *it, int fd, char *s)
+{
+	suspend_terminal();
+	it->eof = 0;
+	hdoc__reset(it, 0);
+	close(fd);
+	if (s)
+		ft_memdel((void**)&s);
+}
+
+static int				hdoc(char *eof, int fd, char *s)
 {
 	t_it			*it;
 
@@ -46,8 +56,12 @@ static void				hdoc(char *eof, int fd)
 	resumed_terminal();
 	while (read(0, &it->buffer, 4))
 	{
-		if ((it->buffer == CTRL_D && !it->len) || !it->eof)
-			break ;
+		if ((it->buffer == CTRL_D && !it->len) || !it->eof || it->ctrl_c)
+		{
+			put_back(it, fd, s);
+			free(eof);
+			return (1);
+		}
 		parse_line(it);
 		if (it->buffer == '\n')
 		{
@@ -57,10 +71,8 @@ static void				hdoc(char *eof, int fd)
 		}
 		it->buffer = 0;
 	}
-	suspend_terminal();
-	it->eof = 0;
-	hdoc__reset(it, 0);
-	close(fd);
+	put_back(it, fd, NULL);
+	return (0);
 }
 
 static int				do_all_hdoc__normalize(char **cmd)
@@ -75,7 +87,8 @@ static int				do_all_hdoc__normalize(char **cmd)
 	eof = ft_strword(*cmd);
 	if (*eof)
 	{
-		hdoc(eof, fd);
+		if (hdoc(eof, fd, s))
+			return (1);
 		write(1, "\n", 1);
 		free(eof);
 		free(s);

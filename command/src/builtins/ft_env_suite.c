@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 15:59:14 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/05 17:37:32 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/13 16:21:14 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void			remove_variables(char **av)
 	}
 }
 
-static void			env_loop(char **av, t_norme *flags, int j)
+static int			env_loop(char **av, t_norme *flags, int j)
 {
 	char			*tmp;
 	char			*tmp2;
@@ -78,6 +78,7 @@ static void			env_loop(char **av, t_norme *flags, int j)
 		}
 		i++;
 	}
+	return (j);
 }
 
 void				check_variables(t_norme *flags, char **av,
@@ -93,7 +94,7 @@ void				check_variables(t_norme *flags, char **av,
 	}
 	else
 		j = return_env_size(flags->copy);
-	env_loop(av, flags, j);
+	j = env_loop(av, flags, j);
 	flags->copy[j] = 0;
 	remove_variables(av);
 }

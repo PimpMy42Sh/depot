@@ -12,86 +12,126 @@
 
 #include "../../include/minishell.h"
 
-static char	*replace_environ_suite(char **environ, char *search)
+static char	*ft_strtrim_quotes(char *s)
 {
-	int		j;
+	char	*ref;
 	char	*ret;
 
-	j = 0;
-	ret = NULL;
-	while (environ[j] && !ft_strcmp(search, "HOME"))
+	ref = s;
+	ret = ref;
+	while (*s)
 	{
-		if (!ft_strncmp(environ[j], search, 4))
-			ret = ft_strsub(environ[j], 5, ft_strlen(environ[j]));
-		j++;
+		if (*s != '\'' && *s != '\"')
+			*(ref++) = *(s++);
+		else
+			s++;
 	}
-	while (environ[j] && ft_strcmp(search, "HOME"))
-	{
-		if (!ft_strncmp(environ[j], search, ft_strlen(search))
-			&& environ[j][ft_strlen(search)] == '=')
-			ret = ft_strsub(environ[j], ft_strlen(search) + 1,
-					ft_strlen(environ[j]));
-		j++;
-	}
+	*ref = 0;
 	return (ret);
 }
 
-static void	replace_environ(char **av, char **environ, char *str,
-		t_norme *norme)
+static void	replace_tilde(char **origin, int *index, char **environ)
 {
-	char	*search;
-	char	*cat;
 	char	*ret;
-	char	*tmp;
-	char	*tmp2;
+	char	*var;
+	int		var_len;
 
-	ret = ft_strdup(av[norme->i]);
-	cat = NULL;
-	tmp = NULL;
-	tmp2 = NULL;
-	if ((ft_strlen(ret) > 0) && !ft_strcmp(str, "HOME"))
-		cat = ft_strsub(ret, 1, ft_strlen(ret));
-	if (!ft_strcmp(str, "HOME"))
-		search = ft_strdup(str);
-	else
-		search = parse_search(ret);
-	tmp = replace_environ_suite(environ, search);
-	if (tmp && cat)
-		tmp2 = ft_strjoin(tmp, cat);
-	if (tmp2)
-		replace_envrion_suite_2(tmp2, norme, av);
-	else
-		replace_envrion_suite_2(tmp, norme, av);
-	free_elements(cat, search, ret, tmp);
-	ft_memdel((void**)&tmp2);
+	if (!(var = return_env(environ, "HOME")))
+		var = "\0";
+	var_len = ft_strlen(var);
+	ret = ft_strnew(var_len + ft_strlen(*origin));
+	*((*origin) + (*index)) = 0;
+	ft_strcpy(ret, *origin);
+	ft_strcpy(ret + (*index), var);
+	ft_strcpy(ret + (*index) + var_len, *origin + (*index) + 1);
+	free(*origin);
+	*index += var_len - 1;
+	*origin = ret;
+	if (var_len)
+		free(var);
 }
 
-/*
-** Si le boolean est égale à 1, et que l'on essaye d'accéder à une variable
-** d'environnement qui n'éxiste pas (ex $FAKE), le programme affiche
-** "undefined_variable" sur la sortie d'erreur et exit(1). Il faut donc être
-** dans un processus fils car sinon le shell quitte.
-** Si le boolean est 0, alors le programme affichera $FAKE car il n'aura pas
-** trouvé de correspondance dans l'environnement. Il n'éxit pas et peut donc
-** être appelé en dehors d'un fork().
-*/
+static void	replace_environ(char **origin, int *index, char **environ, char *str)
+{
+	char	*ret;
+	char	*var;
+	int		var_len;
+
+	if (!(var = return_env(environ, str)))
+		var = "\0";
+	var_len = ft_strlen(var);
+	ret = ft_strnew(var_len + ft_strlen(*origin));
+	*((*origin) + (*index)) = 0;
+	ft_strcpy(ret, *origin);
+	ft_strcpy(ret + (*index), var);
+	ft_strcpy(ret + (*index) + var_len, *origin + (*index) + ft_strlen(str) + 1);
+	free(*origin);
+	*index += var_len - 1;
+	*origin = ret;
+	if (var_len)
+		free(var);
+}
+
+static char	*get_token(char *s)
+{
+	char	*tmp;
+	char	*ret;
+	int		len;
+
+	len = 0;
+	tmp = s;
+	while (*s && ft_isalnum(*s))
+	{
+		len++;
+		s++;
+	}
+	ret = ft_strnew(len);
+	ft_strncpy(ret, tmp, len);
+	return (ret);
+}
+
+static void	check_tilde_and_dollar__str(char **environ, char **av)
+{
+	int		i;
+	char	*token;
+
+	i = 0;
+	while ((*av)[i])
+	{
+		if ((*av)[i] == '\'')
+		{
+			i++;
+			while ((*av)[i] != '\'')
+				i++;
+		}
+		else if ((*av)[i] == '~')
+		{
+			if ((*av)[i + 1] != '~')
+				replace_tilde(av, &i, environ);
+			else
+				while ((*av)[i + 1] == '~')
+					i++;
+		}
+		else if ((*av)[i] == '$')
+		{
+			token = get_token(&(*av)[i + 1]);
+			replace_environ(av, &i, environ, token);
+			free(token);
+		}
+		i++;
+	}
+}
 
 void		check_tilde_and_dollar(char **environ, char **av, int boolean)
 {
-	t_norme	*norme;
+	int		i;
 
-	norme = (t_norme*)ft_memalloc(sizeof(t_norme));
-	norme->i = 0;
-	norme->boolean = boolean;
-	while (av[norme->i])
+	i = 0;
+	while (av[i])
 	{
-		if (!ft_strcmp(av[norme->i], "$"))
-			return ;
-		if (av[norme->i][0] == '~')
-			replace_environ(av, environ, "HOME", norme);
-		else if (av[norme->i][0] == '$')
-			replace_environ(av, environ, "$", norme);
-		norme->i++;
+		check_tilde_and_dollar__str(environ, &av[i]);
+		ft_strtrim_quotes(av[i]);
+		i++;
 	}
-	free_struct(norme);
+	(void)boolean;
 }

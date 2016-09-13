@@ -7,7 +7,6 @@ static void			print_string(char **av, char **environ, int delta)
 
 	ok = 0;
 	i = delta;
-	check_tilde_and_dollar(environ, av, 0);
 	while (av[i])
 	{
 		ft_putstr(av[i]);
@@ -19,6 +18,7 @@ static void			print_string(char **av, char **environ, int delta)
 	}
 	if (delta != 2)
 		ft_putchar('\n');
+	(void)environ;
 }
 
 void				ft_echo(char **av, char **environ)

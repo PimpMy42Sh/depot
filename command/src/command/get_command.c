@@ -75,9 +75,7 @@ t_command		*get_command(char **s, t_env *e)
 			else if (**s == '\"' || **s == '\'')
 				quotes(&n, s);
 			else
-			{
 				realloc_copy(s, &n.str, &n.len);
-			}
 		while (**s == ' ')
 			(*s)++;
 	}

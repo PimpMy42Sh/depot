@@ -34,7 +34,7 @@ char	*ft_strtrim(char const *s)
 		j++;
 	}
 	j--;
-	while (str[j] == ' ' || str[j] == '\n' || (str[j] == '\t' && j > 0))
+	while (str[j] == ' ' || str[j] == '\n' || str[j] == '\t')
 	{
 		str[j] = '\0';
 		j--;

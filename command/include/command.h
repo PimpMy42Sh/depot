@@ -26,7 +26,7 @@ typedef struct stat		t_stat;
 typedef struct			s_norme_command
 {
 	int					len;
-	char				*cpy;
+	int					alloc;
 	char				*str;
 }						t_norme_command;
 

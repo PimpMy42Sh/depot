@@ -1,29 +1,31 @@
 #include <command.h>
 
-static void		realloc_copy(char **cpy, char **str)
+static void		realloc_copy(char **s, char **str, int *len)
 {
 	char		*tmp;
 
-	if (*cpy - *str >= 1023)
-	{
-		tmp = ft_strnew(1024 + (*cpy - *str) + 1);
-		ft_strcpy(tmp, *str);
-		free(*str);
-		*str = tmp;
-		*cpy = *str;
-	}
+	tmp = ft_strnew(*len + 1);
+	ft_strcpy(tmp, *str);
+	free(*str);
+	*str = tmp;
+	*(*str + *len) = **s;
+	(*s)++;
+	(*len)++;
+	//printf("(%s, %d)\n", *str, *len);
 }
 
-static void		argument(t_command *c, char **s, char **cpy, char **str)
+static void		argument(t_command *c, char **s, t_norme_command *n)
 {
 	while (**s == ' ')
 		(*s)++;
-	if (*str)
+	if (*n->str)
 	{
-		ft_lstadd(&c->args, ft_lstnew(*str, *cpy - *str + 2));
-		free(*str);
-		*str = ft_strnew(1024);
-		*cpy = *str;
+		ft_lstadd(&c->args,
+		ft_lstnew(n->str, n->len));
+		free(n->str);
+		n->str = ft_strnew(3);
+		n->cpy = n->str;
+		n->len = 0;
 	}
 }
 
@@ -34,39 +36,51 @@ static void		redirection(t_command *c, char **s)
 		(*s)++;
 }
 
-static void		end__get_command(t_env *e, t_command *c, char *str, char *cpy)
+static void		end__get_command(t_env *e, t_command *c, t_norme_command *n)
 {
-	if (*str)
-		ft_lstadd(&c->args, ft_lstnew(str, cpy - str + 2));
-	free(str);
+	if (*n->str)
+		ft_lstadd(&c->args,
+		ft_lstnew(n->str, n->len));
+	free(n->str);
 	c->argv = lst_to_tab(c->args);
 	check_tilde_and_dollar(e->environ, c->argv, 0);
 }
 
+static void		quotes(t_norme_command *n, char **s)
+{
+	int		tmp;
+
+	tmp = **s;
+	realloc_copy(s, &n->str, &n->len);
+	while (**s != tmp)
+		realloc_copy(s, &n->str, &n->len);
+	realloc_copy(s, &n->str, &n->len);
+}
+
 t_command		*get_command(char **s, t_env *e)
 {
-	t_command	*c;
-	char		*cpy;
-	char		*str;
+	t_command		*c;
+	t_norme_command	n;
 
-	str = ft_strnew(1024);
-	cpy = str;
+	n.str = ft_strnew(3);
+	n.len = 0;
 	if ((c = (t_command*)malloc(sizeof(t_command))))
 	{
 		ft_bzero(c, sizeof(t_command));
 		while ((**s && !is_a_spec_char(**s)) || is_a_redirection(*s))
 			if (**s == ' ')
-				argument(c, s, &cpy, &str);
+				argument(c, s, &n);
 			else if (is_a_redirection(*s))
 				redirection(c, s);
+			else if (**s == '\"' || **s == '\'')
+				quotes(&n, s);
 			else
 			{
-				realloc_copy(&cpy, &str);
-				*(cpy++) = *((*s)++);
+				realloc_copy(s, &n.str, &n.len);
 			}
 		while (**s == ' ')
 			(*s)++;
 	}
-	end__get_command(e, c, str, cpy);
+	end__get_command(e, c, &n);
 	return (c);
 }

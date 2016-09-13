@@ -23,6 +23,13 @@
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 
+typedef struct			s_norme_command
+{
+	int					len;
+	char				*cpy;
+	char				*str;
+}						t_norme_command;
+
 typedef struct			s_agregateur
 {
 	int					fd_1;

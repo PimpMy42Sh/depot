@@ -42,6 +42,7 @@ static void		create_shlvl(t_env *env)
 	else
 		i = return_env_size(env->environ);
 	append_item_environ(env, "SHLVL", "1");
+	(void)i;
 }
 
 void			check_shlvl(t_env *env)

@@ -21,7 +21,7 @@ static void		argument(t_command *c, char **s, t_norme_command *n)
 	if (*n->str)
 	{
 		ft_lstadd(&c->args,
-		ft_lstnew(n->str, n->len));
+		ft_lstnew(n->str, n->len + 1));
 		free(n->str);
 		n->str = ft_strnew(3);
 		n->cpy = n->str;
@@ -40,7 +40,7 @@ static void		end__get_command(t_env *e, t_command *c, t_norme_command *n)
 {
 	if (*n->str)
 		ft_lstadd(&c->args,
-		ft_lstnew(n->str, n->len));
+		ft_lstnew(n->str, n->len + 1));
 	free(n->str);
 	c->argv = lst_to_tab(c->args);
 	check_tilde_and_dollar(e->environ, c->argv, 0);

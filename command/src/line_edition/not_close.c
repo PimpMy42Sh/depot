@@ -27,14 +27,14 @@ static int	is_a_newline(t_it *it, char end, t_list **args)
 	{
 		if (ft_strchr(it->line, end))
 		{
-			append_backlash_n(it, args);
+			ft_lstadd_end(args, ft_lstnew(it->line, ft_strlen(it->line) + 1));
 			write(1, "\n", 1);
 			return (0);
 		}
 		append_backlash_n(it, args);
 	}
 	else
-		write(1, "\n", 1);
+		ft_lstadd_end(args, ft_lstnew("\n", 2));
 	return (1);
 }
 
@@ -44,6 +44,8 @@ static void	quote_reset(t_it *it)
 	it->buffer = 0;
 	it->len = 0;
 	ft_memdel((void**)&it->line);
+	ft_memdel((void**)&it->tmp_line);
+	ft_memdel((void**)&it->tmp_buffer);
 	ft_putstr("\n> ");
 }
 
@@ -60,7 +62,9 @@ void		quote_not_close(char *begin, char end, char **back)
 {
 	t_it	*it;
 	t_list	*args;
+	t_ctrl_c	*ctrl_c;
 
+	ctrl_c = ft_stock_ctrl_c(NULL);
 	args = NULL;
 	copy_first_element(begin, &args);
 	it = init_it_struct(1);
@@ -69,7 +73,7 @@ void		quote_not_close(char *begin, char end, char **back)
 	resumed_terminal();
 	while (read(0, &it->buffer, 4))
 	{
-		if ((it->buffer == CTRL_D && !it->len) || !it->eof)
+		if ((it->buffer == CTRL_D && !it->len) || !it->eof || ctrl_c->bol)
 			break ;
 		parse_line(it);
 		if (it->buffer == '\n')

@@ -90,7 +90,7 @@ static char	*get_token(char *s)
 	return (ret);
 }
 
-static void	check_tilde_and_dollar__str(char **environ, char **av)
+void	check_tilde_and_dollar__str(char **environ, char **av)
 {
 	int		i;
 	char	*token;

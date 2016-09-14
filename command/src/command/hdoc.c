@@ -14,7 +14,7 @@ static void				hdoc__reset(t_it *it, int prompt)
 		free(it);
 }
 
-static int				is_a_newline(t_it *it, int fd, char *eof)
+static int				is_a_newline(t_it *it, int fd, char *eof, char **env)
 {
 	int		delta;
 
@@ -29,6 +29,7 @@ static int				is_a_newline(t_it *it, int fd, char *eof)
 	{
 		if (!ft_strcmp(it->line, eof))
 			return (0);
+		check_tilde_and_dollar__str(env, &it->line);
 		ft_putendl_fd(it->line, fd);
 	}
 	else
@@ -46,7 +47,7 @@ static void 			put_back(t_it *it, int fd, char *s)
 		ft_memdel((void**)&s);
 }
 
-static int				hdoc(char *eof, int fd, char *s)
+static int				hdoc(char *eof, int fd, char *s, char **env)
 {
 	t_it			*it;
 	t_ctrl_c	*ctrl_c;
@@ -67,7 +68,7 @@ static int				hdoc(char *eof, int fd, char *s)
 		parse_line(it);
 		if (it->buffer == '\n')
 		{
-			if (!is_a_newline(it, fd, eof))
+			if (!is_a_newline(it, fd, eof, env))
 				break ;
 			hdoc__reset(it, 1);
 		}
@@ -77,7 +78,7 @@ static int				hdoc(char *eof, int fd, char *s)
 	return (0);
 }
 
-static int				do_all_hdoc__normalize(char **cmd)
+static int				do_all_hdoc__normalize(char **cmd, char **env)
 {
 	char				*s;
 	char				*eof;
@@ -89,7 +90,7 @@ static int				do_all_hdoc__normalize(char **cmd)
 	eof = ft_strword(*cmd);
 	if (*eof)
 	{
-		if (hdoc(eof, fd, s))
+		if (hdoc(eof, fd, s, env))
 			return (1);
 		write(1, "\n", 1);
 		free(eof);
@@ -104,14 +105,14 @@ static int				do_all_hdoc__normalize(char **cmd)
 	return (1);
 }
 
-int						do_all_hdoc(char *cmd)
+int						do_all_hdoc(char *cmd, char **env)
 {
 	nhdoc(0);
 	while (*cmd)
 	{
 		if (*cmd == '<' && *(cmd + 1) == '<')
 		{
-			if (do_all_hdoc__normalize(&cmd))
+			if (do_all_hdoc__normalize(&cmd, env))
 				return (1);
 		}
 		else

@@ -136,7 +136,7 @@ void					do__agr_dup(t_list *lst);
 /*
 **	Hdoc.c
 */
-int						do_all_hdoc(char *cmd);
+int						do_all_hdoc(char *cmd, char **env);
 
 /*
 **	Hdoc_utils.c

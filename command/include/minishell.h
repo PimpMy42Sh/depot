@@ -224,6 +224,8 @@ void										parse_arguments(char **environ,
 void										check_tilde_and_dollar(
 											char **environ, char **av,
 											int boolean);
+void										check_tilde_and_dollar__str(
+											char **environ, char **av);
 void										replace_envrion_suite_2(char *ret,
 											t_norme *norme, char **av);
 char										*parse_search(char *ret);

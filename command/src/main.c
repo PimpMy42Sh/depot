@@ -24,7 +24,7 @@ static void	split_cmd(t_it *it, t_env *env)
 	ft_putchar('\n');
 	history = create_elem(history, it->line);
 	s = it->line;
-	if (check_line_quotes(s, &back) || do_all_hdoc(s))
+	if (check_line_quotes(s, &back) || do_all_hdoc(s, env->environ))
 		return ;
 	if (back)
 		s = back;

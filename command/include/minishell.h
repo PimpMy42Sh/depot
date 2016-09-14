@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 09:11:29 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/14 11:39:56 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,7 +294,7 @@ void										move_begin(t_it *it);
 void										move_end(t_it *it);
 void										move_one_word_left(t_it *it);
 void										move_one_word_right(t_it *it);
-t_it										*init_it_struct(void);
+t_it										*init_it_struct(int tmp);
 void										del_char_buffer(t_it *it,
 											int current);
 void										del_current(t_it *it);

@@ -50,7 +50,7 @@ static int				hdoc(char *eof, int fd, char *s)
 {
 	t_it			*it;
 
-	it = init_it_struct();
+	it = init_it_struct(1);
 	it->eof = 1;
 	ft_putstr("> ");
 	resumed_terminal();

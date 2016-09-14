@@ -63,7 +63,7 @@ void		quote_not_close(char *begin, char end, char **back)
 
 	args = NULL;
 	copy_first_element(begin, &args);
-	it = init_it_struct();
+	it = init_it_struct(1);
 	it->eof = 1;
 	ft_putstr("> ");
 	resumed_terminal();

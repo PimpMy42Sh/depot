@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 09:19:01 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/14 11:40:42 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	main_loop(t_env *env)
 	t_it			*it;
 	t_tty			*s;
 
-	it = init_it_struct();
+	it = init_it_struct(0);
 	s = ft_stock_term(0);
 	while (read(0, &it->buffer, 4))
 	{

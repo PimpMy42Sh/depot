@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 14:10:36 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/14 16:40:53 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ int											return_offset(void);
 */
 int											check_line_quotes(char *s,
 											char **back);
-void										quote_not_close(char *begin,
+int											quote_not_close(char *begin,
 											char end, char **back);
 void										convert_it_line(t_it *it,
 											t_list *args, char **back);

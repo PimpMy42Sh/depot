@@ -58,7 +58,7 @@ static void	copy_first_element(char *begin, t_list **args)
 	ft_memdel((void**)&tmp);
 }
 
-void		quote_not_close(char *begin, char end, char **back)
+int		quote_not_close(char *begin, char end, char **back)
 {
 	t_it	*it;
 	t_list	*args;
@@ -74,7 +74,7 @@ void		quote_not_close(char *begin, char end, char **back)
 	while (read(0, &it->buffer, 4))
 	{
 		if ((it->buffer == CTRL_D && !it->len) || !it->eof || ctrl_c->bol)
-			break ;
+			return (1);
 		parse_line(it);
 		if (it->buffer == '\n')
 		{
@@ -87,4 +87,5 @@ void		quote_not_close(char *begin, char end, char **back)
 	suspend_terminal();
 	it->eof = 0;
 	convert_it_line(it, args, back);
+	return (0);
 }

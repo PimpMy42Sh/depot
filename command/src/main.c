@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 11:40:42 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/14 14:11:40 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,30 @@ static void	split_cmd(t_it *it, t_env *env)
 
 static void	parse(t_it *it, t_env *env)
 {
-	t_tty			*s;
+	t_ctrl_c	*ctrl_c;
 
-	s = ft_stock_term(NULL);
+	ctrl_c = ft_stock_ctrl_c(NULL);
 	suspend_terminal();
-	s->bol = 0;
+	ctrl_c->stdin = 0;
 	split_cmd(it, env);
 	ft_memdel((void**)&it->line);
 	resumed_terminal();
-	if (!s->bol)
+	if (!ctrl_c->stdin)
 		print_prompt();
-	s->bol = 1;
-	it->ctrl_c = 0;
+	ctrl_c->stdin = 1;
+	ctrl_c->bol = 0;
 }
 
 static void	main_loop(t_env *env)
 {
 	t_it			*it;
-	t_tty			*s;
+	t_ctrl_c	*ctrl_c;
 
 	it = init_it_struct(0);
-	s = ft_stock_term(0);
+	ctrl_c = ft_stock_ctrl_c(NULL);
 	while (read(0, &it->buffer, 4))
 	{
-		s->bol = 0;
+		ctrl_c->stdin = 0;
 		parse_line(it);
 		ft_stock_it(it);
 		if (it->buffer == '\n')
@@ -77,7 +77,7 @@ static void	main_loop(t_env *env)
 			{
 				go_to_bottom(it);
 				ft_putchar('\n');
-				if (!s->bol)
+				if (!ctrl_c->stdin)
 					print_prompt();
 			}
 			ft_memdel((void**)&it->line);
@@ -115,9 +115,13 @@ int			main(int argc, char **argv, char **environment)
 {
 	t_tty			*tty;
 	t_env			*env;
+	t_ctrl_c	*ctrl_c;
 
 	(void)argv;
 	(void)argc;
+	ctrl_c = (t_ctrl_c*)ft_memalloc(sizeof(struct s_ctrl_c));
+	ft_bzero(ctrl_c, sizeof(t_ctrl_c));
+	ft_stock_ctrl_c(ctrl_c);
 	env = (t_env*)ft_memalloc(sizeof(struct s_env));
 	init_copy_environ(env, environment);
 	parse_path_directories(env->environ);

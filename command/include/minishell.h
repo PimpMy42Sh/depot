@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 11:39:56 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/14 14:10:36 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,13 @@ typedef struct								s_tty
 {
 	struct termios							term;
 	struct termios							backup;
-	int													bol;
 }											t_tty;
+
+typedef struct								s_ctrl_c
+{
+	int													bol;
+	int													stdin;
+}															t_ctrl_c;
 
 typedef struct								s_env
 {
@@ -145,7 +150,6 @@ typedef struct								s_it
 	int										ws_col;
 	int										nb_current_line;
 	int										eof;
-	int										ctrl_c;
 }											t_it;
 
 typedef struct								s_hist
@@ -342,6 +346,7 @@ void										print_prompt(void);
 void										check_shlvl(t_env *env);
 void										check_only_space(t_it *it);
 t_it										*ft_stock_it(t_it *it);
+t_ctrl_c								*ft_stock_ctrl_c(t_ctrl_c *ctrl_c);
 void										go_to_bottom(t_it *it);
 int											ft_abs(int i);
 char										**malloc_environ(char **environ,

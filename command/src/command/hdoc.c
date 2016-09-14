@@ -49,14 +49,16 @@ static void 			put_back(t_it *it, int fd, char *s)
 static int				hdoc(char *eof, int fd, char *s)
 {
 	t_it			*it;
+	t_ctrl_c	*ctrl_c;
 
+	ctrl_c = ft_stock_ctrl_c(NULL);
 	it = init_it_struct(1);
 	it->eof = 1;
 	ft_putstr("> ");
 	resumed_terminal();
 	while (read(0, &it->buffer, 4))
 	{
-		if ((it->buffer == CTRL_D && !it->len) || !it->eof || it->ctrl_c)
+		if ((it->buffer == CTRL_D && !it->len) || !it->eof || ctrl_c->bol)
 		{
 			put_back(it, fd, s);
 			free(eof);

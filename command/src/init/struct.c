@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 15:26:03 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 11:46:46 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/14 13:47:27 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_tty		*ft_stock_term(t_tty *tty)
 static void		rec_tmp_size(t_it *it)
 {
 	struct winsize		win;
-	
+
 	ioctl(0, TIOCGWINSZ, &win);
 	it->ws_col = win.ws_col;
 }
@@ -58,7 +58,6 @@ t_it		*init_it_struct(int tmp)
 	it->tmp_line = NULL;
 	it->line = NULL;
 	it->eof = 0;
-	it->ctrl_c = 0;
 	if (!tmp)
 		rec_size(it);
 	else
@@ -72,5 +71,14 @@ t_it		*ft_stock_it(t_it *it)
 
 	if (it)
 		tmp = it;
+	return (tmp);
+}
+
+t_ctrl_c		*ft_stock_ctrl_c(t_ctrl_c *ctrl_c)
+{
+	static t_ctrl_c	*tmp = NULL;
+
+	if (ctrl_c)
+		tmp = ctrl_c;
 	return (tmp);
 }

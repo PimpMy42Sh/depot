@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 09:11:51 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/14 14:01:51 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 static void				ctrl_c(void)
 {
 	t_it		*it;
-	t_tty		*s;
+	t_ctrl_c	*ctrl_c;
 
-	s = ft_stock_term(NULL);
+	ctrl_c = ft_stock_ctrl_c(NULL);
 	it = ft_stock_it(NULL);
 	tputs(tgetstr(DEFAULT, NULL), 0, my_putchar);
 	if (it)
 	{
 		it->eof = 0;
-		it->ctrl_c = 1;
 		it->r_video = 0;
 		go_to_bottom(it);
 		ft_memdel((void**)&it->line);
@@ -34,7 +33,8 @@ static void				ctrl_c(void)
 	}
 		ft_putchar('\n');
 		print_prompt();
-		s->bol = 1;
+		ctrl_c->stdin = 1;
+		ctrl_c->bol = 1;
 }
 
 static void				signal_handler(int signum)

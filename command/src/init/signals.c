@@ -28,11 +28,13 @@ static void				ctrl_c(void)
 		go_to_bottom(it);
 		ft_memdel((void**)&it->line);
 		it->i = 0;
-		it->line = NULL;
 		it->buffer = 0;
 		it->first = 1;
 		ft_stock_it(it);
 	}
+	printf("%d\n", g_father);
+	if (!g_father)
+		exit(1);
 	if (g_father != 0)
 	{
 		ft_putchar('\n');

@@ -25,7 +25,19 @@ static void			stop_cmd(t_list *pipeline)
 	}
 }
 
-int						execution__simple_command(t_command *c, t_env *e)
+static int			execution__simple(t_command *c, t_env *e)
+{
+	if (!check_bultins(c, e) && !(g_father = fork()))
+	{
+		if (c->need_redir)
+			do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
+		start_prgm(e->environ, c->argv);
+	}
+	wait(NULL);
+	return (WEXITSTATUS(g_father));
+}
+
+int					execution__simple_command(t_command *c, t_env *e)
 {
 	pid_t			p;
 
@@ -42,7 +54,6 @@ int						execution__simple_command(t_command *c, t_env *e)
 int					execution(t_list *pipeline, t_env *e)
 {
 	int		ret;
-	pid_t	p;
 
 	ret = 0;
 	if (pipeline && !verification_pipeline(pipeline))
@@ -52,14 +63,10 @@ int					execution(t_list *pipeline, t_env *e)
 			if (!(g_father = fork()))
 				execute_pipes(pipeline, e);
 			wait(NULL);
-			ret = WEXITSTATUS(p);
+			ret = WEXITSTATUS(g_father);
 		}
 		else
-		{
-			g_father = 0;
-			ret = execution__simple_command(pipeline->content, e);
-			g_father = 1;
-		}
+			ret = execution__simple(pipeline->content, e);
 		wait(NULL);
 	}
 	stop_cmd(pipeline);

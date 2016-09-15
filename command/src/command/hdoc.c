@@ -59,7 +59,9 @@ static int				hdoc(char *eof, int fd, char *s, char **env)
 	resumed_terminal();
 	while (read(0, &it->buffer, 4))
 	{
-		if ((it->buffer == CTRL_D && !it->len) || !it->eof || ctrl_c->bol)
+		if ((it->buffer == CTRL_D && !it->len))
+			break ;
+		if (!it->eof || ctrl_c->bol)
 		{
 			put_back(it, fd, s);
 			free(eof);

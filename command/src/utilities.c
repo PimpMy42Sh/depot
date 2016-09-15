@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:40:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/21 17:18:22 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/15 11:23:02 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		check_only_space(t_it *it)
 			return ;
 		i++;
 	}
+	ft_memdel((void**)&it->line);
 	it->line = NULL;
 }
 

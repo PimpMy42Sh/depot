@@ -52,7 +52,7 @@ void			build_agregateur(t_redirections *r, int fd,
 	}
 	while (**cmd == ' ')
 		(*cmd)++;
-	(*cmd) += ft_strlen(word) + 1;
+	(*cmd) += ft_strlen(word);
 	ft_lstadd(&r->agr, ft_lstnew(&a, sizeof(t_agregateur)));
 }
 
@@ -117,7 +117,7 @@ int				build_redirection(t_redirections *r, char **cmd)
 		while (**cmd == ' ')
 			(*cmd)++;
 		new_redirection(r, fd, type, ft_strword(*cmd));
-		while (**cmd != ' ' && **cmd)
+		while (!is_a_spec_char(**cmd) && **cmd && **cmd != ' ')
 			(*cmd)++;
 	}
 	return (type);

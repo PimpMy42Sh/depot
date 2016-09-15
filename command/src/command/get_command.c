@@ -5,7 +5,7 @@ static int		alloc_size()
 	t_it		*it;
 
 	it = ft_stock_it(0);
-	return (it->len);
+	return (ft_strlen(it->line));
 }
 
 static void		realloc_copy(char **s, char **str, int *len)
@@ -44,17 +44,20 @@ static void		end__get_command(t_env *e, t_command *c, t_norme_command *n)
 	free(n->str);
 	c->argv = lst_to_tab(c->args);
 	check_tilde_and_dollar(e->environ, c->argv, 0);
+	(void)e;
 }
 
 static void		quotes(t_norme_command *n, char **s)
 {
 	int		tmp;
 
+	//printf("quotes\n");
 	tmp = **s;
 	realloc_copy(s, &n->str, &n->len);
 	while (**s != tmp)
 		realloc_copy(s, &n->str, &n->len);
 	realloc_copy(s, &n->str, &n->len);
+	//printf("end\n");
 }
 
 t_command		*get_command(char **s, t_env *e)

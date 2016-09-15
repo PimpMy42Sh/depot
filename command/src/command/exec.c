@@ -29,6 +29,7 @@ int						execution__simple_command(t_command *c, t_env *e)
 {
 	pid_t			p;
 
+	print_command(c);
 	if (!check_bultins(c, e) && !(p = fork()))
 		{
 			if (c->need_redir)

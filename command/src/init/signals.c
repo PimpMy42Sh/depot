@@ -28,13 +28,14 @@ static void				ctrl_c(void)
 		ft_memdel((void**)&it->line);
 		it->i = 0;
 		it->line = NULL;
+		it->buffer = 0;
 		it->first = 1;
 		ft_stock_it(it);
 	}
-		ft_putchar('\n');
-		print_prompt();
-		ctrl_c->stdin = 1;
-		ctrl_c->bol = 1;
+	ft_putchar('\n');
+	print_prompt();
+	ctrl_c->stdin = 1;
+	ctrl_c->bol = 1;
 }
 
 static void				signal_handler(int signum)

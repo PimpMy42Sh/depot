@@ -37,6 +37,7 @@ void		convert_it_line(t_it *it, t_list *args, char **back)
 	while (args)
 	{
 		it->line = ft_strcat(it->line, args->content);
+		printf("%s\n", it->line);
 		args = args->next;
 	}
 	*back = ft_strdup(it->line);

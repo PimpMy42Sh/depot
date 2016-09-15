@@ -29,8 +29,6 @@ static void	split_cmd(t_it *it, t_env *env)
 	if (back)
 		s = back;
 	nhdoc(0);
-	printf("=======================\n");
-	printf("%s\n", s);
 	while (*s)
 	{
 		while ((c = get_pipeline(&s, env)))

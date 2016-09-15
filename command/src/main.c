@@ -61,7 +61,7 @@ static void	parse(t_it *it, t_env *env)
 static void	main_loop(t_env *env)
 {
 	t_it			*it;
-	t_ctrl_c	*ctrl_c;
+	t_ctrl_c		*ctrl_c;
 
 	it = init_it_struct(0);
 	ctrl_c = ft_stock_ctrl_c(NULL);

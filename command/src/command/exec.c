@@ -30,11 +30,11 @@ int						execution__simple_command(t_command *c, t_env *e)
 	pid_t			p;
 
 	if (!check_bultins(c, e) && !(p = fork()))
-		{
-			if (c->need_redir)
-				do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
-			start_prgm(e->environ, c->argv);
-		}
+	{
+		if (c->need_redir)
+			do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
+		start_prgm(e->environ, c->argv);
+	}
 	wait(NULL);
 	return (WEXITSTATUS(p));
 }
@@ -49,13 +49,17 @@ int					execution(t_list *pipeline, t_env *e)
 	{
 		if (pipeline->next)
 		{
-			if (!(p = fork()))
+			if (!(g_father = fork()))
 				execute_pipes(pipeline, e);
 			wait(NULL);
 			ret = WEXITSTATUS(p);
 		}
 		else
+		{
+			g_father = 0;
 			ret = execution__simple_command(pipeline->content, e);
+			g_father = 1;
+		}
 		wait(NULL);
 	}
 	stop_cmd(pipeline);

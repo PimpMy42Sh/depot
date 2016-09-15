@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 14:01:51 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/15 17:24:42 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void				ctrl_c(void)
 	ctrl_c = ft_stock_ctrl_c(NULL);
 	it = ft_stock_it(NULL);
 	tputs(tgetstr(DEFAULT, NULL), 0, my_putchar);
+	resumed_terminal();
 	if (it)
 	{
 		it->eof = 0;
@@ -32,8 +33,11 @@ static void				ctrl_c(void)
 		it->first = 1;
 		ft_stock_it(it);
 	}
-	ft_putchar('\n');
-	print_prompt();
+	if (g_father != 0)
+	{
+		ft_putchar('\n');
+		print_prompt();
+	}
 	ctrl_c->stdin = 1;
 	ctrl_c->bol = 1;
 }

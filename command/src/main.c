@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 15:24:20 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/15 17:16:12 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	split_cmd(t_it *it, t_env *env)
 	t_list				*c;
 	static t_history	*history = NULL;
 
+	history = create_elem(history, it->line);
 	ft_putchar('\n');
 	back = NULL;
 	s = it->line;
@@ -121,6 +122,7 @@ int			main(int argc, char **argv, char **environment)
 
 	(void)argv;
 	(void)argc;
+	g_father = 1;
 	ctrl_c = (t_ctrl_c*)ft_memalloc(sizeof(struct s_ctrl_c));
 	ft_bzero(ctrl_c, sizeof(t_ctrl_c));
 	ft_stock_ctrl_c(ctrl_c);

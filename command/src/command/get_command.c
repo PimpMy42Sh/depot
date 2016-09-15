@@ -1,11 +1,12 @@
 #include <command.h>
 
-static int		alloc_size()
+int				alloc_size(int len)
 {
-	t_it		*it;
+	static int			alloc_len = 0;
 
-	it = ft_stock_it(0);
-	return (ft_strlen(it->line));
+	if (len)
+		alloc_len = len;
+	return (alloc_len);
 }
 
 static void		realloc_copy(char **s, char **str, int *len)
@@ -24,7 +25,7 @@ static void		argument(t_command *c, char **s, t_norme_command *n)
 		ft_lstadd(&c->args,
 		ft_lstnew(n->str, n->len + 1));
 		free(n->str);
-		n->str = ft_strnew(alloc_size());
+		n->str = ft_strnew(alloc_size(0));
 		n->len = 0;
 	}
 }
@@ -65,7 +66,7 @@ t_command		*get_command(char **s, t_env *e)
 	t_command		*c;
 	t_norme_command	n;
 
-	n.str = ft_strnew(alloc_size());
+	n.str = ft_strnew(alloc_size(0));
 	n.len = 0;
 	if ((c = (t_command*)malloc(sizeof(t_command))))
 	{

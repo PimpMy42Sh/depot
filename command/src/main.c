@@ -16,19 +16,19 @@
 static void	split_cmd(t_it *it, t_env *env)
 {
 	char				*s;
+	char				*back;
 	t_list				*c;
 	static t_history	*history = NULL;
-	char				*back;
 
-	back = NULL;
 	ft_putchar('\n');
-	history = create_elem(history, it->line);
+	back = NULL;
 	s = it->line;
 	if (check_line_quotes(s, &back) || do_all_hdoc(s, env->environ))
 		return ;
+	nhdoc(0);
 	if (back)
 		s = back;
-	nhdoc(0);
+	alloc_size(ft_strlen(s));
 	while (*s)
 	{
 		while ((c = get_pipeline(&s, env)))

@@ -156,4 +156,5 @@ int						build_redirection(t_redirections *r, char **cmd);
 **	Other
 */
 int						check_bultins(t_command *c, t_env *e);
+int						alloc_size(int len);
 #endif

@@ -1,11 +1,15 @@
 #include "../../include/minishell.h"
 
-static void free_structure(t_list *args)
+static void	free_structure(t_list *args)
 {
+	t_list *tmp;
+
 	while (args)
 	{
+		tmp = args->next;
 		ft_memdel((void**)&args->content);
-		args = args->next;
+		free(args);
+		args = tmp;
 	}
 	ft_memdel((void**)&args);
 }
@@ -40,6 +44,6 @@ void		convert_it_line(t_it *it, t_list *args, char **back)
 		args = args->next;
 	}
 	*back = ft_strdup(it->line);
-	free_structure(args);
+	free_structure(begin);
 	free_it(it);
 }

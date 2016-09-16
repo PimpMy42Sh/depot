@@ -26,17 +26,16 @@ static void				ctrl_c(void)
 		it->eof = 0;
 		it->r_video = 0;
 		go_to_bottom(it);
-		ft_memdel((void**)&it->line);
 		it->i = 0;
 		it->buffer = 0;
 		it->first = 1;
-		//ft_stock_it(it);
 	}
 	if (g_father != 0)
 	{
 		ft_putchar('\n');
 		print_prompt();
 	}
+	g_father = 1;
 	ctrl_c->stdin = 1;
 	ctrl_c->bol = 1;
 }

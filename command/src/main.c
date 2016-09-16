@@ -45,43 +45,32 @@ static void	split_cmd(t_it *it, t_env *env)
 
 static void	parse(t_it *it, t_env *env)
 {
-	t_ctrl_c	*ctrl_c;
-
-	ctrl_c = ft_stock_ctrl_c(NULL);
 	suspend_terminal();
-	ctrl_c->stdin = 0;
 	split_cmd(it, env);
 	ft_memdel((void**)&it->line);
 	resumed_terminal();
-	if (!ctrl_c->stdin)
-		print_prompt();
-	ctrl_c->stdin = 1;
-	ctrl_c->bol = 0;
+	print_prompt();
 }
 
 static void	main_loop(t_env *env)
 {
 	t_it			*it;
-	t_ctrl_c		*ctrl_c;
 
 	it = init_it_struct(0);
-	ctrl_c = ft_stock_ctrl_c(NULL);
 	while (read(0, &it->buffer, 4))
 	{
-		ctrl_c->stdin = 0;
 		parse_line(it);
 		ft_stock_it(it);
 		if (it->buffer == '\n')
 		{
 			check_only_space(it);
-			if (it->line && ft_strlen(it->line))
+			if (it->line && *it->line)
 				parse(it, env);
 			else
 			{
 				go_to_bottom(it);
 				ft_putchar('\n');
-				if (!ctrl_c->stdin)
-					print_prompt();
+				print_prompt();
 			}
 			ft_memdel((void**)&it->line);
 			it->i = 0;

@@ -37,9 +37,10 @@ static int				is_a_newline(t_it *it, int fd, char *eof, char **env)
 	return (1);
 }
 
-static void 			put_back(t_it *it, int fd, char *s)
+static void 			put_back(t_it *it, int fd, char *s, int bol)
 {
-	suspend_terminal();
+	if (bol)
+		suspend_terminal();
 	it->eof = 0;
 	hdoc__reset(it, 0);
 	close(fd);
@@ -63,7 +64,7 @@ static int				hdoc(char *eof, int fd, char *s, char **env)
 			break ;
 		if (!it->eof || ctrl_c->bol)
 		{
-			put_back(it, fd, s);
+			put_back(it, fd, s, 0);
 			free(eof);
 			return (1);
 		}
@@ -76,7 +77,7 @@ static int				hdoc(char *eof, int fd, char *s, char **env)
 		}
 		it->buffer = 0;
 	}
-	put_back(it, fd, NULL);
+	put_back(it, fd, NULL, 1);
 	return (0);
 }
 

@@ -26,7 +26,9 @@ void		convert_it_line(t_it *it, t_list *args, char **back)
 {
 	int		compteur;
 	t_list	*begin;
+	char		*troll;
 
+	troll = NULL;
 	begin = args;
 	compteur = 0;
 	while (args)
@@ -46,4 +48,7 @@ void		convert_it_line(t_it *it, t_list *args, char **back)
 	*back = ft_strdup(it->line);
 	free_structure(begin);
 	free_it(it);
+	check_line_quotes(*back, &troll);
+	if (troll)
+		*back = troll;
 }

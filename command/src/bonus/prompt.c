@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/24 09:32:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/13 11:40:09 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/16 14:25:29 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		print_prompt(void)
 
 	cwd = NULL;
 	cwd = getcwd(buffer, 256);
+	tputs(tgetstr(DEFAULT, NULL), 0, my_putchar);
 	if (cwd)
 	{
 		ft_putstr(GREEN);

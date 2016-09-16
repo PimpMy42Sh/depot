@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/15 17:16:12 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/16 17:06:50 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,10 @@ static void	parse(t_it *it, t_env *env)
 
 	ctrl_c = ft_stock_ctrl_c(NULL);
 	suspend_terminal();
-	ctrl_c->stdin = 0;
 	split_cmd(it, env);
 	ft_memdel((void**)&it->line);
 	resumed_terminal();
-	if (!ctrl_c->stdin)
-		print_prompt();
-	ctrl_c->stdin = 1;
+	print_prompt();
 	ctrl_c->bol = 0;
 }
 
@@ -68,7 +65,6 @@ static void	main_loop(t_env *env)
 	ctrl_c = ft_stock_ctrl_c(NULL);
 	while (read(0, &it->buffer, 4))
 	{
-		ctrl_c->stdin = 0;
 		parse_line(it);
 		ft_stock_it(it);
 		if (it->buffer == '\n')
@@ -80,8 +76,7 @@ static void	main_loop(t_env *env)
 			{
 				go_to_bottom(it);
 				ft_putchar('\n');
-				if (!ctrl_c->stdin)
-					print_prompt();
+				print_prompt();
 			}
 			ft_memdel((void**)&it->line);
 			it->i = 0;

@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 16:40:53 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/16 17:07:04 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@
 # define BEGIN			"cr"
 # define DOWN_MAJ		"DO"
 # define CLEAR 			"cd"
-# define SAVE 			"sc"
-# define RESTORE 		"rc"
 # define CLEAR_TERM "cl"
 
 pid_t													g_father;
@@ -127,7 +125,6 @@ typedef struct								s_tty
 typedef struct								s_ctrl_c
 {
 	int													bol;
-	int													stdin;
 }															t_ctrl_c;
 
 typedef struct								s_env

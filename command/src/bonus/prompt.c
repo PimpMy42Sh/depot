@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/24 09:32:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/16 14:25:29 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/16 17:06:07 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,4 @@ void		print_prompt(void)
 		ft_putstr("$> ");
 		ft_putstr(RESET);
 	}
-	tputs(tgetstr(SAVE, NULL), 0, my_putchar);
 }

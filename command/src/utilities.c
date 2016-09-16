@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:40:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/15 11:23:02 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/16 17:06:19 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		go_to_bottom(t_it *it)
 		nb_lines = (it->len + it->offset) / it->ws_col;
 		if (nb_lines < 0)
 			nb_lines = 0;
-		tputs(tparm(tgetstr("DOWN_MAJ", NULL), nb_lines - 1), 0, my_putchar);
+		tputs(tparm(tgetstr("DOWN_MAJ", NULL), nb_lines), 0, my_putchar);
 	}
 }
 

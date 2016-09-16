@@ -30,11 +30,8 @@ static void				ctrl_c(void)
 		it->i = 0;
 		it->buffer = 0;
 		it->first = 1;
-		ft_stock_it(it);
+		//ft_stock_it(it);
 	}
-	printf("%d\n", g_father);
-	if (!g_father)
-		exit(1);
 	if (g_father != 0)
 	{
 		ft_putchar('\n');

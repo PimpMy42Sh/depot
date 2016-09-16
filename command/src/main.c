@@ -6,14 +6,14 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/16 17:06:50 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/16 18:09:46 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/command.h"
 
-static void	split_cmd(t_it *it, t_env *env)
+static int	split_cmd(t_it *it, t_env *env)
 {
 	char				*s;
 	char				*back;
@@ -25,7 +25,7 @@ static void	split_cmd(t_it *it, t_env *env)
 	back = NULL;
 	s = it->line;
 	if (check_line_quotes(s, &back) || do_all_hdoc(s, env->environ))
-		return ;
+		return (1);
 	nhdoc(0);
 	if (back)
 		s = back;
@@ -41,6 +41,7 @@ static void	split_cmd(t_it *it, t_env *env)
 	}
 	if (back)
 		free(back);
+		return (0);
 }
 
 static void	parse(t_it *it, t_env *env)
@@ -49,7 +50,8 @@ static void	parse(t_it *it, t_env *env)
 
 	ctrl_c = ft_stock_ctrl_c(NULL);
 	suspend_terminal();
-	split_cmd(it, env);
+	if (split_cmd(it, env))
+		return ;
 	ft_memdel((void**)&it->line);
 	resumed_terminal();
 	print_prompt();

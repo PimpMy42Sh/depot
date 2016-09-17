@@ -66,6 +66,7 @@ static int				hdoc(char *eof, int fd, char *s, char **env)
 		{
 			put_back(it, fd, s, 0);
 			free(eof);
+			ctrl_c->bol = 0;
 			return (1);
 		}
 		parse_line(it);

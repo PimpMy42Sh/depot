@@ -74,7 +74,10 @@ int		quote_not_close(char *begin, char end, char **back)
 	while (read(0, &it->buffer, 4))
 	{
 		if ((it->buffer == CTRL_D && !it->len) || !it->eof || ctrl_c->bol)
+		{
+			ctrl_c->bol = 0;
 			return (1);
+		}
 		parse_line(it);
 		if (it->buffer == '\n')
 		{

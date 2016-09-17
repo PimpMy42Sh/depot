@@ -41,30 +41,24 @@ static int	split_cmd(t_it *it, t_env *env)
 	}
 	if (back)
 		free(back);
-		return (0);
+	return (0);
 }
 
 static void	parse(t_it *it, t_env *env)
 {
-	t_ctrl_c	*ctrl_c;
-
-	ctrl_c = ft_stock_ctrl_c(NULL);
 	suspend_terminal();
 	if (split_cmd(it, env))
 		return ;
 	ft_memdel((void**)&it->line);
 	resumed_terminal();
 	print_prompt();
-	ctrl_c->bol = 0;
 }
 
 static void	main_loop(t_env *env)
 {
 	t_it			*it;
-	t_ctrl_c		*ctrl_c;
 
 	it = init_it_struct(0);
-	ctrl_c = ft_stock_ctrl_c(NULL);
 	while (read(0, &it->buffer, 4))
 	{
 		parse_line(it);

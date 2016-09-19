@@ -50,5 +50,9 @@ void		convert_it_line(t_it *it, t_list *args, char **back)
 	free_it(it);
 	check_line_quotes(*back, &troll);
 	if (troll)
-		*back = troll;
+	{
+		free(*back);
+		*back = ft_strdup(troll);
+		free(troll);
+	}
 }

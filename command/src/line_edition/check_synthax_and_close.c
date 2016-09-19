@@ -63,28 +63,28 @@ static char		skip_quote(char **s, char tmp)
 	return (end);
 }
 
-static int		check_line_is_close(char *s, char **back)
+static int		check_line_is_close(char **s, char **back)
 {
-	char	*tmp;
+	char	tmp;
 	char	end;
 	char	*begin;
 
-	begin = ft_strdup(s);
-	while (*s)
+	begin = ft_strdup(*s);
+	while (**s)
 	{
-		if (*s == QUOTES || *s == D_QUOTES || *s == B_QUOTES ||
-			*s == PARENTHESES || *s == ACCOLADES || *s == CROCHETS)
+		if (**s == QUOTES || **s == D_QUOTES || **s == B_QUOTES ||
+			**s == PARENTHESES || **s == ACCOLADES || **s == CROCHETS)
 		{
-			tmp = s;
-			s++;
-			end = skip_quote(&s, *tmp);
-			if (!*s)
+			tmp = **s;
+			(*s)++;
+			end = skip_quote(s, tmp);
+			if (!**s)
 				if (quote_not_close(begin, end, back))
 					return (1);
 		}
-		s++;
+		(*s)++;
 	}
-	ft_memdel((void**)&begin);
+	ft_memdel((void*)&begin);
 	return (0);
 }
 
@@ -97,8 +97,7 @@ int				check_line_quotes(char *s, char **back)
 	}
 	else
 	{
-		printf("%s\n", s);
-		if (check_line_is_close(s, back))
+		if (check_line_is_close(&s, back))
 			return (1);
 	}
 	return (0);

@@ -23,13 +23,13 @@ static int	split_cmd(t_it *it, t_env *env)
 	history = create_elem(history, it->line);
 	ft_putchar('\n');
 	back = NULL;
-	s = it->line;
-	if (check_line_quotes(s, &back))
+	if (check_line_quotes(it->line, &back))
 		return (1);
 	nhdoc(0);
 	if (back)
 		s = back;
-	printf("(%s)\n", s);
+	else
+		s = it->line;
 	if (do_all_hdoc(s, env->environ))
 		return (1);
 	alloc_size(ft_strlen(s));
@@ -54,9 +54,11 @@ static void	parse(t_it *it, t_env *env)
 	suspend_terminal();
 	if (split_cmd(it, env))
 		return ;
-	ft_memdel((void**)&it->line);
 	resumed_terminal();
+	if (!it->line)
+		ft_putchar('\n');
 	print_prompt();
+	ft_memdel((void**)&it->line);
 }
 
 static void	main_loop(t_env *env)

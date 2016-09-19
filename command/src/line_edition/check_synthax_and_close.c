@@ -78,11 +78,11 @@ static int		check_line_is_close(char *s, char **back)
 			tmp = s;
 			s++;
 			end = skip_quote(&s, *tmp);
-			if (!**s)
+			if (!*s)
 				if (quote_not_close(begin, end, back))
 					return (1);
 		}
-		(*s)++;
+		s++;
 	}
 	ft_memdel((void**)&begin);
 	return (0);
@@ -98,7 +98,7 @@ int				check_line_quotes(char *s, char **back)
 	else
 	{
 		printf("%s\n", s);
-		if (check_line_is_close(&s, back))
+		if (check_line_is_close(s, back))
 			return (1);
 	}
 	return (0);

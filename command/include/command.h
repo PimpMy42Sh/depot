@@ -123,6 +123,7 @@ void					execute_pipes(t_list *cmds, t_env *env);
 /*
 **	Exec.c
 */
+void					stop_cmd(t_list *pipeline);
 void					start_prgm(char **env, char **argv);
 int						execution__simple_command(t_command *c, t_env *e);
 int						execution(t_list *pipeline, t_env *e);

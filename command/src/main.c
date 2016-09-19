@@ -24,17 +24,22 @@ static int	split_cmd(t_it *it, t_env *env)
 	ft_putchar('\n');
 	back = NULL;
 	s = it->line;
-	if (check_line_quotes(s, &back) || do_all_hdoc(s, env->environ))
+	if (check_line_quotes(s, &back))
 		return (1);
 	nhdoc(0);
 	if (back)
 		s = back;
+	printf("(%s)\n", s);
+	if (do_all_hdoc(s, env->environ))
+		return (1);
 	alloc_size(ft_strlen(s));
 	while (*s)
 	{
 		while ((c = get_pipeline(&s, env)))
 		{
-			execution(c, env);
+			if (it->line)
+				execution(c, env);
+			stop_cmd(c);
 			s += (*s == ';');
 		}
 		s += (*s == ';');

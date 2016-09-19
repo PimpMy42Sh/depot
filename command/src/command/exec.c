@@ -12,7 +12,7 @@ void				start_prgm(char **env, char **argv)
 	exit(1);
 }
 
-static void			stop_cmd(t_list *pipeline)
+void			stop_cmd(t_list *pipeline)
 {
 	t_list	*tmp;
 
@@ -72,6 +72,5 @@ int					execution(t_list *pipeline, t_env *e)
 		wait(NULL);
 	}
 	g_father = 1;
-	stop_cmd(pipeline);
 	return (ret);
 }

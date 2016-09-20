@@ -3,11 +3,11 @@
 
 void				start_prgm(char **env, char **argv)
 {
-	if ((argv[0] = hash_cmd(argv[0], env)))
-	{
-		map_environ(env);
+	map_environ(env);
+	if (!ft_strncmp("./", argv[0], 2))
+		execve(argv[0] + 2, argv, env);		
+	else if ((argv[0] = hash_cmd(argv[0], env)))
 		execve(argv[0], argv, env);
-	}
 	command_not_find(argv[0]);
 	exit(1);
 }
@@ -24,19 +24,7 @@ void			stop_cmd(t_list *pipeline)
 		pipeline = tmp;
 	}
 }
-/*
-static int			execution__simple(t_command *c, t_env *e)
-{
-	if (!check_bultins(c, e) && !(g_father = fork()))
-	{
-		if (c->need_redir)
-			do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
-		start_prgm(e->environ, c->argv);
-	}
-	wait(NULL);
-	return (WEXITSTATUS(g_father));
-}
-*/
+
 int					execution__simple_command(t_command *c, t_env *e)
 {
 	pid_t			p;

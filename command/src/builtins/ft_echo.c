@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-static void			print_string(char **av, char **environ, int delta)
+static void			print_string(char **av, char **environ, int delta, int flag)
 {
 	int				i;
 	int				ok;
@@ -16,19 +16,50 @@ static void			print_string(char **av, char **environ, int delta)
 			ft_putchar(' ');
 		i++;
 	}
-	if (delta != 2)
+	if (!flag)
 		ft_putchar('\n');
 	(void)environ;
 }
 
+static int 				check_flags(char **av, int *flag)
+{
+	int			i;
+
+	i = 1;
+	if (av[i] && ft_strcmp(av[i], "-n"))
+		return (i);
+	while (av[i])
+	{
+		if (av[i] && !ft_strcmp(av[i], "-n"))
+		{
+			remove_env(av, i);
+			*flag = 1;
+		}
+		if (av[i] && ft_strcmp(av[i], "-n") && (!ft_strcmp(av[i], "--") || av[i][0] != ' '))
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
 void				ft_echo(char **av, char **environ)
 {
+	int		i;
+	int		flag;
+
+	flag = 0;
+	i = 0;
 	if (!av[1])
+	{
 		ft_putchar('\n');
-	else if (av[1] && !ft_strcmp(av[1], "-n") && !av[2])
 		return ;
-	else if (av[1] && !ft_strcmp(av[1], "-n") && av[2])
-		print_string(av, environ, 2);
+	}
 	else
-		print_string(av, environ, 1);
+		i = check_flags(av, &flag);
+	if (flag && !av[i])
+		return ;
+	else if (flag && av[i])
+		print_string(av, environ, i, flag);
+	else
+		print_string(av, environ, 1, flag);
 }

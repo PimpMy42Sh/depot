@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 12:00:50 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/24 11:44:35 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/20 10:35:09 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void			loop_remove_env(char **av, t_env *env)
 		while (env->environ[j])
 		{
 			env_var = ft_strsplit(env->environ[j], '=');
-			if (!ft_strncmp(env_var[0], av[i], ft_strlen(av[i])))
+			if (!ft_strcmp(env_var[0], av[i]))
 			{
 				remove_env(env->environ, j);
 				j--;

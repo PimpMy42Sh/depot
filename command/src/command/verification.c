@@ -63,7 +63,6 @@ int					verification_pipeline(t_list *pipeline)
 	while (pipeline)
 	{
 		c = pipeline->content;
-		print_command(c);
 		if (!c)
 		{
 			write(2, "Need a valide command\n", 22);

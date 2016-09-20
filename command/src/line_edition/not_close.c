@@ -67,6 +67,7 @@ int		quote_not_close(char *begin, char end, char **back)
 	ctrl_c = ft_stock_ctrl_c(NULL);
 	args = NULL;
 	copy_first_element(begin, &args);
+	ctrl_c->bol = 0;
 	it = init_it_struct(1);
 	it->eof = 1;
 	ft_putstr("> ");

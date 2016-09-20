@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:42:09 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/16 18:10:39 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/20 10:05:26 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void				ctrl_c(void)
 		it->i = 0;
 		it->buffer = 0;
 		it->first = 1;
-		ft_stock_it(it);
 	}
 	ctrl_c->bol = 1;
 }

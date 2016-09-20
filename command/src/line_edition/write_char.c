@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:48:46 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/04 15:31:54 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/20 10:16:49 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void			parse_line(t_it *it)
 	if (!it->eof)
 		it->offset = return_offset();
 	else
-		it->offset = 2;
+		it->offset = 1;
 	if (!it->line)
 	{
 		it->i = 0;

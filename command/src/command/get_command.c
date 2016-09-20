@@ -52,13 +52,11 @@ static void		quotes(t_norme_command *n, char **s)
 {
 	int		tmp;
 
-	//printf("quotes\n");
 	tmp = **s;
 	realloc_copy(s, &n->str, &n->len);
 	while (**s != tmp)
 		realloc_copy(s, &n->str, &n->len);
 	realloc_copy(s, &n->str, &n->len);
-	//printf("end\n");
 }
 
 t_command		*get_command(char **s, t_env *e)

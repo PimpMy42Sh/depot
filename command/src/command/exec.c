@@ -1,7 +1,7 @@
 #include <command.h>
 #include "../../include/minishell.h"
 
-static int				test_access(char *name)
+static int			test_access(char *name)
 {
 	DIR				*d;
 	int				ret;
@@ -17,18 +17,18 @@ static int				test_access(char *name)
 		closedir(d);
 	}
 	else if (!access(name, F_OK))
-			if (access(name, X_OK))
-			{
-				ft_putstr_fd(name, 2);
-				ft_putstr_fd(": ", 2);
-				write(2, "Permission denied\n", 18);
-				ret = 1;
-			}
+		if (access(name, X_OK))
+		{
+			ft_putstr_fd(name, 2);
+			ft_putstr_fd(": ", 2);
+			write(2, "Permission denied\n", 18);
+			ret = 1;
+		}
 	ft_putstr_fd(RESET, 2);
 	return (ret);
 }
 
-void				start_prgm(char **env, char **argv)
+void			start_prgm(char **env, char **argv)
 {
 	map_environ(env);
 	if (test_access(argv[0]))
@@ -53,20 +53,8 @@ void			stop_cmd(t_list *pipeline)
 		pipeline = tmp;
 	}
 }
-/*
-static int			execution__simple(t_command *c, t_env *e)
-{
-	if (!check_bultins(c, e) && !(g_father = fork()))
-	{
-		if (c->need_redir)
-			do_redirections(&c->redirs, STDIN_FILENO, STDOUT_FILENO);
-		start_prgm(e->environ, c->argv);
-	}
-	wait(NULL);
-	return (WEXITSTATUS(g_father));
-}
-*/
-int					execution__simple_command(t_command *c, t_env *e)
+
+int				execution__simple_command(t_command *c, t_env *e)
 {
 	pid_t			p;
 
@@ -80,7 +68,7 @@ int					execution__simple_command(t_command *c, t_env *e)
 	return (WEXITSTATUS(p));
 }
 
-int					execution(t_list *pipeline, t_env *e)
+int				execution(t_list *pipeline, t_env *e)
 {
 	int		ret;
 	pid_t	p;

@@ -21,7 +21,7 @@ static void			print_string(char **av, char **environ, int delta, int flag)
 	(void)environ;
 }
 
-static int 				check_flags(char **av, int *flag)
+static int			check_flags(char **av, int *flag)
 {
 	int			i;
 
@@ -35,7 +35,8 @@ static int 				check_flags(char **av, int *flag)
 			remove_env(av, i);
 			*flag = 1;
 		}
-		if (av[i] && ft_strcmp(av[i], "-n") && (!ft_strcmp(av[i], "--") || av[i][0] != ' '))
+		if (av[i] && ft_strcmp(av[i], "-n") &&
+			(!ft_strcmp(av[i], "--") || av[i][0] != ' '))
 			return (i);
 		i++;
 	}

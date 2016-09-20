@@ -1,7 +1,7 @@
 #include <minishell.h>
 #include <command.h>
 
-static void									do_bultins(char **av, t_env *env)
+static void					do_bultins(char **av, t_env *env)
 {
 	if (!ft_strcmp(av[0], "exit"))
 		ft_exit(av, env);
@@ -19,16 +19,15 @@ static void									do_bultins(char **av, t_env *env)
 
 static void					builtins_redirs(t_command *c, t_env *e)
 {
-if (!fork())
-		{
-			do_redirections(&c->redirs, 0, 1);
-			do_bultins(c->argv, e);
-			exit(1);
-		}
-		(void)e;
+	if (!fork())
+	{
+		do_redirections(&c->redirs, 0, 1);
+		do_bultins(c->argv, e);
+		exit(1);
+	}
 }
 
-static int									is_a_builtin(char *av)
+static int					is_a_builtin(char *av)
 {
 	return (!ft_strcmp(av, "exit")
 			|| !ft_strcmp(av, "cd")
@@ -38,15 +37,15 @@ static int									is_a_builtin(char *av)
 			|| !ft_strcmp(av, "echo"));
 }
 
-int								check_bultins(t_command *c, t_env *e)
+int							check_bultins(t_command *c, t_env *e)
 {
 	if (is_a_builtin(c->argv[0]))
 	{
-			if (c->need_redir)
-				builtins_redirs(c, e);
-			else
-				do_bultins(c->argv, e);
-			return (1);
+		if (c->need_redir)
+			builtins_redirs(c, e);
+		else
+			do_bultins(c->argv, e);
+		return (1);
 	}
 	return (0);
 }

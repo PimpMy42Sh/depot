@@ -34,7 +34,7 @@ t_tty		*ft_stock_term(t_tty *tty)
 	return (tmp);
 }
 
-static void		rec_tmp_size(t_it *it)
+static void	rec_tmp_size(t_it *it)
 {
 	struct winsize		win;
 
@@ -74,7 +74,7 @@ t_it		*ft_stock_it(t_it *it)
 	return (tmp);
 }
 
-t_ctrl_c		*ft_stock_ctrl_c(t_ctrl_c *ctrl_c)
+t_ctrl_c	*ft_stock_ctrl_c(t_ctrl_c *ctrl_c)
 {
 	static t_ctrl_c	*tmp = NULL;
 

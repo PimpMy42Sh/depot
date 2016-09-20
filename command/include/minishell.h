@@ -101,7 +101,7 @@
 # define CLEAR 			"cd"
 # define CLEAR_TERM "cl"
 
-pid_t													g_father;
+pid_t										g_father;
 
 typedef struct								s_norme
 {
@@ -124,8 +124,8 @@ typedef struct								s_tty
 
 typedef struct								s_ctrl_c
 {
-	int													bol;
-}															t_ctrl_c;
+	int										bol;
+}											t_ctrl_c;
 
 typedef struct								s_env
 {
@@ -235,7 +235,6 @@ void										replace_environ(char **origin,
 void										replace_dollar(char **av,
 											int *i, char **environ);
 char										*get_token(char *s);
-
 
 /*
 **	parse environ
@@ -353,7 +352,7 @@ void										print_prompt(void);
 void										check_shlvl(t_env *env);
 void										check_only_space(t_it *it);
 t_it										*ft_stock_it(t_it *it);
-t_ctrl_c								*ft_stock_ctrl_c(t_ctrl_c *ctrl_c);
+t_ctrl_c									*ft_stock_ctrl_c(t_ctrl_c *ctrl_c);
 void										go_to_bottom(t_it *it);
 int											ft_abs(int i);
 char										**malloc_environ(char **environ,

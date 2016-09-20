@@ -112,7 +112,13 @@ static int				do_all_hdoc__normalize(char **cmd, char **env)
 
 int						do_all_hdoc(char *cmd, char **env)
 {
+	t_it		*it;
+
+	it = ft_stock_it(0);
+	it->offset = 1;
 	nhdoc(0);
+	move_end(it);
+	tputs(tgetstr(DOWN, NULL), 0, my_putchar);
 	while (*cmd)
 	{
 		if (*cmd == '<' && *(cmd + 1) == '<')

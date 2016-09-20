@@ -32,6 +32,7 @@ static int	split_cmd(t_it *it, t_env *env)
 		s = it->line;
 	if (do_all_hdoc(s, env->environ))
 		return (1);
+	nhdoc(0);
 	alloc_size(ft_strlen(s));
 	while (*s)
 	{

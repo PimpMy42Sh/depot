@@ -12,6 +12,24 @@ static void	append_backlash_n(t_it *it, t_list **args)
 	ft_memdel((void**)&tmp);
 }
 
+static int	close_or_not(char *str, char end)
+{
+	int		i;
+	int		j;
+
+	j = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == end)
+			j++;
+		i++;
+	}
+	if (j > 0 && j % 2)
+		return (1);
+	return (0);
+}
+
 static int	is_a_newline(t_it *it, char end, t_list **args)
 {
 	int		delta;
@@ -25,7 +43,7 @@ static int	is_a_newline(t_it *it, char end, t_list **args)
 	}
 	if (it->line)
 	{
-		if (ft_strchr(it->line, end))
+		if (ft_strchr(it->line, end) && close_or_not(it->line ,end))
 		{
 			ft_lstadd_end(args, ft_lstnew(it->line, ft_strlen(it->line) + 1));
 			write(1, "\n", 1);
@@ -37,7 +55,6 @@ static int	is_a_newline(t_it *it, char end, t_list **args)
 		ft_lstadd_end(args, ft_lstnew("\n", 2));
 	return (1);
 }
-
 static void	quote_reset(t_it *it)
 {
 	it->i = 0;

@@ -20,7 +20,7 @@ void		command_not_find(char *arg)
 	go_to_bottom(it);
 	ft_putstr_fd(RED, 2);
 	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(": command not found.\n", 2);
+	ft_putstr_fd(": Command not found.\n", 2);
 	ft_putstr_fd(RESET, 2);
 	ft_memdel((void**)&it);
 	exit(1);

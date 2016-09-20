@@ -217,10 +217,9 @@ void										free_cmd(char **cmd);
 **	parse arguments
 */
 void										parse_arguments(char **environ,
-											char *line, int boolean);
+											char *line);
 void										check_tilde_and_dollar(
-											char **environ, char **av,
-											int boolean);
+											char **environ, char **av);
 void										check_tilde_and_dollar__str(
 											char **environ, char **av);
 void										replace_envrion_suite_2(char *ret,
@@ -228,6 +227,15 @@ void										replace_envrion_suite_2(char *ret,
 char										*parse_search(char *ret);
 int											return_av_size(char **av);
 void										convert_tab(char *str);
+void										replace_tilde(char **origin,
+											int *index, char **environ);
+void										replace_environ(char **origin,
+											int *index, char **environ,
+											char *str);
+void										replace_dollar(char **av,
+											int *i, char **environ);
+char										*get_token(char *s);
+
 
 /*
 **	parse environ

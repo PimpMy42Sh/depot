@@ -44,7 +44,7 @@ static void		end__get_command(t_env *e, t_command *c, t_norme_command *n)
 		ft_lstnew(n->str, n->len + 1));
 	free(n->str);
 	c->argv = lst_to_tab(c->args);
-	check_tilde_and_dollar(e->environ, c->argv, 0);
+	check_tilde_and_dollar(e->environ, c->argv);
 	(void)e;
 }
 

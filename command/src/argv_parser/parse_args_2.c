@@ -30,7 +30,7 @@ static char	*ft_strtrim_quotes(char *s)
 	return (ret);
 }
 
-static void	replace_tilde(char **origin, int *index, char **environ)
+void		replace_tilde(char **origin, int *index, char **environ)
 {
 	char	*ret;
 	char	*var;
@@ -51,7 +51,8 @@ static void	replace_tilde(char **origin, int *index, char **environ)
 		free(var);
 }
 
-static void	replace_environ(char **origin, int *index, char **environ, char *str)
+void		replace_environ(char **origin, int *index,
+			char **environ, char *str)
 {
 	char	*ret;
 	char	*var;
@@ -64,7 +65,8 @@ static void	replace_environ(char **origin, int *index, char **environ, char *str
 	*((*origin) + (*index)) = 0;
 	ft_strcpy(ret, *origin);
 	ft_strcpy(ret + (*index), var);
-	ft_strcpy(ret + (*index) + var_len, *origin + (*index) + ft_strlen(str) + 1);
+	ft_strcpy(ret + (*index) + var_len,
+		*origin + (*index) + ft_strlen(str) + 1);
 	free(*origin);
 	*index += var_len - 1;
 	*origin = ret;
@@ -72,57 +74,16 @@ static void	replace_environ(char **origin, int *index, char **environ, char *str
 		free(var);
 }
 
-static char	*get_token(char *s)
+void		replace_dollar(char **av, int *i, char **environ)
 {
-	char	*tmp;
-	char	*ret;
-	int		len;
-
-	len = 0;
-	tmp = s;
-	while (*s && ft_isalnum(*s))
-	{
-		len++;
-		s++;
-	}
-	ret = ft_strnew(len);
-	ft_strncpy(ret, tmp, len);
-	return (ret);
-}
-
-void	check_tilde_and_dollar__str(char **environ, char **av)
-{
-	int		i;
 	char	*token;
 
-	i = 0;
-	while ((*av)[i])
-	{
-		if ((*av)[i] == '\'')
-		{
-			i++;
-			while ((*av)[i] != '\'')
-				i++;
-		}
-		else if ((*av)[i] == '~')
-		{
-			if ((*av)[i + 1] != '~')
-				replace_tilde(av, &i, environ);
-			else
-				while ((*av)[i + 1] == '~')
-					i++;
-		}
-		else if ((*av)[i] == '$')
-		{
-			token = get_token(&(*av)[i + 1]);
-			replace_environ(av, &i, environ, token);
-			free(token);
-		}
-		i++;
-	}
+	token = get_token(&(*av)[(*i) + 1]);
+	replace_environ(av, i, environ, token);
+	free(token);
 }
 
-void		check_tilde_and_dollar(char **environ, char **av, int boolean)
+void		check_tilde_and_dollar(char **environ, char **av)
 {
 	int		i;
 
@@ -133,5 +94,4 @@ void		check_tilde_and_dollar(char **environ, char **av, int boolean)
 		ft_strtrim_quotes(av[i]);
 		i++;
 	}
-	(void)boolean;
 }

@@ -90,12 +90,12 @@ int			check_env(char **environ)
 	return (-1);
 }
 
-void		parse_arguments(char **environ, char *line, int boolean)
+void		parse_arguments(char **environ, char *line)
 {
 	char		**av;
 
 	av = ft_strsplit(line, ' ');
-	check_tilde_and_dollar(environ, av, boolean);
+	check_tilde_and_dollar(environ, av);
 	av[0] = hash_cmd(av[0], environ);
 	map_environ(environ);
 	suspend_terminal();

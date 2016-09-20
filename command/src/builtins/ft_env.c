@@ -99,7 +99,7 @@ static int		ft_env_suite(char **av, char **environ, t_norme *flags)
 		g_father = 0;
 	}
 	else
-		parse_arguments(flags->copy, flags->str, 0);
+		parse_arguments(flags->copy, flags->str);
 	return (0);
 }
 

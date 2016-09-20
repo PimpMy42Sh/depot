@@ -30,3 +30,16 @@ char					*get_filename(int i)
 	free(i_to_a);
 	return (s);
 }
+
+void					hdoc__reset(t_it *it, int prompt)
+{
+	it->i = 0;
+	it->buffer = 0;
+	it->len = 0;
+	ft_memdel((void**)&it->line);
+	ft_memdel((void**)&it->tmp_line);
+	if (prompt)
+		ft_putstr("\n> ");
+	else
+		free(it);
+}

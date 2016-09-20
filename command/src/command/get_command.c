@@ -1,21 +1,5 @@
 #include <command.h>
 
-int				alloc_size(int len)
-{
-	static int			alloc_len = 0;
-
-	if (len)
-		alloc_len = len;
-	return (alloc_len);
-}
-
-static void		realloc_copy(char **s, char **str, int *len)
-{
-	*(*str + *len) = **s;
-	(*s)++;
-	(*len)++;
-}
-
 static void		argument(t_command *c, char **s, t_norme_command *n)
 {
 	while (**s == ' ')

@@ -1,7 +1,7 @@
 #include <command.h>
 #include "../../include/minishell.h"
 
-static int			test_access(char *name)
+static int		test_access(char *name)
 {
 	DIR				*d;
 	int				ret;

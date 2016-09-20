@@ -28,7 +28,7 @@ LIB_PATH = ./libft
 
 OBJ_NAME = $(addsuffix .o, $(basename $(SRC_NAME)))
 
-SRC_NAME = main.c free.c utilities.c get_next_line.c debug.c buitlins/ft_cd.c\
+SRC_NAME = main.c free.c utilities.c get_next_line.c buitlins/ft_cd.c\
 buitlins/ft_env.c buitlins/ft_env_suite.c buitlins/ft_setenv.c\
 buitlins/ft_unsetenv.c buitlins/ft_exit.c line_edition/move_left.c\
 line_edition/move_right.c line_edition/copy_paste.c\
@@ -53,6 +53,7 @@ command/hdoc_utils.c command/agregateur.c command/build.c\
 command/pipes.c command/get_pipeline.c command/dbg_command.c\
 buitlins/checking.c buitlins/ft_echo.c line_edition/check_synthax_and_close.c\
 line_edition/not_close.c line_edition/store_tmp_line_quote.c\
+command/all_hdoc.c init/stock.c
 
 LIB_NAME = -lft
 

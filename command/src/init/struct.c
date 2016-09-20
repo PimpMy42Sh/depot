@@ -25,15 +25,6 @@ void		init_struct(t_norme *norme)
 	norme->boolean = 0;
 }
 
-t_tty		*ft_stock_term(t_tty *tty)
-{
-	static t_tty	*tmp = NULL;
-
-	if (tty)
-		tmp = tty;
-	return (tmp);
-}
-
 static void	rec_tmp_size(t_it *it)
 {
 	struct winsize		win;
@@ -63,22 +54,4 @@ t_it		*init_it_struct(int tmp)
 	else
 		rec_tmp_size(it);
 	return (it);
-}
-
-t_it		*ft_stock_it(t_it *it)
-{
-	static t_it	*tmp = NULL;
-
-	if (it)
-		tmp = it;
-	return (tmp);
-}
-
-t_ctrl_c	*ft_stock_ctrl_c(t_ctrl_c *ctrl_c)
-{
-	static t_ctrl_c	*tmp = NULL;
-
-	if (ctrl_c)
-		tmp = ctrl_c;
-	return (tmp);
 }

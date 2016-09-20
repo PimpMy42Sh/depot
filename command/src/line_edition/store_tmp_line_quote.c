@@ -14,7 +14,7 @@ static void	free_structure(t_list *args)
 	ft_memdel((void**)&args);
 }
 
-static void free_it(t_it *it)
+static void	free_it(t_it *it)
 {
 	ft_memdel((void**)&it->line);
 	ft_memdel((void**)&it->tmp_line);

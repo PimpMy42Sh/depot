@@ -13,25 +13,10 @@
 #include "../include/minishell.h"
 #include "../include/command.h"
 
-static int	split_cmd(t_it *it, t_env *env)
+static void	split_cmd(t_it *it, t_env *env, char *s)
 {
-	char				*s;
-	char				*back;
 	t_list				*c;
-	static t_history	*history = NULL;
 
-	history = create_elem(history, it->line);
-	ft_putchar('\n');
-	back = NULL;
-	if (check_line_quotes(it->line, &back))
-		return (1);
-	nhdoc(0);
-	if (back)
-		s = back;
-	else
-		s = it->line;
-	if (do_all_hdoc(s, env->environ))
-		return (1);
 	nhdoc(0);
 	alloc_size(ft_strlen(s));
 	while (*s)
@@ -45,21 +30,33 @@ static int	split_cmd(t_it *it, t_env *env)
 		}
 		s += (*s == ';');
 	}
-	if (back)
-		free(back);
-	return (0);
 }
 
 static void	parse(t_it *it, t_env *env)
 {
-	suspend_terminal();
-	if (split_cmd(it, env))
+	char				*back;
+	char				*s;
+	static t_history	*history = NULL;
+
+	history = create_elem(history, it->line);
+	ft_putchar('\n');
+	back = NULL;
+	if (check_line_quotes(it->line, &back))
 		return ;
+	s = (back) ? back : it->line;
+	if (do_all_hdoc(s, env->environ))
+	{
+		free(back);
+		return ;
+	}
+	suspend_terminal();
+	split_cmd(it, env, s);
 	resumed_terminal();
 	if (!it->line)
 		ft_putchar('\n');
 	print_prompt();
 	ft_memdel((void**)&it->line);
+	free(back);
 }
 
 static void	main_loop(t_env *env)
@@ -117,7 +114,7 @@ int			main(int argc, char **argv, char **environment)
 {
 	t_tty			*tty;
 	t_env			*env;
-	t_ctrl_c	*ctrl_c;
+	t_ctrl_c		*ctrl_c;
 
 	(void)argv;
 	(void)argc;

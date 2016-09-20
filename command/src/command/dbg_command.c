@@ -1,20 +1,5 @@
 #include <command.h>
 
-void			print_command(t_command *c)
-{
-	char		**args;
-
-	printf("==== %p ====\n", c);
-	args = c->argv;
-	while (*args)
-	{
-		printf("%s\n", *args);
-		args++;
-	}
-	printf("(%d %d)\n", ft_lstsize(c->redirs.normal),
-		ft_lstsize(c->redirs.agr));
-}
-
 void			free_command(t_command *c)
 {
 	if (c)
@@ -23,4 +8,20 @@ void			free_command(t_command *c)
 		free_double_array(c->argv);
 		free(c);
 	}
+}
+
+int				alloc_size(int len)
+{
+	static int			alloc_len = 0;
+
+	if (len)
+		alloc_len = len;
+	return (alloc_len);
+}
+
+void			realloc_copy(char **s, char **str, int *len)
+{
+	*(*str + *len) = **s;
+	(*s)++;
+	(*len)++;
 }

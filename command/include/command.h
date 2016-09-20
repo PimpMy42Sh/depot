@@ -102,8 +102,8 @@ t_command				*get_command(char **s, t_env *e);
 /*
 **	Dbg_command.c
 */
-void					print_command(t_command *c);
 void					free_command(t_command *c);
+void					realloc_copy(char **s, char **str, int *len);
 
 /*
 **	Verification.c
@@ -137,6 +137,11 @@ void					do__agr_dup(t_list *lst);
 /*
 **	Hdoc.c
 */
+int						hdoc(char *eof, int fd, char *s, char **env);
+
+/*
+**	All_hdoc.c
+*/
 int						do_all_hdoc(char *cmd, char **env);
 
 /*
@@ -145,6 +150,7 @@ int						do_all_hdoc(char *cmd, char **env);
 int						nhdoc(int reset);
 void					prepare_hdoc(t_redirection *r);
 char					*get_filename(int i);
+void					hdoc__reset(t_it *it, int prompt);
 
 /*
 **	Build.c

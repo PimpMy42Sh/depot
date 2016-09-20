@@ -11,119 +11,90 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <command.h>
 
-void				copy_environ(char **av, char **environ, t_norme *flags)
+static void			split_cmd(t_it *it, t_env *env, char *s)
+{
+	t_list				*c;
+
+	nhdoc(0);
+	alloc_size(ft_strlen(s));
+	while (*s)
+	{
+		while ((c = get_pipeline(&s, env)))
+		{
+			if (it->line)
+				execution(c, env);
+			stop_cmd(c);
+			s += (*s == ';');
+		}
+		s += (*s == ';');
+	}
+}
+
+char				*env_parsing(char ***av)
+{
+	char		**tmp;
+	char		*s;
+	int			size;
+
+	(*av)++;
+	tmp = *av;
+	size = 0;
+	while (**av &&
+		ft_strcmp(**av, "-i") &&
+		ft_strcmp(**av, "-u"))
+	{
+		size += ft_strlen(**av) + 1;
+		(*av)++;
+	}
+	s = ft_strnew(size);
+	while (*tmp &&
+		ft_strcmp(*tmp, "-i") &&
+		ft_strcmp(*tmp, "-u"))
+	{
+		ft_strcat(s, *tmp);
+		ft_strcat(s, " ");
+		tmp++;
+	}
+	return (s);
+}
+
+static char			**void_env(void)
+{
+	char		**copy;
+
+	copy = ft_memalloc(sizeof(char*));
+	*copy = 0;
+	return (copy);
+}
+
+void				env_parse(char *s)
+{
+	t_it	*it;
+	t_env	e;
+
+	e.environ = void_env();
+	it = ft_stock_it(0);
+	if (do_all_hdoc(s, e.environ))
+		return ;
+	split_cmd(it, &e, s);
+	ft_memdel((void**)&e.environ);
+}
+
+char				**copy_environ(char **environ)
 {
 	int				i;
-	int				j;
+	char			**copy;
 
 	i = return_env_size(environ);
-	j = return_env_size(av);
-	flags->copy = ft_memalloc(sizeof(char*) * (i + j + 1));
+	copy = ft_memalloc(sizeof(char*) * (i + 1));
 	i = 0;
 	while (environ[i])
 	{
-		flags->copy[i] = ft_strdup(environ[i]);
+		copy[i] = ft_strdup(environ[i]);
 		i++;
 	}
-	flags->copy[i] = 0;
-}
-
-static void			remove_variables(char **av)
-{
-	int				i;
-	int				bol;
-
-	i = 0;
-	bol = 0;
-	while (av[i])
-	{
-		if (av[i][0] != '=' && ft_strchr(av[i] + 1, '='))
-		{
-			remove_env(av, i);
-			bol = 1;
-		}
-		if (bol == 0)
-			i++;
-		else
-		{
-			bol = 0;
-			i = 0;
-		}
-	}
-}
-
-static int			env_loop(char **av, t_norme *flags, int j)
-{
-	char			*tmp;
-	char			*tmp2;
-	int				i;
-
-	i = 0;
-	tmp2 = NULL;
-	tmp = NULL;
-	while (av[i])
-	{
-		if (av[i][0] != '=' && ft_strchr(av[i] + 1, '='))
-		{
-			tmp = return_variable(av[i]);
-			if ((tmp2 = return_env(flags->copy, tmp)))
-			{
-				replace_item(flags, tmp, av, i);
-				ft_memdel((void**)&tmp2);
-			}
-			else
-				flags->copy[j++] = ft_strdup(av[i]);
-			ft_memdel((void**)&tmp);
-		}
-		i++;
-	}
-	return (j);
-}
-
-void				check_variables(t_norme *flags, char **av,
-					char **environ)
-{
-	int				j;
-
-	if (!flags->copy)
-	{
-		flags->copy = ft_memalloc(sizeof(char*) * (return_env_size(av) +
-					(return_env_size(environ))));
-		j = 0;
-	}
-	else
-		j = return_env_size(flags->copy);
-	j = env_loop(av, flags, j);
-	flags->copy[j] = 0;
-	remove_variables(av);
-}
-
-void				remove_flags(char **av, t_norme *flags)
-{
-	int				i;
-
-	i = 0;
-	remove_env(av, 0);
-	while (av[i])
-	{
-		if (!ft_strcmp(av[i], "-i"))
-		{
-			flags->i = 1;
-			remove_env(av, i);
-			i--;
-		}
-		else if (!ft_strcmp(av[i], "-u"))
-		{
-			flags->u = 1;
-			remove_env(av, i);
-			i--;
-		}
-		else if (!ft_strcmp(av[i], "env"))
-		{
-			remove_env(av, i);
-			i--;
-		}
-		i++;
-	}
+	copy[i] = 0;
+	return (copy);
 }

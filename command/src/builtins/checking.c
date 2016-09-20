@@ -3,6 +3,8 @@
 
 static void					do_bultins(char **av, t_env *env)
 {
+	char					**tmp;
+
 	if (!ft_strcmp(av[0], "exit"))
 		ft_exit(av, env);
 	else if (!ft_strcmp(av[0], "cd"))
@@ -12,7 +14,11 @@ static void					do_bultins(char **av, t_env *env)
 	else if (!ft_strcmp(av[0], "unsetenv"))
 		ft_unsetenv(av, env);
 	else if (!ft_strcmp(av[0], "env"))
-		ft_env(av, env->environ);
+	{
+		tmp = copy_environ(env->environ);
+		ft_env(av, tmp, 0);
+		free_double_array(tmp);
+	}
 	else
 		ft_echo(av, env->environ);
 }

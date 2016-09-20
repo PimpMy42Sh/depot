@@ -190,13 +190,11 @@ t_list										*check_bultins_command(
 int											ft_setenv(char **av, t_env *env);
 void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);
-int											ft_env(char **av, char **environ);
-void										remove_flags(char **av,
-											t_norme *flags);
-void										check_variables(t_norme *flags,
-											char **av, char **environ);
-void										copy_environ(char **av,
-											char **environ, t_norme *flags);
+int											ft_env(char **av, char **environ,
+											int ok);
+void										env_parse(char *s);
+char										*env_parsing(char ***av);
+char										**copy_environ(char **environ);
 void										ft_exit(char **av, t_env *env);
 char										*return_pwd(void);
 void										ft_echo(char **av, char **environ);

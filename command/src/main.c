@@ -13,7 +13,7 @@
 #include "../include/minishell.h"
 #include "../include/command.h"
 
-static void	split_cmd(t_it *it, t_env *env, char *s)
+void	split_cmd(t_it *it, t_env *env, char *s)
 {
 	t_list				*c;
 
@@ -32,7 +32,7 @@ static void	split_cmd(t_it *it, t_env *env, char *s)
 	}
 }
 
-static void	parse(t_it *it, t_env *env)
+void		parse(t_it *it, t_env *env)
 {
 	char				*back;
 	char				*s;

@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/12 15:25:19 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 16:41:08 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 14:00:26 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,11 @@ static int		check_line_is_close(char **s, char **back)
 			(*s)++;
 			end = skip_quote(s, tmp);
 			if (!**s)
-				if (quote_not_close(begin, end, back))
+				if (quote_not_close(begin, &end, back))
+				{
+					ft_memdel((void**)&begin);
 					return (1);
+				}
 		}
 		(*s)++;
 	}

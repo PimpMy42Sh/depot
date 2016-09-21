@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/09/12 16:40:26 by mfamilar         ###   ########.fr        #
+#    Updated: 2016/09/21 13:58:07 by Marco            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ command/hdoc_utils.c command/agregateur.c command/build.c\
 command/pipes.c command/get_pipeline.c command/dbg_command.c\
 buitlins/checking.c buitlins/ft_echo.c line_edition/check_synthax_and_close.c\
 line_edition/not_close.c line_edition/store_tmp_line_quote.c\
-command/all_hdoc.c init/stock.c
+command/all_hdoc.c init/stock.c line_edition/new_line.c\
 
 LIB_NAME = -lft
 

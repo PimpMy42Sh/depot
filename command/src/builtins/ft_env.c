@@ -36,20 +36,6 @@ static int		unset(int *ok, char ***av, char **env)
 	return (1);
 }
 
-char			**exec_tab_parser(char **av, int *type_exec)
-{
-	int				i;
-	char			**tabl;
-
-	i = 0;
-	while (av[i] && ft_strchr(av[i], '='))
-		i++;
-	if ((*type_exec = !!av[i]) && av[i])
-		tabl = copy_environ(&av[i]);
-	else
-		tabl = copy_environ(av);
-	return (tabl);
-}
 
 static int		replace(char *av, char **env)
 {
@@ -96,38 +82,23 @@ static void		add_env(char *av, char ***env)
 	*env = copy;
 }
 
-static int		exec(int *ok, char **av, char ***env)
-{
-	char		**tabl;
-	int			i;
-	char		**tmp;
 
-	if (!env)
+
+int			exec_parser(char **av, char ***env)
+{
+	int				i;
+
+	i = 0;
+	while (av[i] && ft_strchr(av[i], '='))
 	{
-		av++;
-		tmp = void_env();
+		if (!replace(av[i], *env))
+			add_env(av[i], env);
+		i++;
 	}
+	if (av[i])
+		env_parse(&av[i], *env);
 	else
-		tmp = NULL;
-	if ((tabl = exec_tab_parser(av, ok)))
-	{
-		if (*ok)
-			env_parse(tabl, (env) ? *env : tmp);
-		else
-		{
-			i = 0;
-			while (tabl[i])
-			{
-				if (!replace(tabl[i], (env) ? *env : tmp))
-					add_env(tabl[i], (env) ? env : &tmp);
-				i++;
-			}
-			print_env((env) ? *env : tmp);
-		}
-		free_double_array(tabl);
-	}
-	if (!env)
-		free_double_array(tmp);
+		print_env(*env);
 	return (1);
 }
 
@@ -142,11 +113,14 @@ int				ft_env(char **av, char ***environ, int ok)
 				break ;
 		}
 		else if (!ft_strcmp("-i", *av))
-			return (exec(&ok, av, NULL));
+		{
+			free_double_array(*environ);
+			*environ = void_env();
+		}
 		else if (**av != '-' || !ft_strcmp("--", *av))
 		{
 			av += (**av == '-');
-			return (exec(&ok, av, environ));
+			return (exec_parser(av, environ));
 		}
 		else 
 		{

@@ -42,7 +42,11 @@ static void		parse(t_it *it, t_env *env)
 	ft_putchar('\n');
 	back = NULL;
 	if (check_line_quotes(it->line, &back))
+	{
+		ft_putchar('\n');
+		print_prompt();
 		return ;
+	}
 	s = (back) ? back : it->line;
 	if (do_all_hdoc(s, env->environ))
 	{

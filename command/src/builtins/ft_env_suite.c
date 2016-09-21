@@ -24,9 +24,11 @@ char			**void_env(void)
 
 void				env_parse(char **s, char **env)
 {
-	if ((g_father = fork()) == 0)
+	g_father = 0;
+	if (!fork())
 		start_prgm(env, s);
 	wait(NULL);
+	g_father = 1;
 }
 
 char				**copy_environ(char **environ)

@@ -46,6 +46,7 @@ static void				hdoc__start(t_it **it, t_ctrl_c **ctrl_c)
 {
 	*ctrl_c = ft_stock_ctrl_c(NULL);
 	(*ctrl_c)->bol = 0;
+	(*ctrl_c)->main_loop = 0;
 	*it = init_it_struct(1);
 	(*it)->eof = 1;
 	ft_putstr("> ");

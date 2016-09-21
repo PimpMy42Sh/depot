@@ -62,8 +62,11 @@ static void		parse(t_it *it, t_env *env)
 static void	main_loop(t_env *env)
 {
 	t_it			*it;
+	t_ctrl_c		*ctrl_c;
 
 	it = init_it_struct(0);
+	ctrl_c = ft_stock_ctrl_c(0);
+	ctrl_c->main_loop = 1;
 	ft_stock_it(it);
 	while (read(0, &it->buffer, 4))
 	{
@@ -83,6 +86,8 @@ static void	main_loop(t_env *env)
 			it->i = 0;
 			it->len = 0;
 		}
+		ctrl_c->main_loop = 1;
+		resumed_terminal();
 		it->buffer = 0;
 	}
 }

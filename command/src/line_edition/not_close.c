@@ -29,17 +29,19 @@ static void	copy_first_element(char *begin, t_list **args)
 	ft_memdel((void**)&tmp);
 }
 
-static int	quotes_loop(t_it	*it, t_list	*args, char **back, char *end)
+static int	quotes_loop(t_it *it, t_list *args, char **back, char *end)
 {
 	t_ctrl_c	*ctrl_c;
 
 	ctrl_c = ft_stock_ctrl_c(NULL);
 	ctrl_c->bol = 0;
+	ctrl_c->main_loop = 0;
 	while (read(0, &it->buffer, 4))
 	{
 		if ((it->buffer == CTRL_D && !it->len) || !it->eof || ctrl_c->bol)
 		{
 			ctrl_c->bol = 0;
+			ctrl_c->main_loop = 1;
 			free_list_and_struct(it, args);
 			return (1);
 		}
@@ -55,7 +57,7 @@ static int	quotes_loop(t_it	*it, t_list	*args, char **back, char *end)
 	suspend_terminal();
 	it->eof = 0;
 	convert_it_line(it, args, back);
-	return (0);
+	return (!ctrl_c->main_loop);
 }
 
 int		quote_not_close(char *begin, char *end, char **back)

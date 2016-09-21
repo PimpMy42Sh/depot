@@ -25,5 +25,6 @@ void		resumed_terminal(void)
 	t_tty	*tty;
 
 	tty = ft_stock_term(NULL);
+	tty->term.c_cc[VMIN] = 1;
 	tcsetattr(0, TCSANOW, &tty->term);
 }

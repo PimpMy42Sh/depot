@@ -98,6 +98,7 @@ typedef struct								s_tty
 typedef struct								s_ctrl_c
 {
 	int										bol;
+	int										main_loop;
 }											t_ctrl_c;
 
 typedef struct								s_env

@@ -16,7 +16,7 @@ CXX = gcc
 
 NAME = 21sh
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 
 SRC_PATH = ./src/
 

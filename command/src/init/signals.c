@@ -16,16 +16,21 @@ static void				ctrl_c(void)
 {
 	t_it		*it;
 	t_ctrl_c	*ctrl_c;
+	t_tty		*tty;
 
 	ctrl_c = ft_stock_ctrl_c(NULL);
 	it = ft_stock_it(NULL);
+	tty = ft_stock_term(NULL);
 	resumed_terminal();
 	if (g_father != 0)
 	{
 		if (it)
 			go_to_bottom(it);
-		ft_putchar('\n');
-		print_prompt();
+		if (ctrl_c->main_loop)
+		{
+			ft_putchar('\n');
+			print_prompt();
+		}
 	}
 	if (it)
 	{
@@ -35,6 +40,11 @@ static void				ctrl_c(void)
 		it->i = 0;
 		it->buffer = 0;
 		it->first = 1;
+	}
+	if (!ctrl_c->main_loop)
+	{
+		tty->term.c_cc[VMIN] = 0;
+		tcsetattr(0, TCSANOW, &tty->term);
 	}
 	ctrl_c->bol = 1;
 }

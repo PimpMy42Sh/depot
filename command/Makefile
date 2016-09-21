@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/09/21 17:27:05 by Marco            ###   ########.fr        #
+#    Updated: 2016/09/21 19:24:00 by Marco            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,10 @@ line_edition/del_char.c line_edition/insert_char.c\
 line_edition/del_char_buffer.c bonus/ft_hash.c\
 line_edition/check_move_one_word_left.c bonus/hash_tree.c\
 bonus/hachage.c bonus/prompt.c env_parser/parse_environ.c\
-env_parser/parse_environ_2.c env_parser/parse_environ_3.c\
+env_parser/parse_environ_2.c command/all_hdoc.c init/stock.c\
 env_parser/path_manager.c argv_parser/parse_args.c bonus/shlvl.c\
 argv_parser/parse_args_2.c argv_parser/parse_args_3.c errors/errors.c\
-errors/errors_2.c errors/errors_3.c init/struct.c\
+errors/errors_2.c init/struct.c line_edition/new_line.c\
 init/init_terminal_data.c init/suspend_terminal.c\
 line_edition/cursor_moves_one_word_left.c\
 command/alloc_redirection.c command/deps.c command/exec.c\
@@ -53,7 +53,6 @@ command/hdoc_utils.c command/agregateur.c command/build.c\
 command/pipes.c command/get_pipeline.c command/dbg_command.c\
 buitlins/checking.c buitlins/ft_echo.c line_edition/check_synthax_and_close.c\
 line_edition/not_close.c line_edition/store_tmp_line_quote.c\
-command/all_hdoc.c init/stock.c line_edition/new_line.c\
 
 LIB_NAME = -lft
 

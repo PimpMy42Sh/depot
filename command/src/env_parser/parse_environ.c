@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/25 12:31:24 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 11:34:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/21 19:12:21 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		move_old_and_pwd(t_env *env, char *old, char *pwd)
 	t_norme	*norme;
 
 	norme = (t_norme*)ft_memalloc(sizeof(t_norme));
-	norme->i = 0;
+	ft_bzero(norme, sizeof(t_norme));
 	norme->current = 1;
 	norme->previous = 1;
 	while (env->environ[norme->i])

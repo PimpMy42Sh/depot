@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 18:06:41 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/21 17:04:06 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 19:50:47 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,4 @@ void		free_struct(t_norme *s)
 	if (s->copy)
 		free_double_array(s->copy);
 	ft_memdel((void**)&s);
-}
-
-void		free_cmd(char **cmd)
-{
-	int			i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		ft_memdel((void**)&cmd[i]);
-		i++;
-	}
-	ft_memdel((void**)&cmd);
 }

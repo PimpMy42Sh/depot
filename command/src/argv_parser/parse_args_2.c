@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 17:42:35 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/12 19:50:03 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/21 19:40:41 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		replace_tilde(char **origin, int *index, char **environ)
 		free(var);
 }
 
-void		replace_environ(char **origin, int *index,
+static void		replace_environ(char **origin, int *index,
 			char **environ, char *str)
 {
 	char	*ret;

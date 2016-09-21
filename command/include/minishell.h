@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/21 18:56:18 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 19:50:39 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ typedef struct								s_hash_tree
 **	errors
 */
 void										command_not_find(char *arg);
-void										env_error(void);
 void										permission_denied(char *str,
 											char *path);
 void										setenv_error(int boolean);
@@ -170,7 +169,6 @@ char										**env_parsing(char ***av);
 char										**copy_environ(char **environ);
 char										**void_env(void);
 void										ft_exit(char **av, t_env *env);
-char										*return_pwd(void);
 void										ft_echo(char **av, char **environ);
 
 /*
@@ -181,27 +179,16 @@ void										free_elements(char *one,
 											char *two, char *three,
 											char *four);
 void										free_struct(t_norme *s);
-void										free_cmd(char **cmd);
 
 /*
 **	parse arguments
 */
-void										parse_arguments(char **environ,
-											char *line);
 void										check_tilde_and_dollar(
 											char **environ, char **av);
 void										check_tilde_and_dollar__str(
 											char **environ, char **av);
-void										replace_envrion_suite_2(char *ret,
-											t_norme *norme, char **av);
-char										*parse_search(char *ret);
-int											return_av_size(char **av);
-void										convert_tab(char *str);
 void										replace_tilde(char **origin,
 											int *index, char **environ);
-void										replace_environ(char **origin,
-											int *index, char **environ,
-											char *str);
 void										replace_dollar(char **av,
 											int *i, char **environ);
 char										*get_token(char *s);
@@ -216,11 +203,6 @@ char										*return_env(char **environ,
 											char *env);
 void										move_old_and_pwd(t_env *env,
 											char *old, char *pwd);
-void										map_environ(char **environ);
-char										*return_variable(char *str);
-void										replace_item(t_norme *flags,
-											char *env, char **av,
-											int indice);
 void										print_env(char **environ);
 void										loop_remove_env(char **av,
 											t_env *env);
@@ -249,7 +231,6 @@ void										reset_term(void);
 int											check_line(char *line, t_env *env,
 											int boolean);
 char										**append_set_path(char *cmd);
-void										init_struct(t_norme *norme);
 void										parse_line(t_it *it);
 void										edit_line(t_it *it);
 int											return_offset(void);
@@ -331,8 +312,6 @@ t_it										*ft_stock_it(t_it *it);
 t_ctrl_c									*ft_stock_ctrl_c(t_ctrl_c *ctrl_c);
 void										go_to_bottom(t_it *it);
 int											ft_abs(int i);
-char										**malloc_environ(char **environ,
-											char *var);
 void										path_manager(t_env *env);
 
 /*

@@ -30,7 +30,6 @@ static int		test_access(char *name)
 
 void			start_prgm(char **env, char **argv)
 {
-	map_environ(env);
 	if (test_access(argv[0]))
 		exit(1);
 	if (!ft_strncmp("./", argv[0], 2))

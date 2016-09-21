@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 12:02:11 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 16:22:23 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/21 19:37:28 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,4 @@ int			check_env(char **environ)
 		i++;
 	}
 	return (-1);
-}
-
-void		parse_arguments(char **environ, char *line)
-{
-	char		**av;
-
-	av = ft_strsplit(line, ' ');
-	check_tilde_and_dollar(environ, av);
-	av[0] = hash_cmd(av[0], environ);
-	map_environ(environ);
-	suspend_terminal();
-	if (execve(av[0], av, environ) == -1)
-		command_not_find(av[0]);
 }

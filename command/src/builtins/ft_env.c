@@ -33,7 +33,7 @@ static int		unset(int *ok, char ***av, char **env)
 	return (1);
 }
 
-char				**exec_tab_parser(char **av, int *type_exec)
+char			**exec_tab_parser(char **av, int *type_exec)
 {
 	int				i;
 	char			**tabl;
@@ -48,34 +48,85 @@ char				**exec_tab_parser(char **av, int *type_exec)
 	return (tabl);
 }
 
-static int		exec(int *ok, char **av, char **env)
+static int		replace(char *av, char **env)
+{
+	char		*str;
+	char		tmp;
+	int			len;
+
+	str = ft_strchr(av, '=') + 1;
+	tmp = *str;
+	*str = 0;
+	len = ft_strlen(av);
+	*str = tmp;
+	while (*env)
+	{
+		if (!ft_strncmp(av, *env, len))
+		{
+			free(*env);
+			*env = ft_strdup(av);
+			*av = 0;
+			return (1);
+		}
+		env++;
+	}
+	return (0);
+}
+
+static void		add_env(char *av, char ***env)
+{
+	int			i;
+	char		**copy;
+
+	i = return_env_size(*env) + 2;
+	copy = (char**)malloc(sizeof(char*) * (i + 1));
+	i = 0;
+	while ((*env)[i])
+	{
+		copy[i] = ft_strdup((*env)[i]);
+		free((*env)[i]);
+		i++;
+	}
+	copy[i] = ft_strdup(av);
+	copy[i + 1] = 0;
+	free(*env);
+	*env = copy;
+}
+
+static int		exec(int *ok, char **av, char ***env)
 {
 	char		**tabl;
+	int			i;
 
-	av += !env;
+	av += !*env;
 	if ((tabl = exec_tab_parser(av, ok)))
 	{
 		if (*ok)
-			env_parse(tabl, env);
+			env_parse(tabl, *env);
 		else
 		{
-			if (env)
-				print_env(env);
-			print_env(tabl);
+			i = 0;
+			while (tabl[i])
+			{
+				if (!replace(tabl[i], *env))
+					add_env(tabl[i], env);
+				i++;
+			}
+			print_env(*env);
 		}
 		free_double_array(tabl);
 	}
 	return (1);
 }
 
-int				ft_env(char **av, char **environ, int ok)
+int				ft_env(char **av, char ***environ, int ok)
 {
 	av++;
 	while (*av)
 	{
 		if (!ft_strcmp("-u", *av))
 		{
-			if (!unset(&ok, &av, environ))
+			if (!unset(&ok, &av, *environ))
 				break ;
 		}
 		else if (!ft_strcmp("-i", *av))
@@ -97,6 +148,6 @@ int				ft_env(char **av, char **environ, int ok)
 		av += !!*av;
 	}
 	if (!ok)
-		print_env(environ);
+		print_env(*environ);
 	return (0);
 }

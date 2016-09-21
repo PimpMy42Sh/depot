@@ -190,7 +190,7 @@ t_list										*check_bultins_command(
 int											ft_setenv(char **av, t_env *env);
 void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);
-int											ft_env(char **av, char **environ,
+int											ft_env(char **av, char ***environ,
 											int ok);
 
 char										**env_parsing(char ***av);

@@ -16,7 +16,7 @@ static void					do_bultins(char **av, t_env *env)
 	else if (!ft_strcmp(av[0], "env"))
 	{
 		tmp = copy_environ(env->environ);
-		ft_env(av, tmp, 0);
+		ft_env(av, &tmp, 0);
 		free_double_array(tmp);
 	}
 	else

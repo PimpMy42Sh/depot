@@ -13,53 +13,6 @@
 #include "../../include/minishell.h"
 #include <command.h>
 
-static void			split_cmd(t_it *it, t_env *env, char *s)
-{
-	t_list				*c;
-
-	nhdoc(0);
-	alloc_size(ft_strlen(s));
-	while (*s)
-	{
-		while ((c = get_pipeline(&s, env)))
-		{
-			if (it->line)
-				execution(c, env);
-			stop_cmd(c);
-			s += (*s == ';');
-		}
-		s += (*s == ';');
-	}
-}
-
-char				*env_parsing(char ***av)
-{
-	char		**tmp;
-	char		*s;
-	int			size;
-
-	(*av)++;
-	tmp = *av;
-	size = 0;
-	while (**av &&
-		ft_strcmp(**av, "-i") &&
-		ft_strcmp(**av, "-u"))
-	{
-		size += ft_strlen(**av) + 1;
-		(*av)++;
-	}
-	s = ft_strnew(size);
-	while (*tmp &&
-		ft_strcmp(*tmp, "-i") &&
-		ft_strcmp(*tmp, "-u"))
-	{
-		ft_strcat(s, *tmp);
-		ft_strcat(s, " ");
-		tmp++;
-	}
-	return (s);
-}
-
 static char			**void_env(void)
 {
 	char		**copy;
@@ -69,17 +22,16 @@ static char			**void_env(void)
 	return (copy);
 }
 
-void				env_parse(char *s)
+void				env_parse(char **s, char **env)
 {
-	t_it	*it;
-	t_env	e;
+	char			**tmp;
 
-	e.environ = void_env();
-	it = ft_stock_it(0);
-	if (do_all_hdoc(s, e.environ))
-		return ;
-	split_cmd(it, &e, s);
-	ft_memdel((void**)&e.environ);
+	tmp = (env) ? env : void_env();
+	if ((g_father = fork()) == 0)
+		start_prgm(tmp, s);
+	wait(NULL);
+	if (!env)
+		free(tmp);
 }
 
 char				**copy_environ(char **environ)

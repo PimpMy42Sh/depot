@@ -23,36 +23,49 @@ static int		unset(int *ok, char ***av, char **env)
 	else
 	{
 		*ok = 1;
-		env_error();
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd("env: Bad option: -u: ", 2);
+		ft_putstr_fd("Need a variable name", 2);
+		ft_putstr_fd(RESET, 2);
+		ft_putchar('\n');
 		return (0);
 	}
 	return (1);
 }
 
-static int		exec(int *ok, char ***av)
+char				**exec_tab_parser(char **av, int *type_exec)
 {
-	char		*str_parse;
+	int				i;
+	char			**tabl;
 
-	*ok = 1;
-	if (!*((*av) + 1))
+	i = 0;
+	while (av[i] && ft_strchr(av[i], '='))
+		i++;
+	if ((*type_exec = !!av[i]))
+		tabl = copy_environ(&av[i]);
+	else
+		tabl = copy_environ(av);
+	return (tabl);
+}
+
+static int		exec(int *ok, char **av, char **env)
+{
+	char		**tabl;
+
+	av += !env;
+	if ((tabl = exec_tab_parser(av, ok)))
 	{
-		env_error();
-		return (0);
+		if (*ok)
+			env_parse(tabl, env);
+		else
+		{
+			if (env)
+				print_env(env);
+			print_env(tabl);
+		}
+		free_double_array(tabl);
 	}
-	str_parse = env_parsing(av);
-	env_parse(str_parse);
-	free(str_parse);
 	return (1);
-}
-
-static void		bad_argument(int *ok, char *av)
-{
-	*ok = 1;
-	ft_putstr_fd(RED, 2);
-	ft_putstr_fd(av, 2);
-	write(2, ": ", 2);
-	write(2, "Bad argument\n", 13);
-	ft_putstr_fd(RESET, 2);
 }
 
 int				ft_env(char **av, char **environ, int ok)
@@ -66,14 +79,20 @@ int				ft_env(char **av, char **environ, int ok)
 				break ;
 		}
 		else if (!ft_strcmp("-i", *av))
+			return (exec(&ok, av, NULL));
+		else if (**av != '-' || !ft_strcmp("--", *av))
 		{
-			if (!exec(&ok, &av))
-				break ;
+			av += (**av == '-');
+			return (exec(&ok, av, environ));
 		}
-		else
+		else 
 		{
-			bad_argument(&ok, *av);
-			break ;
+			ft_putstr_fd(RED, 2);
+			ft_putstr_fd("env: Bad option: ", 2);
+			ft_putstr_fd(*av, 2);
+			ft_putstr_fd(RESET, 2);
+			ft_putchar('\n');
+			return (0);
 		}
 		av += !!*av;
 	}

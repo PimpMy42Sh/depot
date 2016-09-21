@@ -6,7 +6,7 @@
 #    By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/03/18 11:39:04 by mfamilar          #+#    #+#              #
-#    Updated: 2016/09/21 13:58:07 by Marco            ###   ########.fr        #
+#    Updated: 2016/09/21 17:27:05 by Marco            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CXX = gcc
 
 NAME = 21sh
 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 
 SRC_PATH = ./src/
 

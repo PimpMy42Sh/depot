@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 15:26:03 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 13:47:27 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 18:22:25 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 void		init_struct(t_norme *norme)
 {
 	norme->i = 0;
-	norme->u = 0;
 	norme->current = 0;
 	norme->previous = 0;
 	norme->old = NULL;
 	norme->pwd = NULL;
 	norme->str = NULL;
 	norme->copy = NULL;
-	norme->boolean = 0;
 }
 
 static void	rec_tmp_size(t_it *it)
@@ -38,17 +36,7 @@ t_it		*init_it_struct(int tmp)
 	t_it			*it;
 
 	it = (t_it*)ft_memalloc(sizeof(struct s_it));
-	it->i = 0;
-	it->len = 0;
-	it->first = 0;
-	it->offset = 0;
-	it->buffer = 0;
-	it->r_video = 0;
-	it->nb_current_line = 0;
-	it->tmp_buffer = NULL;
-	it->tmp_line = NULL;
-	it->line = NULL;
-	it->eof = 0;
+	ft_bzero(it, sizeof(t_it));
 	if (!tmp)
 		rec_size(it);
 	else

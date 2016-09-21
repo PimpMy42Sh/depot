@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/09 11:45:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/21 17:10:47 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/21 17:38:10 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	file_word_counter(void)
 {
+	char	c;
 	int		i;
 	int		fd;
-	char	c;
 
 	if ((fd = open("/etc/paths", O_RDONLY)) == -1)
 		return (0);

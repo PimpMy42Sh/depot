@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 16:49:49 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 12:20:41 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/21 18:14:52 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void		incremente_shlvl(t_env *env, int i, char *lvl)
 	int		intlvl;
 	char	*tmp;
 
-	intlvl = 0;
 	tmp = NULL;
 	intlvl = ft_atoi(lvl);
 	if (intlvl)
@@ -38,8 +37,8 @@ void			check_shlvl(t_env *env)
 	int		i;
 	char	*charlvl;
 
-	i = 0;
 	charlvl = NULL;
+	i = 0;
 	while (env->environ[i])
 	{
 		if (!ft_strncmp(env->environ[i], "SHLVL", 5))

@@ -6,25 +6,11 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 18:06:41 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/07/08 18:19:07 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 17:04:06 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void		free_env(char *path, char **path_env)
-{
-	int		i;
-
-	i = 0;
-	ft_memdel((void**)&path);
-	while (path_env[i])
-	{
-		ft_memdel((void**)&path_env[i]);
-		i++;
-	}
-	ft_memdel((void**)&path_env);
-}
 
 void		free_double_array(char **arr)
 {

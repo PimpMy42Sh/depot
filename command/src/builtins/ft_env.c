@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/29 11:55:33 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/13 16:21:46 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/21 18:53:45 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int				ft_env(char **av, char ***environ, int ok)
 			av += (**av == '-');
 			return (exec_parser(av, environ));
 		}
-		else 
+		else
 		{
 			ft_putstr_fd(RED, 2);
 			ft_putstr_fd("env: Bad option: ", 2);

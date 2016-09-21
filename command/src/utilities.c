@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 11:40:39 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/20 14:39:02 by mfamilar         ###   ########.fr       */
+/*   Updated: 2016/09/21 17:33:10 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void		check_only_space(t_it *it)
 		i++;
 	}
 	ft_memdel((void**)&it->line);
-	it->line = NULL;
 }
 
 void		go_to_bottom(t_it *it)
@@ -43,7 +42,7 @@ void		go_to_bottom(t_it *it)
 	{
 		nb_lines = (it->len + it->offset) / it->ws_col;
 		if (nb_lines < 0)
-			nb_lines = 0;
+			return ;
 		tputs(tparm(tgetstr("DOWN_MAJ", NULL), nb_lines - 1), 0, my_putchar);
 	}
 }

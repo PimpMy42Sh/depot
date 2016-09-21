@@ -6,14 +6,14 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:15:22 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/16 18:09:46 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 18:27:34 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/command.h"
 
-void	split_cmd(t_it *it, t_env *env, char *s)
+static void	split_cmd(t_it *it, t_env *env, char *s)
 {
 	t_list				*c;
 
@@ -32,7 +32,7 @@ void	split_cmd(t_it *it, t_env *env, char *s)
 	}
 }
 
-void		parse(t_it *it, t_env *env)
+static void		parse(t_it *it, t_env *env)
 {
 	char				*back;
 	char				*s;
@@ -64,10 +64,10 @@ static void	main_loop(t_env *env)
 	t_it			*it;
 
 	it = init_it_struct(0);
+	ft_stock_it(it);
 	while (read(0, &it->buffer, 4))
 	{
 		parse_line(it);
-		ft_stock_it(it);
 		if (it->buffer == '\n')
 		{
 			check_only_space(it);

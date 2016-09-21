@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/22 14:49:45 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/08/23 17:48:21 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 18:48:07 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@ void		command_not_find(char *arg)
 	ft_putstr_fd(": Command not found.\n", 2);
 	ft_putstr_fd(RESET, 2);
 	ft_memdel((void**)&it);
-	exit(1);
-}
-
-void		undefined_variable(char *str)
-{
-	ft_putstr_fd(RED, 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": Undefined variable.\n", 2);
-	ft_putstr_fd(RESET, 2);
 	exit(1);
 }
 

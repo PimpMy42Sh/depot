@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 17:04:29 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/21 14:03:09 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 18:56:18 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
-# include "get_next_line.h"
 # include <dirent.h>
-
+# include "get_next_line.h"
 # include "../libft/libft.h"
 
 # define GREEN   		"\x1b[32m"
@@ -36,11 +35,9 @@
 # define KD					4348699
 # define KR					4414235
 # define KL					4479771
-# define ESC				27
 # define ESP				32
 # define DEL 				127
 # define TILDE			126
-# define TAB 				9
 # define RET				10
 # define HOME				4741915
 # define END				4610843
@@ -50,11 +47,8 @@
 # define CTRL_R			18
 # define CTRL_L			12
 # define CTRL_T			20
-# define CTRL_H
-# define TABULATION		'\t'
 # define U_CUT			117
 # define MAX_SIZE		1
-
 # define QUOTES			'\''
 # define D_QUOTES		'"'
 # define B_QUOTES		'`'
@@ -64,32 +58,13 @@
 # define C_ACCOLADES 	'}'
 # define CROCHETS 		'['
 # define C_CROCHETS 	']'
-# define BAD_QUOTES 	1
-# define BAD_D_QUOTES	2
-# define BAD_B_QUOTES	3
-# define BAD_PARENTHESE	4
-# define BAD_ACCOLADES	5
-# define BAD_CROCHETS 	6
 # define SYNTAX_ERROR 	7
 
-/*
-** SCHOOL
-** # define ALT_LEFT		17465
-** # define ALT_RIGHT		17209
-** # define ALT_UP			16697
-** # define ALT_DOWN		16953
-*/
-
-/*
-** HOUSE
-*/
-# define ALT_LEFT		1146821403
-# define ALT_RIGHT	1130044187
-# define ALT_UP			1096489755
-# define ALT_DOWN		1113266971
-
+# define ALT_LEFT		17465
+# define ALT_RIGHT	17209
+# define ALT_UP			16697
+# define ALT_DOWN		16953
 # define TERM_ENV		"xterm-256color"
-# define CURS_POS		"\x1b[6n"
 # define LEFT				"le"
 # define RIGHT			"nd"
 # define DOWN				"do"
@@ -111,9 +86,7 @@ typedef struct								s_norme
 	char									*pwd;
 	char									*str;
 	char									**copy;
-	int										boolean;
 	int										i;
-	int										u;
 }											t_norme;
 
 typedef struct								s_tty
@@ -169,7 +142,6 @@ typedef struct								s_hash_tree
 **	errors
 */
 void										command_not_find(char *arg);
-void										undefined_variable(char *str);
 void										env_error(void);
 void										permission_denied(char *str,
 											char *path);
@@ -192,6 +164,7 @@ void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);
 int											ft_env(char **av, char ***environ,
 											int ok);
+
 void										env_parse(char **av, char **env);
 char										**env_parsing(char ***av);
 char										**copy_environ(char **environ);
@@ -203,8 +176,6 @@ void										ft_echo(char **av, char **environ);
 /*
 **	free
 */
-void										free_env(char *path,
-											char **path_env);
 void										free_double_array(char **arr);
 void										free_elements(char *one,
 											char *two, char *three,
@@ -384,12 +355,8 @@ void										rec_size(t_it *it);
 void										check_signal(void);
 
 /*
-**	DEBUG
-*/
-void										debug(char *str, int l);
-
-/*
 **	Other bonus
 */
 void										completion(t_it *it, int reset);
+void		env_parse(char **env, char **tmp);
 #endif

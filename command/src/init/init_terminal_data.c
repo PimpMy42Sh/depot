@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/25 10:48:26 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/14 14:12:11 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/21 18:12:32 by Marco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,19 @@ static int		init_termios_struct(t_tty *tty)
 
 int				init_terminal_data(t_tty *tty)
 {
+	int				success;
 	char			*name_term;
 	char			*tmp;
-	int				success;
 
-	name_term = NULL;
 	tmp = NULL;
+	name_term = NULL;
 	if (!(name_term = getenv("TERM")))
 	{
 		tmp = ft_strdup(TERM_ENV);
 		name_term = tmp;
 	}
 	success = tgetent(NULL, name_term);
-	if (tmp)
-		ft_memdel((void**)&tmp);
+	ft_memdel((void**)&tmp);
 	if (handle_success(success))
 		return (1);
 	if (init_termios_struct(tty))

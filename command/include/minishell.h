@@ -192,9 +192,10 @@ void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);
 int											ft_env(char **av, char ***environ,
 											int ok);
-void										env_parse(char **env, char ***tmp);
+void										env_parse(char **av, char **env);
 char										**env_parsing(char ***av);
 char										**copy_environ(char **environ);
+char										**void_env(void);
 void										ft_exit(char **av, t_env *env);
 char										*return_pwd(void);
 void										ft_echo(char **av, char **environ);

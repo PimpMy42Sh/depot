@@ -33,7 +33,6 @@ static int		unset(int *ok, char ***av, char **env)
 		ft_putchar('\n');
 		return (0);
 	}
-	printf("OUT\n");
 	return (1);
 }
 
@@ -45,7 +44,7 @@ char			**exec_tab_parser(char **av, int *type_exec)
 	i = 0;
 	while (av[i] && ft_strchr(av[i], '='))
 		i++;
-	if ((*type_exec = !!av[i]))
+	if ((*type_exec = !!av[i]) && av[i])
 		tabl = copy_environ(&av[i]);
 	else
 		tabl = copy_environ(av);
@@ -101,25 +100,34 @@ static int		exec(int *ok, char **av, char ***env)
 {
 	char		**tabl;
 	int			i;
+	char		**tmp;
 
-	av += !env;
+	if (!env)
+	{
+		av++;
+		tmp = void_env();
+	}
+	else
+		tmp = NULL;
 	if ((tabl = exec_tab_parser(av, ok)))
 	{
 		if (*ok)
-			env_parse(tabl, env);
+			env_parse(tabl, (env) ? *env : tmp);
 		else
 		{
 			i = 0;
 			while (tabl[i])
 			{
-				if (!replace(tabl[i], *env))
-					add_env(tabl[i], env);
+				if (!replace(tabl[i], (env) ? *env : tmp))
+					add_env(tabl[i], (env) ? env : &tmp);
 				i++;
 			}
-			print_env(*env);
+			print_env((env) ? *env : tmp);
 		}
 		free_double_array(tabl);
 	}
+	if (!env)
+		free_double_array(tmp);
 	return (1);
 }
 

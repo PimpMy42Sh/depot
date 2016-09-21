@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 #include <command.h>
 
-static char			**void_env(void)
+char			**void_env(void)
 {
 	char		**copy;
 
@@ -22,16 +22,11 @@ static char			**void_env(void)
 	return (copy);
 }
 
-void				env_parse(char **s, char ***env)
+void				env_parse(char **s, char **env)
 {
-	char			**tmp;
-
-	tmp = (env) ? *env : void_env();
 	if ((g_father = fork()) == 0)
-		start_prgm(tmp, s);
+		start_prgm(env, s);
 	wait(NULL);
-	if (!env)
-		free(tmp);
 }
 
 char				**copy_environ(char **environ)

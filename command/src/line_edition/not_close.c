@@ -41,7 +41,6 @@ static int	quotes_loop(t_it *it, t_list *args, char **back, char *end)
 		if ((it->buffer == CTRL_D && !it->len) || !it->eof || ctrl_c->bol)
 		{
 			ctrl_c->bol = 0;
-			ctrl_c->main_loop = 1;
 			free_list_and_struct(it, args);
 			return (1);
 		}
@@ -57,7 +56,9 @@ static int	quotes_loop(t_it *it, t_list *args, char **back, char *end)
 	suspend_terminal();
 	it->eof = 0;
 	convert_it_line(it, args, back);
-	return (!ctrl_c->main_loop);
+	if (ctrl_c->main_loop)
+		free(*back);
+	return (ctrl_c->main_loop);
 }
 
 int		quote_not_close(char *begin, char *end, char **back)

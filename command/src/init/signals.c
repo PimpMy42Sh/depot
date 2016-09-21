@@ -46,6 +46,7 @@ static void				ctrl_c(void)
 		tty->term.c_cc[VMIN] = 0;
 		tcsetattr(0, TCSANOW, &tty->term);
 	}
+	ctrl_c->main_loop = 1;
 	ctrl_c->bol = 1;
 }
 

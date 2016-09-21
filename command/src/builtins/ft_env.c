@@ -15,10 +15,13 @@
 
 static int		unset(int *ok, char ***av, char **env)
 {
+	int			index;
+
 	if (*((*av) + 1))
 	{
 		(*av)++;
-		remove_env(env, return_env_indice(env, **av));
+		if ((index = return_env_indice(env, **av)) != -1)
+			remove_env(env, index);
 	}
 	else
 	{
@@ -30,6 +33,7 @@ static int		unset(int *ok, char ***av, char **env)
 		ft_putchar('\n');
 		return (0);
 	}
+	printf("OUT\n");
 	return (1);
 }
 
@@ -98,11 +102,11 @@ static int		exec(int *ok, char **av, char ***env)
 	char		**tabl;
 	int			i;
 
-	av += !*env;
+	av += !env;
 	if ((tabl = exec_tab_parser(av, ok)))
 	{
 		if (*ok)
-			env_parse(tabl, *env);
+			env_parse(tabl, env);
 		else
 		{
 			i = 0;

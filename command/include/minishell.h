@@ -192,7 +192,7 @@ void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);
 int											ft_env(char **av, char ***environ,
 											int ok);
-
+void										env_parse(char **env, char ***tmp);
 char										**env_parsing(char ***av);
 char										**copy_environ(char **environ);
 void										ft_exit(char **av, t_env *env);
@@ -391,5 +391,4 @@ void										debug(char *str, int l);
 **	Other bonus
 */
 void										completion(t_it *it, int reset);
-void		env_parse(char **env, char **tmp);
 #endif

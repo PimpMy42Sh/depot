@@ -22,11 +22,11 @@ static char			**void_env(void)
 	return (copy);
 }
 
-void				env_parse(char **s, char **env)
+void				env_parse(char **s, char ***env)
 {
 	char			**tmp;
 
-	tmp = (env) ? env : void_env();
+	tmp = (env) ? *env : void_env();
 	if ((g_father = fork()) == 0)
 		start_prgm(tmp, s);
 	wait(NULL);

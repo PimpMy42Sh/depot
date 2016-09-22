@@ -35,16 +35,8 @@ void		check_only_space(t_it *it)
 
 void		go_to_bottom(t_it *it)
 {
-	int		nb_lines;
-
-	nb_lines = 0;
-	if (it->line)
-	{
-		nb_lines = (it->len + it->offset) / it->ws_col;
-		if (nb_lines < 0)
-			return ;
-		tputs(tparm(tgetstr("DOWN_MAJ", NULL), nb_lines - 1), 0, my_putchar);
-	}
+	move_end(it);
+	tputs(tgetstr(BEGIN, NULL), 0, my_putchar);
 }
 
 int			ft_abs(int i)

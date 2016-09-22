@@ -34,7 +34,6 @@ int						do_all_hdoc(char *cmd, char **env)
 
 	ok = 0;
 	it = ft_stock_it(0);
-	it->offset = 1;
 	nhdoc(0);
 	while (*cmd)
 	{
@@ -42,8 +41,7 @@ int						do_all_hdoc(char *cmd, char **env)
 		{
 			if (!ok)
 			{
-				move_end(it);
-				tputs(tgetstr(DOWN, NULL), 0, my_putchar);
+				go_to_bottom(it);
 				ok = 1;
 			}
 			if (do_all_hdoc__normalize(&cmd, env))

@@ -164,7 +164,7 @@ void										ft_unsetenv(char **av, t_env *env);
 int											ft_cd(char **av, t_env *env);
 int											ft_env(char **av, char ***environ,
 											int ok);
-
+int											env_bad_arg(char *av);
 void										env_parse(char **av, char **env);
 char										**env_parsing(char ***av);
 char										**copy_environ(char **environ);
@@ -245,12 +245,14 @@ int											quote_not_close(char *begin,
 											char *end, char **back);
 void										convert_it_line(t_it *it,
 											t_list *args, char **back);
-int										is_a_newline_quotes(t_it *it,
+int											is_a_newline_quotes(t_it *it,
 											char *end, t_list **args);
-char									browse_skip_quote(char **s,
+char										browse_skip_quote(char **s,
 											char tmp);
-void 									free_list_and_struct(t_it *it,
+void										free_list_and_struct(t_it *it,
 											t_list *args);
+void										stop_quotes(t_it *it, t_ctrl_c *c,
+											char **back, t_list *args);
 
 /*
 **	cursor_moves
@@ -334,9 +336,4 @@ char										*hash_cmd(char *cmd, char
 void										rec_size(t_it *it);
 void										check_signal(void);
 
-/*
-**	Other bonus
-*/
-void										completion(t_it *it, int reset);
-void		env_parse(char **env, char **tmp);
 #endif

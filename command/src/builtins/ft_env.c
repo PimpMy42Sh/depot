@@ -36,7 +36,6 @@ static int		unset(int *ok, char ***av, char **env)
 	return (1);
 }
 
-
 static int		replace(char *av, char **env)
 {
 	char		*str;
@@ -82,9 +81,7 @@ static void		add_env(char *av, char ***env)
 	*env = copy;
 }
 
-
-
-int			exec_parser(char **av, char ***env)
+int				exec_parser(char **av, char ***env)
 {
 	int				i;
 
@@ -123,14 +120,7 @@ int				ft_env(char **av, char ***environ, int ok)
 			return (exec_parser(av, environ));
 		}
 		else
-		{
-			ft_putstr_fd(RED, 2);
-			ft_putstr_fd("env: Bad option: ", 2);
-			ft_putstr_fd(*av, 2);
-			ft_putstr_fd(RESET, 2);
-			ft_putchar('\n');
-			return (0);
-		}
+			return (env_bad_arg(*av));
 		av += !!*av;
 	}
 	if (!ok)

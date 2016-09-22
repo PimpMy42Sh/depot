@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 #include <command.h>
 
-char			**void_env(void)
+char				**void_env(void)
 {
 	char		**copy;
 
@@ -46,4 +46,14 @@ char				**copy_environ(char **environ)
 	}
 	copy[i] = 0;
 	return (copy);
+}
+
+int					env_bad_arg(char *av)
+{
+	ft_putstr_fd(RED, 2);
+	ft_putstr_fd("env: Bad option: ", 2);
+	ft_putstr_fd(av, 2);
+	ft_putstr_fd(RESET, 2);
+	ft_putchar('\n');
+	return (0);
 }

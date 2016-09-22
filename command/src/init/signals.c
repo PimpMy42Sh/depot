@@ -12,26 +12,11 @@
 
 #include "../../include/minishell.h"
 
-static void				ctrl_c(void)
+static void				ctrl_c_bis(t_it *it, t_ctrl_c *ctrl_c)
 {
-	t_it		*it;
-	t_ctrl_c	*ctrl_c;
 	t_tty		*tty;
 
-	ctrl_c = ft_stock_ctrl_c(NULL);
-	it = ft_stock_it(NULL);
 	tty = ft_stock_term(NULL);
-	resumed_terminal();
-	if (g_father != 0)
-	{
-		if (it)
-			go_to_bottom(it);
-		if (ctrl_c->main_loop)
-		{
-			ft_putchar('\n');
-			print_prompt();
-		}
-	}
 	if (it)
 	{
 		it->eof = 0;
@@ -48,6 +33,27 @@ static void				ctrl_c(void)
 	}
 	ctrl_c->main_loop = 1;
 	ctrl_c->bol = 1;
+}
+
+static void				ctrl_c(void)
+{
+	t_it		*it;
+	t_ctrl_c	*ctrl_c;
+
+	ctrl_c = ft_stock_ctrl_c(NULL);
+	it = ft_stock_it(NULL);
+	resumed_terminal();
+	if (g_father != 0)
+	{
+		if (it)
+			go_to_bottom(it);
+		if (ctrl_c->main_loop)
+		{
+			ft_putchar('\n');
+			print_prompt();
+		}
+	}
+	ctrl_c_bis(it, ctrl_c);
 }
 
 static void				signal_handler(int signum)

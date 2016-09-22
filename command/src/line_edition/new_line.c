@@ -13,7 +13,7 @@
 #include "../../include/minishell.h"
 #include "../../include/command.h"
 
-static void	append_backlash_n(t_it *it, t_list **args)
+static void		append_backlash_n(t_it *it, t_list **args)
 {
 	char	*tmp;
 
@@ -24,7 +24,7 @@ static void	append_backlash_n(t_it *it, t_list **args)
 	ft_memdel((void**)&tmp);
 }
 
-static int	browse_line(char **str, char *end, char other)
+static int		browse_line(char **str, char *end, char other)
 {
 	while (**str)
 	{
@@ -48,7 +48,7 @@ static int	browse_line(char **str, char *end, char other)
 	return (1);
 }
 
-static int	close_or_not(char **str, char *end)
+static int		close_or_not(char **str, char *end)
 {
 	char	other;
 
@@ -64,7 +64,7 @@ static int	close_or_not(char **str, char *end)
 	return (browse_line(str, end, other));
 }
 
-static void display_delta(t_it *it)
+static void		display_delta(t_it *it)
 {
 	int		delta;
 
@@ -77,7 +77,7 @@ static void display_delta(t_it *it)
 	}
 }
 
-int	is_a_newline_quotes(t_it *it, char *end, t_list **args)
+int				is_a_newline_quotes(t_it *it, char *end, t_list **args)
 {
 	char	*str;
 	char	*begin;

@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
- static void	free_structure(t_list *args)
+static void	free_structure(t_list *args)
 {
 	t_list *tmp;
 
@@ -14,7 +14,7 @@
 	ft_memdel((void**)&args);
 }
 
- static void free_it(t_it *it)
+static void	free_it(t_it *it)
 {
 	ft_memdel((void**)&it->line);
 	ft_memdel((void**)&it->tmp_line);
@@ -22,9 +22,9 @@
 	ft_memdel((void**)&it);
 }
 
-void free_list_and_struct(t_it *it, t_list *args)
+void		free_list_and_struct(t_it *it, t_list *args)
 {
-  free_structure(args);
+	free_structure(args);
 	free_it(it);
 }
 
@@ -52,4 +52,13 @@ void		convert_it_line(t_it *it, t_list *args, char **back)
 	*back = ft_strdup(it->line);
 	free_structure(begin);
 	free_it(it);
+}
+
+void		stop_quotes(t_it *it, t_ctrl_c *c, char **back, t_list *args)
+{
+	suspend_terminal();
+	it->eof = 0;
+	convert_it_line(it, args, back);
+	if (c->main_loop)
+		free(*back);
 }

@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static char	*ft_strtrim_quotes(char *s)
+static char		*ft_strtrim_quotes(char *s)
 {
 	char	*ref;
 	char	*ret;
@@ -30,7 +30,7 @@ static char	*ft_strtrim_quotes(char *s)
 	return (ret);
 }
 
-void		replace_tilde(char **origin, int *index, char **environ)
+void			replace_tilde(char **origin, int *index, char **environ)
 {
 	char	*ret;
 	char	*var;
@@ -74,7 +74,7 @@ static void		replace_environ(char **origin, int *index,
 		free(var);
 }
 
-void		replace_dollar(char **av, int *i, char **environ)
+void			replace_dollar(char **av, int *i, char **environ)
 {
 	char	*token;
 
@@ -83,7 +83,7 @@ void		replace_dollar(char **av, int *i, char **environ)
 	free(token);
 }
 
-void		check_tilde_and_dollar(char **environ, char **av)
+void			check_tilde_and_dollar(char **environ, char **av)
 {
 	int		i;
 

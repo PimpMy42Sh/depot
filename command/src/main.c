@@ -13,11 +13,12 @@
 #include "../include/minishell.h"
 #include "../include/command.h"
 
-static void	split_cmd(t_it *it, t_env *env, char *s)
+static void		split_cmd(t_it *it, t_env *env, char *s)
 {
 	t_list				*c;
 
 	nhdoc(0);
+	suspend_terminal();
 	alloc_size(ft_strlen(s));
 	while (*s)
 	{
@@ -30,6 +31,7 @@ static void	split_cmd(t_it *it, t_env *env, char *s)
 		}
 		s += (*s == ';');
 	}
+	resumed_terminal();
 }
 
 static void		parse(t_it *it, t_env *env)
@@ -53,9 +55,7 @@ static void		parse(t_it *it, t_env *env)
 		free(back);
 		return ;
 	}
-	suspend_terminal();
 	split_cmd(it, env, s);
-	resumed_terminal();
 	if (!it->line)
 		ft_putchar('\n');
 	print_prompt();
@@ -63,15 +63,11 @@ static void		parse(t_it *it, t_env *env)
 	free(back);
 }
 
-static void	main_loop(t_env *env)
+static void		main_loop(t_env *env, t_ctrl_c *ctrl_c)
 {
 	t_it			*it;
-	t_ctrl_c		*ctrl_c;
 
 	it = init_it_struct(0);
-	ctrl_c = ft_stock_ctrl_c(0);
-	ctrl_c->main_loop = 1;
-	ft_stock_it(it);
 	while (read(0, &it->buffer, 4))
 	{
 		parse_line(it);
@@ -96,7 +92,7 @@ static void	main_loop(t_env *env)
 	}
 }
 
-static void	init_copy_environ(t_env *env, char **environment)
+static void		init_copy_environ(t_env *env, char **environment)
 {
 	int		i;
 
@@ -119,7 +115,7 @@ static void	init_copy_environ(t_env *env, char **environment)
 		path_manager(env);
 }
 
-int			main(int argc, char **argv, char **environment)
+int				main(int argc, char **argv, char **environment)
 {
 	t_tty			*tty;
 	t_env			*env;
@@ -141,6 +137,7 @@ int			main(int argc, char **argv, char **environment)
 	check_shlvl(env);
 	print_prompt();
 	check_signal();
-	main_loop(env);
+	ctrl_c->main_loop = 1;
+	main_loop(env, ctrl_c);
 	return (0);
 }

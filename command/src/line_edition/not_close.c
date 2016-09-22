@@ -9,7 +9,7 @@ char			browse_skip_quote(char **s, char tmp)
 	return (tmp);
 }
 
-static void	quote_reset(t_it *it)
+static void		quote_reset(t_it *it)
 {
 	it->i = 0;
 	it->buffer = 0;
@@ -20,7 +20,7 @@ static void	quote_reset(t_it *it)
 	ft_putstr("\n> ");
 }
 
-static void	copy_first_element(char *begin, t_list **args)
+static void		copy_first_element(char *begin, t_list **args)
 {
 	char	*tmp;
 
@@ -29,7 +29,7 @@ static void	copy_first_element(char *begin, t_list **args)
 	ft_memdel((void**)&tmp);
 }
 
-static int	quotes_loop(t_it *it, t_list *args, char **back, char *end)
+static int		quotes_loop(t_it *it, t_list *args, char **back, char *end)
 {
 	t_ctrl_c	*ctrl_c;
 
@@ -53,15 +53,11 @@ static int	quotes_loop(t_it *it, t_list *args, char **back, char *end)
 		}
 		it->buffer = 0;
 	}
-	suspend_terminal();
-	it->eof = 0;
-	convert_it_line(it, args, back);
-	if (ctrl_c->main_loop)
-		free(*back);
+	stop_quotes(it, ctrl_c, back, args);
 	return (ctrl_c->main_loop);
 }
 
-int		quote_not_close(char *begin, char *end, char **back)
+int				quote_not_close(char *begin, char *end, char **back)
 {
 	t_it	*it;
 	t_list	*args;

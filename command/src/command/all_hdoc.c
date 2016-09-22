@@ -20,7 +20,9 @@ static int				do_all_hdoc__normalize(char **cmd, char **env)
 		close(fd);
 		return (0);
 	}
+	ft_putstr_fd(RED, 2);
 	write(2, "Need an end string\n", 19);
+	ft_putstr_fd(RESET, 2);
 	free(eof);
 	free(s);
 	close(fd);
@@ -45,7 +47,10 @@ int						do_all_hdoc(char *cmd, char **env)
 				ok = 1;
 			}
 			if (do_all_hdoc__normalize(&cmd, env))
+			{
+				print_prompt();
 				return (1);
+			}
 		}
 		else
 			cmd++;

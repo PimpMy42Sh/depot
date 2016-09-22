@@ -6,7 +6,7 @@
 /*   By: mfamilar <mfamilar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/12 15:25:19 by mfamilar          #+#    #+#             */
-/*   Updated: 2016/09/21 14:00:26 by Marco            ###   ########.fr       */
+/*   Updated: 2016/09/22 12:53:26 by mfamilar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ int				check_line_quotes(char *s, char **back)
 {
 	if (check_synthax(s))
 	{
-		ft_putstr_fd("syntax error\n", 2);
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd("syntax error", 2);
+		ft_putstr_fd(RESET, 2);
 		return (1);
 	}
 	else

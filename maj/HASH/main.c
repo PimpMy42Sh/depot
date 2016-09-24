@@ -27,6 +27,9 @@ static void		split_cmd(t_it *it, t_env *env, char *s)
 			if (it->line)
 				execution(c, env);
 			stop_cmd(c);
+			printf("IN\n");
+			update_hash(env);
+			printf("OUT\n");
 			s += (*s == ';');
 		}
 		s += (*s == ';');

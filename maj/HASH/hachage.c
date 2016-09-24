@@ -16,7 +16,9 @@ t_hash_tree			*ft_stock_tree(t_hash_tree *tree)
 {
 	static t_hash_tree	*tmp = NULL;
 
-	if (tree)
+	if (tree == (t_hash_tree*)-1)
+		tmp = NULL;
+	else if (tree)
 		tmp = tree;
 	return (tmp);
 }
@@ -32,7 +34,7 @@ static t_list		*create_list(char *cmd, char *path, int indice)
 	return (new);
 }
 
-static void			file_counter(char *path)
+void			file_counter(char *path)
 {
 	int				indice;
 	struct dirent	*dptr;

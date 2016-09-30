@@ -50,7 +50,7 @@ static int		match_wildcard(const char *s, const char *format)
 int					glob__match(const char *s, const char *format)
 {
 	#ifdef DEBUG
-		//printf("s = %s, format = %s\n", s, format);
+		printf("s = %s, format = %s\n", s, format);
 	#endif	
 
 	if (!*s && !*format)

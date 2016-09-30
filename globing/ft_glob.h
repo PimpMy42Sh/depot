@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
-//#define DEBUG
+#define DEBUG
 
 #define GLOB_CASE_SENSITIVE 1
 

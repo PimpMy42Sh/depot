@@ -55,8 +55,8 @@ static t_list		*glob__create_list(const char **paths, const char *format, const 
 				if (glob__match(name, format))
 				{
 					printf("-> %s\n", name);
-					//ft_lstadd(&results, ft_lstnew(name, ft_strlen(name) + 1));
-					glob__list_adding(&results, name, flags);
+					ft_lstadd(&results, ft_lstnew(name, ft_strlen(name) + 1));
+					//glob__list_adding(&results, name, flags);
 				}
 			}
 			closedir(rep);

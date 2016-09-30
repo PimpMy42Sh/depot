@@ -4,7 +4,7 @@
 **	J'ai mis un char** c'est uniqument a titre d'exemple
 **	On devra utiliser la table de hash a la place
 */
-
+/*
 static void				glob__list_adding(t_list **lst, const char *s, const int flags)
 {
 	int		(*compare)();
@@ -35,7 +35,7 @@ static void				glob__list_adding(t_list **lst, const char *s, const int flags)
 		}
 	else
 		*lst = ft_lstnew(s, ft_strlen(s) + 1);
-}
+}*/
 
 static t_list		*glob__create_list(const char **paths, const char *format, const int flags)
 {
@@ -54,7 +54,7 @@ static t_list		*glob__create_list(const char **paths, const char *format, const 
 				name = (char*)entry->d_name;
 				if (glob__match(name, format))
 				{
-					printf("-> %s\n", name);
+					//printf("-> %s\n", name);
 					ft_lstadd(&results, ft_lstnew(name, ft_strlen(name) + 1));
 					//glob__list_adding(&results, name, flags);
 				}
@@ -81,7 +81,7 @@ static char				*glob__create_string(const char *format, const char **paths, cons
 	while (tmp)
 	{
 		len += tmp->content_size;
-		printf("===> %s\n", (char*)tmp->content);
+		//printf("===> %s\n", (char*)tmp->content);
 		tmp = tmp->next;
 	}
 	if (len)
@@ -108,6 +108,6 @@ void						ft_glob(const char **paths, char **addr, const char *format, const int
 	{
 		free(*addr);
 		*addr = s_replace;
-		printf("%s\n", *addr);
+		//printf("%s\n", *addr);
 	}
 }

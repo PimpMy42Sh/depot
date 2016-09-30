@@ -63,7 +63,7 @@ int		process(char *s1)
 	char	*paths[3];
 
 	paths[0] = "./";
-	paths[1] = "/bin/"
+	paths[1] = 0;//"/bin/";
 	paths[2] = NULL;
 
 	ret_ft = process__glob_ft(paths, s1);

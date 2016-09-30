@@ -47,17 +47,22 @@ static int		match_wildcard(const char *s, const char *format)
 		return (1);
 	ret = 0;
 	tmp = (char*)s;
-	while ((occur = strchr(tmp, *format)))
+	if (*format != '[' && *format != ']' && *format != '?')
 	{
-		ok = 1;
-		ret = glob__match(occur, format);
-		if (ret)
-			return (1);
-		tmp = occur + 1;
+		while ((occur = strchr(tmp, *format)))
+		{
+			ok = 1;
+			ret = glob__match(occur, format);
+			if (ret)
+				return (1);
+			tmp = occur + 1;
+		}
+		if (!ok)
+			return (0);
+		return (ret);
 	}
-	if (!ok)
-		return (0);
-	return (ret);
+	else
+		return (glob__match(s + 1, format) || glob__match(s, format));
 }
 
 int					glob__match(const char *s, const char *format)

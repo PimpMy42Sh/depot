@@ -10,7 +10,7 @@ static int		match_bracket(const char *s, const char *format)
 	format++;
 	if (*format == '!')
 	{
-		sign = !sign;
+		sign = 1;
 		format++;
 	}
 	while (*format != ']')
@@ -19,8 +19,8 @@ static int		match_bracket(const char *s, const char *format)
 		{
 			if (*(format + 1) == '-')
 			{
-				ret = *format <= *s && *format >= *s;
-				format++;
+				ret = *format <= *s && *(format + 2) >= *s;
+				format += 2;
 			}
 			else if ((*format == *s) != sign)
 				ret = 1;
@@ -44,18 +44,16 @@ static int		match_wildcard(const char *s, const char *format)
 	ret = strchr(s, *format);
 	if (ret)
 		return (glob__match(ret, format));
-	return (1);
+	return (0);
 }
 
 int					glob__match(const char *s, const char *format)
 {
 	#ifdef DEBUG
-//		printf("s = %s, format = %s\n", s, format);
+		//printf("s = %s, format = %s\n", s, format);
 	#endif	
 
-	if (!s)
-		return (0);
-	else if (!*s && !*format)
+	if (!*s && !*format)
 		return (1);
 	else if (*s == *format)
 		return (glob__match(s + 1, format + 1));

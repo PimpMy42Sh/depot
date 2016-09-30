@@ -1,6 +1,6 @@
 #!/bin/bash
 #Bin_name
-bin=binary
+bin=binairy
 n=1
 libft=../command/libft
 make -C $libft
@@ -134,3 +134,21 @@ launch_test '?*[45454545]' '4[454545454][sh]?' 0
 
 ###### TEST 30
 launch_test '0' '[]' 0
+
+###### TEST 31
+launch_test 'main_truc.c' '*truc*' 1
+
+###### TEST 32
+launch_test '.' '*truc*' 0
+
+###### TEST 33
+launch_test 'main_truc.c' '????_truc*' 1
+
+###### TEST 35
+launch_test 'test-it' 'test[-]it' 1
+
+###### TEST 36
+launch_test 'test--it' 'test[--][--]it' 1
+
+###### TEST 37
+launch_test 'test--it' 'test[----]-it' 1

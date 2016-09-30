@@ -1,6 +1,6 @@
 #!/bin/bash
 #Bin_name
-bin=binary
+bin=binairy
 n=1
 libft=../command/libft
 make -C $libft
@@ -19,7 +19,7 @@ gcc -g -I. glob_replace.c glob_match.c main_glob.c $libft/libft.a -Wall -Wextra 
 
 function launch_test()
 {
-	#echo $1
+	echo $1
 	./$bin $1
 
 	if [ $? -eq 1 ]
@@ -31,105 +31,74 @@ function launch_test()
 	n=$((n+1))
 }
 
-## ATTENTION: CERTAINS PATTERN FONT LE GLOBBING INVOLONTAIREMENT
-## JE NE SAIS PAS COMMENT EMPECHER CELA
-## L'ERREUR EST: (en general...) "Bad args" (s'il n'y a que des char de globbing)
-
-
-################# WILDCARD ################ 
-
 ###### TEST 1
-launch_test 'cat'
+match='*match*'
+launch_test $match
 
 ###### TEST 2
-launch_test 'cat*'
+match='*match'
+launch_test $match
 
 ###### TEST 3
-launch_test '*cat'
+match='*main_*'
+launch_test $match
 
 ###### TEST 4
-launch_test '*a'
+match='*main*_*.sh'
+launch_test $match
 
 ###### TEST 5
-launch_test 'c*******************************'
+match='binar[!z]'
+launch_test $match
 
 ###### TEST 6
-launch_test 'c*t'
+match='[a-z]inary'
+launch_test $match
 
 ###### TEST 7
-launch_test 'z*t'
-
-############### BRACKETS #############
+match='[a---------------------------]inairy'
+launch_test $match
 
 ###### TEST 8
-launch_test '[c]at'
+match='[a---------------------------z]inairy'
+launch_test $match
 
 ###### TEST 9
-launch_test '[c][a][t]'
+match='[a--------------------------z]inairy'
+launch_test $match
 
 ###### TEST 10
-launch_test '[a-c][a-z][t-t]'
+match='[a-------------------------z]inairy'
+launch_test $match
 
 ###### TEST 11
-launch_test '[z-z]'
+match='[a------------------------z]inairy'
+launch_test $match
 
-###### TEST 12 (-- est invalide)
-launch_test '[c--at]'
+###### TEST 12
+match='[a-----------------------z]inairy'
+launch_test $match
 
 ###### TEST 13
-launch_test '[-]'
+match='[a----------------------z]inairy'
+launch_test $match
 
-###### TEST 14 (invalide dans ordre decroissant)
-launch_test 'cat' '[z-a][z-a][z-a]'
-
-############### REPLACE CHAR #############
+###### TEST 14
+match='[z-a]inairy'
+launch_test $match
 
 ###### TEST 15
-launch_test '?at'
+match='[!z-a]inairy'
+launch_test $match
 
-###### TEST 16
-launch_test  '??'
+###### TEST 16 (tout les sh sauf celui ci ... bug???)
+match='*.sh'
+launch_test $match
 
 ###### TEST 17
-launch_test '??'
+match='/bin/l*'
+launch_test $match
 
-###### TEST 18
-launch_test '???'
-
-###### TEST 19
-launch_test 'c?t'
-
-############### MULTI TESTS #############
-
-###### TEST 20
-launch_test '[c]*[t]'
-
-###### TEST 21
-launch_test '[c]?[t]'
-
-###### TEST 22
-launch_test '[a-?-c][a-z]*t'
-
-###### TEST 23
-launch_test '*[c]?*t'
-
-###### TEST 24
-launch_test "42sh"
-
-###### TEST 25
-launch_test '[-]'
-
-###### TEST 26
-launch_test '[!2-9][!1]?[!3]*9'
-
-###### TEST 27
-launch_test '?[c]*****'
-
-###### TEST 28
-launch_test '[a-?-c][a-z]'
-
-###### TEST 29
-launch_test '4[454545454][sh]?'
-
-###### TEST 30
-launch_test '[]'
+###### TEST 17
+match='ls'
+launch_test $match

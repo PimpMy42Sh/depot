@@ -14,7 +14,7 @@ int		process__glob_sys(char *s2)
 	if ((r = g.gl_pathv))
 	while (r[i])
 	{
-//			printf("%s\n", r[i]);
+		//printf("%s\n", r[i]);
 		i++;
 	}
 	#endif
@@ -23,38 +23,48 @@ int		process__glob_sys(char *s2)
 	return (i);
 }
 
+static int		count_words(const char *s, char c)
+{
+	int		cnt;
+	int		tmp;
+
+	tmp = 0;
+	cnt = 0;
+	while (*s)
+	{
+		if (tmp && *s == c)
+			tmp = 0;
+		if (!tmp && *s != c)
+		{
+			tmp = 1;
+			cnt++;
+		}
+		s++;
+	}
+	return (cnt);
+}
+
 int		process__glob_ft(char **paths, char *s1)
 {
 	char	*s;
-	int		i;
+
 	s = ft_strdup("\0");
-	ft_glob(paths, &s, s1);
+	ft_glob((const char **)paths, &s, s1, GLOB_CASE_SENSITIVE);
 	#ifdef DEBUG
 //		printf("%s\n", s);
 	#endif
-	i = 0;
-	while (*s)
-	{
-		if (*s != ' ')
-		{
-			i++;
-			while (*s != ' ')
-				s++;
-		}
-		else
-			s++;
-	}
-	return (i);
+	return (count_words(s, ' '));
 }
 
 int		process(char *s1)
 {
 	int	ret_sys;
 	int	ret_ft;
-	char	*paths[1];
+	char	*paths[3];
 
 	paths[0] = "./";
-	paths[1] = NULL;
+	paths[1] = "/bin/"
+	paths[2] = NULL;
 
 	ret_ft = process__glob_ft(paths, s1);
 	#ifdef DEBUG

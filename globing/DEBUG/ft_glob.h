@@ -13,4 +13,4 @@ int			ft_strcasecmp(const char *s1, const char *s2);
 
 int		glob__open_directory(char *local, char *pattern, int flags, t_list **results);
 int		glob__match(char *local, char *s, char *format, t_list **results);
-void	ft_glob(char **addr, char *format, int flags, t_list **results);
+int		ft_glob(char **addr, char *format, int flags, t_list **results);

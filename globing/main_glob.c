@@ -22,27 +22,6 @@ int		process__glob_sys(char *s2)
 	return (i);
 }
 
-static int		count_words(const char *s, char c)
-{
-	int		cnt;
-	int		tmp;
-
-	tmp = 0;
-	cnt = 0;
-	while (*s)
-	{
-		if (tmp && *s == c)
-			tmp = 0;
-		if (!tmp && *s != c)
-		{
-			tmp = 1;
-			cnt++;
-		}
-		s++;
-	}
-	return (cnt);
-}
-
 int		process__glob_ft(char *s1)
 {
 	char	*s;
@@ -50,11 +29,11 @@ int		process__glob_ft(char *s1)
 
 	lst = NULL;
 	s = ft_strdup("\0");
-	ft_glob(&s, s1, GLOB_CASE_SENSITIVE, &lst);
+	int r = ft_glob(&s, s1, GLOB_CASE_SENSITIVE, &lst);
 	#ifdef DEBUG
 	printf("FIN:%s\n", s);
 	#endif
-	return (count_words(s, ' '));
+	return (r);
 }
 
 int		process(char *s1)
